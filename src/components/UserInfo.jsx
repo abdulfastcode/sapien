@@ -32,22 +32,28 @@ const UserInfo = () => {
     >
       <div className="flex flex-col ml-[39px] items-start gap-[12px]">
         {content}
-        <div>
-          <div>
-            <span className="text-zinc-500 text-[12px] font-normal leading-[8.80px]">
-              Press{" "}
-            </span>
-            <span className="text-zinc-500 text-[12px] font-bold leading-[8.80px]">
-              Enter
-            </span>
-            {activeDivIndex > 0 && (
-              <button
-                className="w-[90px] p-[7px] bg-white border text-indigo-950 border-indigo-950"
-                onClick={() => setActiveDivIndex((prevIndex) => prevIndex - 1)}
-              >
-                Back
-              </button>
-            )}
+        <div className="w-[70vw] md:w-[50vw] lg:w-[460px]">
+          <div className="flex justify-between">
+            <div>
+              <span className="text-zinc-500 text-[12px] font-normal leading-[8.80px]">
+                Press{" "}
+              </span>
+              <span className="text-zinc-500 text-[12px] font-bold leading-[8.80px]">
+                Enter
+              </span>
+            </div>
+            <div>
+              {activeDivIndex > 0 && (
+                <button
+                  className="w-[70px]  bg-white border text-[#71717a] border-[#e4e4e473 rounded-md]"
+                  onClick={() =>
+                    setActiveDivIndex((prevIndex) => prevIndex - 1)
+                  }
+                >
+                  Back
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -64,7 +70,7 @@ const UserInfo = () => {
           </div>
           <div>
             <input
-              className={`w-[70vw] md:w-[50vw] rounded-sm lg:w-[460px]  h-[50px] p-3 border`}
+              className={`w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px]  h-[50px] p-3 border`}
               type="number"
               placeholder="123456789"
             />
@@ -121,7 +127,7 @@ const UserInfo = () => {
                 />
                 <label
                   htmlFor="default-checkbox"
-                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[460px] py-[4px] px-[6px] border border-black  text-sm font-medium text-gray-900 dark:text-gray-300"
+                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-black  text-sm font-medium text-gray-900 dark:text-gray-300"
                 >
                   Robo-Calling
                 </label>
@@ -135,7 +141,7 @@ const UserInfo = () => {
                 />
                 <label
                   htmlFor="checked-checkbox"
-                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[460px] py-[4px] px-[6px] border border-black  text-sm font-medium text-gray-900 dark:text-gray-300"
+                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-black  text-sm font-medium text-gray-900 dark:text-gray-300"
                 >
                   Outbound Sales Calls
                 </label>
@@ -149,7 +155,7 @@ const UserInfo = () => {
                 />
                 <label
                   htmlFor="checked-checkbox"
-                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[460px] py-[4px] px-[6px] border border-black  text-sm font-medium text-gray-900 dark:text-gray-300"
+                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-black  text-sm font-medium text-gray-900 dark:text-gray-300"
                 >
                   Inbound Sales Calls
                 </label>
@@ -163,7 +169,7 @@ const UserInfo = () => {
                 />
                 <label
                   htmlFor="checked-checkbox"
-                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[460px] py-[4px] px-[6px] border border-black  text-sm font-medium text-gray-900 dark:text-gray-300"
+                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-black  text-sm font-medium text-gray-900 dark:text-gray-300"
                 >
                   Customer Support Calls
                 </label>
@@ -191,7 +197,7 @@ const UserInfo = () => {
                 />
                 <label
                   htmlFor="dev-team-yes"
-                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[460px] py-[4px] px-[6px] border border-black  text-sm font-medium text-gray-900 dark:text-gray-300"
+                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-black  text-sm font-medium text-gray-900 dark:text-gray-300"
                 >
                   YES
                 </label>
@@ -206,7 +212,7 @@ const UserInfo = () => {
                 />
                 <label
                   htmlFor="dev-team-no"
-                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[460px] py-[4px] px-[6px] border border-black  text-sm font-medium text-gray-900 dark:text-gray-300"
+                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-black  text-sm font-medium text-gray-900 dark:text-gray-300"
                 >
                   NO
                 </label>
