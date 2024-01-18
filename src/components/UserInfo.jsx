@@ -70,7 +70,7 @@ const UserInfo = () => {
           </div>
           <div>
             <input
-              className={`w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px]  h-[50px] p-3 border`}
+              className={`w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px]  h-[50px] p-3 border border-gray-500`}
               type="number"
               placeholder="123456789"
             />
@@ -86,7 +86,7 @@ const UserInfo = () => {
           </div>
           <div>
             <input
-              className={`w-[70vw] md:w-[50vw] rounded-sm lg:w-[460px]  h-[50px] p-3 border`}
+              className={`w-[70vw] md:w-[50vw] rounded-sm lg:w-[460px]  h-[50px] p-3 border border-gray-500`}
               type="text"
               placeholder="John Smith"
             />
@@ -102,7 +102,7 @@ const UserInfo = () => {
           </div>
           <div>
             <input
-              className={`w-[70vw] md:w-[50vw] rounded-sm lg:w-[460px]  h-[50px] p-3 border`}
+              className={`w-[70vw] md:w-[50vw] rounded-sm lg:w-[460px]  h-[50px] p-3 border border-gray-500`}
               type="text"
               placeholder="Data Science"
             />
@@ -127,7 +127,7 @@ const UserInfo = () => {
                 />
                 <label
                   htmlFor="default-checkbox"
-                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-black  text-sm font-medium text-gray-900 dark:text-gray-300"
+                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500  text-sm font-medium text-gray-900 dark:text-gray-300"
                 >
                   Robo-Calling
                 </label>
@@ -141,7 +141,7 @@ const UserInfo = () => {
                 />
                 <label
                   htmlFor="checked-checkbox"
-                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-black  text-sm font-medium text-gray-900 dark:text-gray-300"
+                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500  text-sm font-medium text-gray-900 dark:text-gray-300"
                 >
                   Outbound Sales Calls
                 </label>
@@ -155,7 +155,7 @@ const UserInfo = () => {
                 />
                 <label
                   htmlFor="checked-checkbox"
-                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-black  text-sm font-medium text-gray-900 dark:text-gray-300"
+                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500  text-sm font-medium text-gray-900 dark:text-gray-300"
                 >
                   Inbound Sales Calls
                 </label>
@@ -169,7 +169,7 @@ const UserInfo = () => {
                 />
                 <label
                   htmlFor="checked-checkbox"
-                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-black  text-sm font-medium text-gray-900 dark:text-gray-300"
+                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500  text-sm font-medium text-gray-900 dark:text-gray-300"
                 >
                   Customer Support Calls
                 </label>
@@ -197,7 +197,7 @@ const UserInfo = () => {
                 />
                 <label
                   htmlFor="dev-team-yes"
-                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-black  text-sm font-medium text-gray-900 dark:text-gray-300"
+                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500  text-sm font-medium text-gray-900 dark:text-gray-300"
                 >
                   YES
                 </label>
@@ -212,7 +212,7 @@ const UserInfo = () => {
                 />
                 <label
                   htmlFor="dev-team-no"
-                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-black  text-sm font-medium text-gray-900 dark:text-gray-300"
+                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500  text-sm font-medium text-gray-900 dark:text-gray-300"
                 >
                   NO
                 </label>
