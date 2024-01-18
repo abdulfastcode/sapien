@@ -71,7 +71,7 @@ const UserInfo = () => {
           <div>
             <input
               className={`w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px]  h-[50px] p-3 border border-gray-500`}
-              type="number"
+              type="tel"
               placeholder="123456789"
             />
           </div>

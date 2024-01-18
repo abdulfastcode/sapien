@@ -50,11 +50,13 @@ const Email = () => {
   };
 
   useEffect(() => {
-    if (user.email && user.phone) {
-      console.log("user", user);
-      // navigate("/agent");
+    if (user.email!== null) {
+      // console.log("user", user);
+      setTimeout(() => {
+        navigate("/dashoard/agent");
+      }, 10000);
     } else {
-      console.log("user", user);
+      // console.log("user", user);
       navigate("/");
     }
     document.addEventListener("keydown", handleKeyPress);
@@ -144,4 +146,3 @@ const Email = () => {
 };
 
 export default Email;
-
