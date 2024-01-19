@@ -13,8 +13,9 @@ const Email = () => {
 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-
+  console.log(user);
   const navigate = useNavigate();
+  
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
@@ -22,6 +23,7 @@ const Email = () => {
         console.log("email valid", email);
         dispatch(addUserDetails({ email: email }));
         setShowFirstDiv(false);
+
         // navigate("/agent");
       } else if (!showFirstDiv) {
         setShowFirstDiv(true);
@@ -50,16 +52,16 @@ const Email = () => {
   };
 
   useEffect(() => {
-    if (user.email!== null) {
-      // console.log("user", user);
+    document.addEventListener("keydown", handleKeyPress);
+    if (user) {
+      console.log("user not null", user);
       setTimeout(() => {
-        navigate("/dashoard/agent");
-      }, 10000);
+        navigate("/dashboard/agent");
+      }, 5000);
     } else {
-      // console.log("user", user);
+      console.log("user null", user);
       navigate("/");
     }
-    document.addEventListener("keydown", handleKeyPress);
 
     return () => {
       document.removeEventListener("keydown", handleKeyPress);
@@ -87,6 +89,7 @@ const Email = () => {
                   : "focus:outline-none focus:ring text-pink-900 focus:ring-pink-600"
               }`}
               type="email"
+              disabled={user??false}
               placeholder="john@smallest.ai"
               value={email}
               onFocus={() =>
