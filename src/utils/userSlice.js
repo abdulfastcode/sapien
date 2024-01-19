@@ -7,7 +7,8 @@ const userSlice = createSlice({
     //         // { email: "abcjsx" }
     //     ]
     // },
-    initialState: null,
+    // initialState: null,
+    initialState: {email:"zaw@gmail.com"},
     reducers: {
         addUserDetails: (state, action) => {
             return action.payload

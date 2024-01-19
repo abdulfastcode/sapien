@@ -10,6 +10,8 @@ import Agent from "./components/dashboard/Agent.jsx";
 import UserInfo from "./components/UserInfo.jsx";
 import Dashboard from "./components/dashboard/Dashboard.jsx";
 import DashBoardHeader from "./components/dashboard/DashBoardHeader.jsx";
+import Audiences from "./components/dashboard/Audiences.jsx";
+import Campaign from "./components/dashboard/Campaign.jsx";
 
 const router = createBrowserRouter([
   {
@@ -31,7 +33,16 @@ const router = createBrowserRouter([
     element: <Dashboard />,
     children: [
       {
-        path: "/dashboard/agent", element: <Agent /> 
+        path: "/dashboard/agent",
+        element: <Agent />,
+      },
+      {
+        path: "/dashboard/audiences",
+        element: <Audiences />,
+      },
+      {
+        path: "/dashboard/campaign",
+        element: <Campaign />,
       },
     ],
   },

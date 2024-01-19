@@ -19,7 +19,7 @@ const DashBoardHeader = ({ user }) => {
     // }
   }, []);
   return (
-    <div className="px-[25px] sm:px-[45px] py-[31px] md:px-[72px] flex justify-between items-center">
+    <div className="px-[25px] sm:px-[45px] py-[20px] md:px-[72px] flex justify-between items-center border-b border-[#433456]">
       <Link to="/">
         <div>
           <img src={logo} alt="logo" />

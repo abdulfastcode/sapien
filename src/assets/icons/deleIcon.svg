@@ -1,0 +1,23 @@
+<svg width="15" height="17" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="13" height="14" fill="#1E1E1E"/>
+<rect id="Rectangle 75" x="-1616" y="-2555" width="10029" height="5374" stroke="white" stroke-width="10"/>
+<g id="TV - 13" clip-path="url(#clip0_604_12)">
+<rect width="1280" height="720" transform="translate(-1243 -89)" fill="white"/>
+<g id="Frame 43">
+<mask id="path-2-inside-1_604_12" fill="white">
+<path d="M-1127 -9H37V23H-1127V-9Z"/>
+</mask>
+<path d="M37 22H-1127V24H37V22Z" fill="#433456" mask="url(#path-2-inside-1_604_12)"/>
+<g id="Frame 29">
+<g id="Group 31">
+<path id="Vector" d="M1.44455 12.4444C1.44455 13.3039 2.24011 14 3.22233 14H10.3334C11.3157 14 12.1112 13.3039 12.1112 12.4444V3.11111H1.44455V12.4444ZM13.0001 0.777778H9.889L9.00011 0H4.55566L3.66678 0.777778H0.555664V2.33333H13.0001V0.777778Z" fill="#BE3E3E"/>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_604_12">
+<rect width="1280" height="720" fill="white" transform="translate(-1243 -89)"/>
+</clipPath>
+</defs>
+</svg>
