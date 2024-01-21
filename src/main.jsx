@@ -9,9 +9,11 @@ import Email from "./components/Email.jsx";
 import Agent from "./components/dashboard/Agent.jsx";
 import UserInfo from "./components/UserInfo.jsx";
 import Dashboard from "./components/dashboard/Dashboard.jsx";
-import DashBoardHeader from "./components/dashboard/DashBoardHeader.jsx";
 import Audiences from "./components/dashboard/Audiences.jsx";
 import Campaign from "./components/dashboard/Campaign.jsx";
+import CreateCampaign from "./components/dashboard/create/campaign/CreateCampaign.jsx";
+import CreateAgent from "./components/dashboard/create/agent/CreateAgent.jsx";
+import CreateAudience from "./components/dashboard/create/audiences/CreateAudience.jsx";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +45,18 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/campaign",
         element: <Campaign />,
+      },
+      {
+        path: "/dashboard/campaign/create",
+        element: <CreateCampaign />,
+      },
+      {
+        path: "/dashboard/agent/create",
+        element: <CreateAgent />,
+      },
+      {
+        path: "/dashboard/audiences/create",
+        element: <CreateAudience />,
       },
     ],
   },

@@ -6,8 +6,8 @@ import logo from "../../assets/logo.svg";
 import { useDispatch } from "react-redux";
 import { removeUser } from "../../utils/userSlice";
 const DashBoardHeader = ({ user }) => {
-  console.log(user);
-  const navigate = useNavigate();
+
+ 
   let dispatch = useDispatch();
   useEffect(() => {
     // if (user.email && user.phone) {

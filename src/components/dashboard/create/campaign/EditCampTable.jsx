@@ -1,13 +1,8 @@
-// import React from 'react'
+import React from "react";
 
-import Action from "./Action";
-import Filter from "./Filter";
-
-const Campaign = () => {
+const EditCampTable = () => {
   return (
-    <div className="w-full">
-      <Filter />
-      <Action />
+    <div>
       <div className="overflow-auto">
         <table className="w-full table-auto ">
           <thead className="items-center border border-[#381E50]">
@@ -16,26 +11,24 @@ const Campaign = () => {
                 ID
               </th>
               <th className="text-base border border-[#381E50] font-bold text-[#381E50]">
-                Name
+                Phone
               </th>
               <th className="text-base border border-[#381E50] font-bold text-[#381E50]">
-                Date
-              </th>
-              <th className="text-base border border-[#381E50] font-bold text-[#381E50]">
-                Recipients
-              </th>
-              <th className="text-base border border-[#381E50] font-bold text-[#381E50]">
-                Called
+                Call Date Time
               </th>
               <th className="text-base border border-[#381E50] font-bold text-[#381E50]">
                 Connected
               </th>
               <th className="text-base border border-[#381E50] font-bold text-[#381E50]">
+                Voicebox
+              </th>
+              <th className="text-base border border-[#381E50] font-bold text-[#381E50]">
                 Converted
               </th>
               <th className="text-base border border-[#381E50] font-bold text-[#381E50]">
-                Status
+                Summary
               </th>
+
               <th className="pt-[3px]">
                 <input
                   type="checkbox"
@@ -50,13 +43,14 @@ const Campaign = () => {
           <tbody className="text-center border border-[#381E50]">
             <tr className="border border-[#381E50]">
               <td className="border border-[#381E50]">CK323</td>
-              <td className="border border-[#381E50]">Real-Estate-UK</td>
+              <td className="border border-[#381E50]">9837441234</td>
               <td className="border border-[#381E50]">12.04.2023</td>
-              <td className="border border-[#381E50]">3280</td>
-              <td className="border border-[#381E50]">1620</td>
-              <td className="border border-[#381E50]">800</td>
-              <td className="border border-[#381E50]">23</td>
-              <td className="border border-[#381E50]">In-Progress</td>
+              <td className="border border-[#381E50]">YES</td>
+              <td className="border border-[#381E50]">YES</td>
+              <td className="border border-[#381E50]">NO</td>
+              <td className="border border-[#381E50]">
+                Went straight to voicebox.
+              </td>
               <td className="pt-[4px]">
                 <input
                   type="checkbox"
@@ -69,14 +63,14 @@ const Campaign = () => {
             </tr>
             <tr className="border border-[#381E50]">
               <td className="border border-[#381E50]">CK323</td>
-              <td className="border border-[#381E50]">Real-Estate-UK</td>
+              <td className="border border-[#381E50]">9837441234</td>
               <td className="border border-[#381E50]">12.04.2023</td>
-              <td className="border border-[#381E50]">3280</td>
-              <td className="border border-[#381E50]">1620</td>
-              <td className="border border-[#381E50]">800</td>
-
-              <td className="border border-[#381E50]">23</td>
-              <td className="border border-[#381E50]">In-Progress</td>
+              <td className="border border-[#381E50]">YES</td>
+              <td className="border border-[#381E50]">YES</td>
+              <td className="border border-[#381E50]">NO</td>
+              <td className="border border-[#381E50]">
+                Went straight to voicebox.
+              </td>
               <td className="pt-[4px]">
                 <input
                   type="checkbox"
@@ -89,14 +83,14 @@ const Campaign = () => {
             </tr>
             <tr className="border border-[#381E50]">
               <td className="border border-[#381E50]">CK323</td>
-              <td className="border border-[#381E50]">Real-Estate-UK</td>
+              <td className="border border-[#381E50]">9837441234</td>
               <td className="border border-[#381E50]">12.04.2023</td>
-              <td className="border border-[#381E50]">3280</td>
-              <td className="border border-[#381E50]">1620</td>
-              <td className="border border-[#381E50]">800</td>
-
-              <td className="border border-[#381E50]">23</td>
-              <td className="border border-[#381E50]">In-Progress</td>
+              <td className="border border-[#381E50]">YES</td>
+              <td className="border border-[#381E50]">YES</td>
+              <td className="border border-[#381E50]">NO</td>
+              <td className="border border-[#381E50]">
+                Went straight to voicebox.
+              </td>
               <td className="pt-[4px]">
                 <input
                   type="checkbox"
@@ -114,4 +108,4 @@ const Campaign = () => {
   );
 };
 
-export default Campaign;
+export default EditCampTable;

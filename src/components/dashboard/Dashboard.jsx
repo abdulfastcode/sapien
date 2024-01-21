@@ -12,11 +12,11 @@ const Dashbord = () => {
 
   useEffect(() => {
     if (user) {
-      console.log("user not null", user);
+      // console.log("user not null", user);
 
       navigate("/dashboard/agent");
     } else {
-      console.log("user null", user);
+      // console.log("user null", user);
       navigate("/");
     }
   }, []);

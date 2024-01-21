@@ -1,8 +1,13 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Filter = () => {
+  // let { create } = props;
+  // console.log(create);
+  // console.log("useLocation", useLocation());
   const { pathname } = useLocation();
+  let finalPathName = pathname.split("/").pop();
+  // console.log(finalPathName);
   return (
     <div className="w-full flex px-[24px] py-[29px] items-center flex-wrap gap-[20px] justify-between border border-b-[#381E50]">
       <div className="flex gap-[20px] sm:gap-[35px] flex-wrap items-center ">
@@ -44,12 +49,11 @@ const Filter = () => {
         </div>
       </div>
       <div>
-        <button
-          className=" py-[3px] px-[25px] items-center bg-[#381E50] text-white text-md
-font-bold"
-        >
-          Create
-        </button>
+        <Link to={`/dashboard/${finalPathName}/create`}>
+          <button className=" py-[3px] px-[25px] items-center bg-[#381E50] text-white text-md font-bold">
+            Create
+          </button>
+        </Link>
       </div>
     </div>
   );
