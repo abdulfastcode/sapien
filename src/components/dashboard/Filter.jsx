@@ -29,7 +29,7 @@ const Filter = () => {
               <select
                 className="border-2 pb-[1px] border-[#381E50] text-[#381e50a9] py-[1px] px-[15px] cursor-pointer "
                 type=""
-                value="Clear Filters"
+              
               >
                 <option value="">In-progress</option>
                 <option value="">Completed</option>

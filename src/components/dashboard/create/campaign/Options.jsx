@@ -27,11 +27,9 @@ const Options = () => {
         <div className="flex justify-between sm:gap-[100px]">
           <div>Audiences</div>
           <div>
-            <input
-              type="text"
-              placeholder="3 Selected"
-              className="border px-[6px] border-black w-[210px]"
-            />
+            <select className="border px-[6px] border-black w-[210px]" name="" id="">
+                <option  value="">3 Selected</option>
+            </select>
           </div>
         </div>
         <div className="flex justify-between sm:gap-[100px]">

@@ -4,7 +4,7 @@ import Options from "./Options";
 import EditCampTable from "./EditCampTable";
 
 const CreateCampaign = () => {
-  return <div className="w-full">
+  return <div className="w-full ">
     
     <EditCamp/>
     <Options/>
