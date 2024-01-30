@@ -1,15 +1,19 @@
-// import React from "react";
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Action from "./Action";
 import Filter from "./Filter";
 import { agentData } from "../../utils/dashbordTablesData/agent";
-import { isDraft } from "@reduxjs/toolkit";
 import DashboardTable from "./table/DashboardTable";
 import { useMaxHeaderValues } from "../../utils/cus-hooks/useMaxHeaderValues";
+import { useDispatch } from "react-redux";
+import { addDataTable } from "../../utils/dashboardSlice";
 const Agent = () => {
   // console.log("agentData", agentData);
-  const [tableData, setTableData] = useState(agentData);
+  const [tableData] = useState(agentData);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(addDataTable(agentData));
+  }, []);
 
   let maxTableHeaders = useMaxHeaderValues(tableData);
 

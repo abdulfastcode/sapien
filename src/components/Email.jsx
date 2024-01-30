@@ -10,7 +10,7 @@ const Email = () => {
   const [email, setEmail] = useState("");
   const [validEmail, setValidEmail] = useState();
   const [inputFocus, setInputFocus] = useState(false);
-
+ 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   console.log(user);
