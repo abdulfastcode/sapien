@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addCheckboxState, addDataTable } from "../../../utils/dashboardSlice";
+import {
+  addCheckboxState,
+  addDataTable,
+} from "../../../utils/slices/dashboardSlice";
 // import React from 'react'
 
 const DashboardTable = ({ maxTableHeaders }) => {
@@ -8,17 +11,21 @@ const DashboardTable = ({ maxTableHeaders }) => {
   let dashboadTable = useSelector((state) => state.dashboard.table);
   let checkState = useSelector((state) => state.dashboard.checkBox);
   let dispatch = useDispatch();
-  const allIds = dashboadTable?.map((e) => e.id);
+  const allIds = dashboadTable?.map((e) => e.audience_id);
 
-  console.log(checkState);
+  // console.log(allIds)
+  // console.log(maxTableHeaders);
+  // console.log(dashboadTable);
 
-  console.log(allIds?.length === check.length);
+
+  // console.log(allIds?.length === check.length);
+  // console.log(maxTableHeaders?"hello":"no data");
 
   useEffect(() => {
     dispatch(addCheckboxState(check));
   }, [check]);
 
-  console.log(allIds?.length, " ", checkState?.length);
+  // console.log(allIds?.length, " ", checkState?.length);
   function checkedHandler(e) {
     let isChecked = e.target.checked;
     let value = e.target.value;
@@ -44,43 +51,49 @@ const DashboardTable = ({ maxTableHeaders }) => {
     <div className="overflow-auto">
       <table className="w-full table-auto ">
         <thead className="items-center border border-[#381E50]">
-          <tr>
-            {maxTableHeaders.map((e, i) => {
-              return (
-                <th
-                  className="text-base border border-[#381E50] font-bold  text-[#381E50]"
-                  key={i}
-                >
-                  {e.charAt(0).toUpperCase() + e.slice(1)}
-                </th>
-              );
-            })}
+          {maxTableHeaders ? (
+            <tr>
+              {maxTableHeaders.map((e, i) => {
+                return (
+                  <th
+                    className="text-base border border-[#381E50] font-bold  text-[#381E50]"
+                    key={i}
+                  >
+                    {e.charAt(0).toUpperCase() + e.slice(1)}
+                  </th>
+                );
+              })}
 
-            <th key={maxTableHeaders?.length} className="pt-[3px]">
-              <input
-                type="checkbox"
-                name=""
-                id=""
-                value=""
-                checked={
-                  dashboadTable !== null
-                    ? checkState?.length === dashboadTable?.length
-                      ? dashboadTable.map(
-                          (e) =>
-                            checkState.includes(e.id) &&
-                            checkState?.length === dashboadTable?.length
-                        )
+              <th key={maxTableHeaders?.length} className="pt-[3px]">
+                <input
+                  type="checkbox"
+                  name=""
+                  id=""
+                  value=""
+                  checked={
+                    dashboadTable !== null
+                      ? checkState?.length === dashboadTable?.length
+                        ? dashboadTable.map(
+                            (e) =>
+                              checkState.includes(e.audience_id) &&
+                              checkState?.length === dashboadTable?.length
+                          )
+                        : false
                       : false
-                    : false
-                }
-                onChange={checkAllHandler}
-                className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-              />
-            </th>
-          </tr>
+                  }
+                  onChange={checkAllHandler}
+                  className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                />
+              </th>
+            </tr>
+          ) : (
+            <tr>
+              <th>No-data</th>
+            </tr>
+          )}
         </thead>
-        <tbody key={1} className="text-center border border-[#381E50]">
-          {dashboadTable === null ? (
+        <tbody  className="text-center border border-[#381E50]">
+          {dashboadTable === null || maxTableHeaders === undefined ? (
             <tr>
               <td>No-data</td>
             </tr>
@@ -102,8 +115,8 @@ const DashboardTable = ({ maxTableHeaders }) => {
                     <input
                       type="checkbox"
                       name=""
-                      value={e.id}
-                      checked={check.includes(e.id)}
+                      value={e.audience_id}
+                      checked={check.includes(e.audience_id)}
                       onChange={checkedHandler}
                       className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                     />

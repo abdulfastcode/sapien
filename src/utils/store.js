@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userSlice from "./userSlice";
-import dashboardSlice from "./dashboardSlice";
+import dashboardSlice from "./slices/dashboardSlice";
+import fileSlice from "./slices/fileSlice";
 
 const store = configureStore({
     reducer: {
         user: userSlice,
-        dashboard: dashboardSlice
+        dashboard: dashboardSlice,
+        fileLoader: fileSlice
     }
 })
 

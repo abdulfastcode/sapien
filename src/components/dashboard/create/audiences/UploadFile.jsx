@@ -1,6 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  uploadCsvFile,
+  uploadJsonFile,
+  uploadXlsxFile,
+} from "../../../../utils/slices/fileSlice";
+import useFileDataExtractor from "../../../../utils/cus-hooks/useFileDataExtractor";
 
 const UploadFile = () => {
+  const [jsonData, setJsonData] = useState(null);
+  const [csvData, setCsvData] = useState(null);
+  const [xlsxData, setXlsxData] = useState(null);
+  let dispatch = useDispatch();
+  let jsonFileData = useSelector((state) => state.fileLoader.json);
+    console.log(jsonFileData);
+
+  async function handleFileChange(e) {
+    const selectedFile = e.target.files[0];
+
+    if (selectedFile) {
+      const fileName = selectedFile.name;
+      const fileExtension = fileName.split(".").pop().toLowerCase();
+
+      let res = await useFileDataExtractor(fileExtension, selectedFile);
+      console.log(res);
+      if (res.json) setJsonData([res.json]);
+      if (res.csv) setCsvData([res.csv]);
+      if (res.xlsx) setXlsxData([res.xlsx]);
+    }
+  }
+  useEffect(() => {
+    console.log(jsonData)
+    dispatch(uploadJsonFile(jsonData));
+    dispatch(uploadCsvFile(csvData));
+    dispatch(uploadXlsxFile(xlsxData));
+    
+  }, [jsonData, csvData, xlsxData]);
+
   return (
     <div className="px-[24px] py-[29px] ">
       <div className="flex gap-[40px] sm:gap-[50px] pb-[30px]">
@@ -36,7 +72,13 @@ const UploadFile = () => {
               CSV,XLSX,JSON
             </p>
           </div>
-          <input id="dropzone-file" type="file" className="hidden" />
+          <input
+            id="dropzone-file"
+            type="file"
+            className="hidden"
+            accept=".csv, .xlsx, .json, .png"
+            onChange={handleFileChange}
+          />
         </label>
       </div>
     </div>

@@ -5,7 +5,7 @@ import { agentData } from "../../utils/dashbordTablesData/agent";
 import DashboardTable from "./table/DashboardTable";
 import { useMaxHeaderValues } from "../../utils/cus-hooks/useMaxHeaderValues";
 import { useDispatch } from "react-redux";
-import { addDataTable } from "../../utils/dashboardSlice";
+import { addDataTable } from "../../utils/slices/dashboardSlice";
 const Agent = () => {
   // console.log("agentData", agentData);
   const [tableData] = useState(agentData);
