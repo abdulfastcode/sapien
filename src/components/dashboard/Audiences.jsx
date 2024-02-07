@@ -20,7 +20,7 @@ const Audiences = () => {
         "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYWJkdWwifQ.QRyeI86pVtG8vJuQCWM-l0mAbC6IAUrp8ppcD7gzHBc",
     };
     fetch("http://3.6.158.162:5000/audiences/get_audience_list", {
-      referrerPolicy: "unsafe_url" ,
+      // referrerPolicy: "unsafe_url" ,
       headers,
     })
       .then((response) => response.json())
