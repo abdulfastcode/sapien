@@ -21,11 +21,11 @@ const LeftNavBar = () => {
         </div>
       </Link>
 
-      <Link to="dashboard/audiences">
+      <Link to="dashboard/audience">
         <div
           className={` ${
-            pathname === "/dashboard/audiences" ||
-            pathname === "/dashboard/audiences/create"
+            pathname === "/dashboard/audience" ||
+            pathname === "/dashboard/audience/create"
               ? "bg-[#381E50] text-white"
               : "text-[#381E50] bg-white"
           } text-base font-bold text-center py-[19px] px-[9px] leading-tight tracking-tight`}

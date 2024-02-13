@@ -4,49 +4,87 @@ import {
   addCheckboxState,
   addDataTable,
 } from "../../../utils/slices/dashboardSlice";
+import { useLocation } from "react-router-dom";
 // import React from 'react'
 
-const DashboardTable = ({ maxTableHeaders }) => {
+const DashboardTable = ({ tableData, setData, maxTableHeaders }) => {
+  // console.log("comp mount from DashboardTable");
+
+  const { pathname } = useLocation();
   const [check, setCheck] = useState([]);
-  let dashboadTable = useSelector((state) => state.dashboard.table);
+  // let dashboadTable = useSelector((state) => state.dashboard.table);
   let checkState = useSelector((state) => state.dashboard.checkBox);
-  let dispatch = useDispatch();
-  const allIds = dashboadTable?.map((e) => e.audience_id);
+  // let dispatch = useDispatch();
 
-  // console.log(allIds)
-  // console.log(maxTableHeaders);
-  // console.log(dashboadTable);
+  const path = pathname.split("/").pop();
+  const allIds = tableData?.map((e) => {
+    return e[`${path}_id`];
+  });
 
-
-  // console.log(allIds?.length === check.length);
-  // console.log(maxTableHeaders?"hello":"no data");
-
+  console.log(tableData);
   useEffect(() => {
-    dispatch(addCheckboxState(check));
+    // dispatch(addCheckboxState([1, 2]));
+    // console.log("dashboard useEfect");
+    // return () => {
+    //   // console.log("comp unmount from das");
+    //   // dispatch(addCheckboxState(null));
+    // };
+    // setData([
+    //   {
+    //     agent_id: "2",
+    //     created_on: "2024-02-07 13:47:22.697171",
+    //     name: "sudarshan-test-2",
+    //     voice: "test_voice",
+    //     isChecked: true,
+    //   },
+    //   {
+    //     agent_id: "3",
+    //     created_on: "2024-02-07 13:47:22.697171",
+    //     name: "sudarshan-test-2",
+    //     voice: "test_voice",
+    //     isChecked: true,
+    //   },
+    // ]);
   }, [check]);
+  console.log(check);
 
-  // console.log(allIds?.length, " ", checkState?.length);
   function checkedHandler(e) {
-    let isChecked = e.target.checked;
-    let value = e.target.value;
-    // console.log([ value]);
-    if (isChecked) {
-      setCheck([...check, value]);
+    let checked = e.target.checked;
+    // let value = e.target.value;
+    let name = e.target.name;
+    console.log("name", name);
+
+    // if (checked) {
+    //   setCheck([...check, value]);
+    // } else {
+    //   setCheck(check.filter((e) => e !== value));
+    // }
+
+    if (name === "allselect") {
+      const checkedValue = tableData.map((data) => {
+        return { ...data, isChecked: checked };
+      });
+      console.log(checkedValue);
+      setData(checkedValue);
     } else {
-      setCheck(check.filter((e) => e !== value));
+      const checkedValue = tableData.map((data) =>
+        data[`${path}_id`] === name ? { ...data, isChecked: checked } : data
+      );
+      console.log(checkedValue);
+      setData(checkedValue);
     }
   }
 
-  function checkAllHandler(e) {
-    let isChecked = e.target.checked;
-    if (isChecked) {
-      setCheck(allIds);
-    } else {
-      setCheck([]);
-    }
-  }
-  // console.log(check);
-
+  // function checkAllHandler(e) {
+  //   let isChecked = e.target.checked;
+  //   if (isChecked) {
+  //     setCheck(allIds);
+  //   } else {
+  //     setCheck([]);
+  //   }
+  // }
+  // console.log(setData);
+  // console.log(setData);
   return (
     <div className="overflow-auto">
       <table className="w-full table-auto ">
@@ -67,38 +105,28 @@ const DashboardTable = ({ maxTableHeaders }) => {
               <th key={maxTableHeaders?.length} className="pt-[3px]">
                 <input
                   type="checkbox"
-                  name=""
+                  name="allselect"
                   id=""
                   value=""
-                  checked={
-                    dashboadTable !== null
-                      ? checkState?.length === dashboadTable?.length
-                        ? dashboadTable.map(
-                            (e) =>
-                              checkState.includes(e.audience_id) &&
-                              checkState?.length === dashboadTable?.length
-                          )
-                        : false
-                      : false
-                  }
-                  onChange={checkAllHandler}
+                  checked={!tableData.some((data)=>data?.isChecked!==true)}
+                  onChange={checkedHandler}
                   className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 />
               </th>
             </tr>
           ) : (
             <tr>
-              <th>No-data</th>
+              <th>Loading...</th>
             </tr>
           )}
         </thead>
-        <tbody  className="text-center border border-[#381E50]">
-          {dashboadTable === null || maxTableHeaders === undefined ? (
+        <tbody className="text-center border border-[#381E50]">
+          {tableData === null || maxTableHeaders === undefined ? (
             <tr>
-              <td>No-data</td>
+              <td>Loading...</td>
             </tr>
           ) : (
-            dashboadTable.map((e, i) => {
+            tableData.map((e, i) => {
               return (
                 <tr key={e.id} className="border border-[#381E50]">
                   {maxTableHeaders.map((header) => {
@@ -114,9 +142,10 @@ const DashboardTable = ({ maxTableHeaders }) => {
                   <td key={`${i}-checkbox`} className="pt-[4px]">
                     <input
                       type="checkbox"
-                      name=""
-                      value={e.audience_id}
-                      checked={check.includes(e.audience_id)}
+                      name={e[`${path}_id`]}
+                      value={e[`${path}_id`]}
+                      // checked={check.includes(e[`${path}_id`])}
+                      checked={e?.isChecked || false}
                       onChange={checkedHandler}
                       className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                     />

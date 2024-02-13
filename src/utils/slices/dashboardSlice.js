@@ -4,7 +4,7 @@ let dashboardSlice = createSlice({
     name: 'dashboardTable',
     initialState: {
         table: null,
-        checkBox: null
+        checkBox: []
     },
     reducers: {
         addDataTable: (state, action) => {
@@ -20,7 +20,7 @@ let dashboardSlice = createSlice({
             // console.log(state.checkBox)
             // return state.table.filter(e => e.id !== '1')
 
-
+ 
         }
     }
 })

@@ -39,7 +39,7 @@ const router = createBrowserRouter([
         element: <Agent />,
       },
       {
-        path: "/dashboard/audiences",
+        path: "/dashboard/audience",
         element: <Audiences />,
       },
       {
@@ -55,7 +55,7 @@ const router = createBrowserRouter([
         element: <CreateAgent />,
       },
       {
-        path: "/dashboard/audiences/create",
+        path: "/dashboard/audience/create",
         element: <CreateAudience />,
       },
     ],

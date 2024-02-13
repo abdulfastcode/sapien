@@ -1,29 +1,72 @@
 import { useEffect, useState } from "react";
 import Action from "./Action";
 import Filter from "./Filter";
-import { agentData } from "../../utils/dashbordTablesData/agent";
+// import { agentData } from "../../utils/dashbordTablesData/agent";
 import DashboardTable from "./table/DashboardTable";
 import { useMaxHeaderValues } from "../../utils/cus-hooks/useMaxHeaderValues";
-import { useDispatch } from "react-redux";
-import { addDataTable } from "../../utils/slices/dashboardSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addCheckboxState,
+  addDataTable,
+} from "../../utils/slices/dashboardSlice";
+import { baseUrl, headers } from "../../utils/baseUrl";
+
 const Agent = () => {
   // console.log("agentData", agentData);
-  const [tableData] = useState(agentData);
+  // console.log("comp mount from main agent");
 
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(addDataTable(agentData));
-  }, []);
+  // const dispatch = useDispatch();
+  const [updateComp, setUpdateComp] = useState(false);
+  let [tableData, setTableData] = useState([]);
+
+  // let checkbox = useSelector((state) => state.dashboard.checkBox);
+  // if (checkbox.length > 0 || checkbox === null) {
+  //   dispatch(addCheckboxState([]));
+  // }
+  useEffect(() => { 
+    // console.log("agent useEffect")
+
+    fetch(`${baseUrl}/agents/get_agent_list`, {
+      headers,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setTableData(data);
+        // dispatch(addDataTable(data));
+      });
+
+    
+  }, [updateComp]);
+  // console.log(tableData);
 
   let maxTableHeaders = useMaxHeaderValues(tableData);
-
+  maxTableHeaders?.sort();
+  console.log("maxTableHeaders", maxTableHeaders);
+  // console.log("newTableHeader", newTableHeader);
   // getmaxHeaderValues()
+
+  function setData(val) {
+    console.log("val", val);
+    setTableData(val);
+    // console.log(selectedData)
+  }
+
+  function renderParentComponent(stateFromChild) {
+    setUpdateComp(stateFromChild);
+  }
 
   return (
     <div className="w-full">
       <Filter />
-      <Action />
-      <DashboardTable tableData={tableData} maxTableHeaders={maxTableHeaders} />
+      <Action
+        renderParentComponent={renderParentComponent}
+        selectedData={tableData}
+      />
+      <DashboardTable
+        tableData={tableData}
+        setData={setData}
+        maxTableHeaders={maxTableHeaders}
+      />
     </div>
   );
 };

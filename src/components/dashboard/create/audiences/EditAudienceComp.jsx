@@ -15,7 +15,7 @@ const EditAudienceComp = () => {
             Save
           </button>
 
-          <Link to={`/dashboard/audiences`}>
+          <Link to={`/dashboard/audience`}>
             <button className=" py-[3px]  items-center text-[#381E50]  text-md font-bold">
               X
             </button>

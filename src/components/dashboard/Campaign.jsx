@@ -6,21 +6,51 @@ import Filter from "./Filter";
 import DashboardTable from "./table/DashboardTable";
 import { campaignData } from "../../utils/dashbordTablesData/campaign";
 import { useMaxHeaderValues } from "../../utils/cus-hooks/useMaxHeaderValues";
-import { useDispatch } from "react-redux";
-import { addDataTable } from "../../utils/slices/dashboardSlice";
+import { baseUrl, headers } from "../../utils/baseUrl";
+
+// import { useDispatch } from "react-redux";
+// import { addDataTable } from "../../utils/slices/dashboardSlice";
 
 const Campaign = () => {
-  let [tableData] = useState(campaignData);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+  // let [tableData] = useState(campaignData);
+  const [updateComp, setUpdateComp] = useState(false);
+  let [tableData, setTableData] = useState([]);
   useEffect(() => {
-    dispatch(addDataTable(campaignData));
-  }, []);
+    // dispatch(addDataTable(campaignData));
+    fetch(`${baseUrl}/campaigns/get_campaigns_list`, {
+      headers,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setTableData(data);
+        // dispatch(addDataTable(data));
+      });
+  }, [updateComp]);
   let maxTableHeaders = useMaxHeaderValues(tableData);
+  maxTableHeaders?.sort();
+
+  function setData(val) {
+    console.log("val", val);
+    setTableData(val);
+  }
+
+  function renderParentComponent(stateFromChild) {
+    setUpdateComp(stateFromChild);
+  }
+
   return (
     <div className="w-full">
       <Filter />
-      <Action />
-      <DashboardTable tableData={tableData} maxTableHeaders={maxTableHeaders} />
+      <Action
+        renderParentComponent={renderParentComponent}
+        selectedData={tableData}
+      />
+      <DashboardTable
+        tableData={tableData}
+        setData={setData}
+        maxTableHeaders={maxTableHeaders}
+      />
     </div>
   );
 };
