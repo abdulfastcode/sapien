@@ -195,7 +195,7 @@ const SelectOpt = ({
         </div>
       </div>
       {showCustConversion && (
-        <div className="w-full h-full flex items-center justify-center bg-[#878b9266] overflow-y-auto overflow-x-hidden fixed top-0 right-0 ">
+        <div className="w-full h-full flex items-center justify-center bg-[#878b9266] overflow-y-auto overflow-x-hidden fixed top-0 right-0 z-20">
           <div className="p-[20px] bg-white left-0 z-50 justify-center items-center w-[95%] sm:w-[70%] md:w-[50%] md:inset-0 ">
             {/* HEADER - CONTROLS */}
             <div className="flex items-center justify-between">
