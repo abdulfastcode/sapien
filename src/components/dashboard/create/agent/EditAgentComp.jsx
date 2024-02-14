@@ -42,7 +42,7 @@ const EditAgentComp = () => {
                 ? "Agent Name"
                 : optionsState?.name}
             </div>
-          </div>
+          </div> 
         </div>
         <div className="flex items-center gap-[15px]">
           <button
