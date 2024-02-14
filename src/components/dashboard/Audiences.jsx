@@ -44,7 +44,7 @@ const Audiences = () => {
   let maxTableHeaders = useMaxHeaderValues(tableData);
   maxTableHeaders?.sort();
   function setData(val) {
-    console.log("val", val);
+    // console.log("val", val);
     setTableData(val);
     // console.log(selectedData)
   }

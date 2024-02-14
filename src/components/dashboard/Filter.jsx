@@ -20,8 +20,8 @@ const Filter = ({ selectedData }) => {
     })
     .filter(Boolean);
   const checkIdsWithParams = idsSelectedData?.join(`&${finalPathName}_id=`);
-  console.log(checkIdsWithParams);
-  console.log("idsSelectedDataFltr", idsSelectedData);
+  // console.log(checkIdsWithParams);
+  // console.log("idsSelectedDataFltr", idsSelectedData);
 
   return (
     <div className="w-full flex px-[24px] py-[29px] items-center flex-wrap gap-[20px] justify-between border border-b-[#381E50]">

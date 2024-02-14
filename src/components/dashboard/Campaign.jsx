@@ -31,7 +31,7 @@ const Campaign = () => {
   // maxTableHeaders?.sort();
 
   function setData(val) {
-    console.log("val", val);
+    // console.log("val", val);
     setTableData(val);
   }
 

@@ -97,7 +97,7 @@ const Options = ({ indvQuery, campaignData }) => {
             />
           </div>
         </div>
-        <div className="flex justify-between sm:gap-[100px]">
+        <div className="flex justify-between sm:gap-[100px]"> 
           <div>Audiences</div>
           <div>
             <MultiSelect

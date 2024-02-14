@@ -12,8 +12,8 @@ import { baseUrl, headers } from "../../utils/baseUrl";
 import { useLocation } from "react-router-dom";
 
 const Action = ({ selectedData, renderParentComponent }) => {
-  console.log("comp mount from action");
-  console.log(selectedData);
+  // console.log("comp mount from action");
+  // console.log(selectedData);
   // function extractIds(arr) {
   //   const ids = [];
   //   arr.forEach((obj) => {
@@ -34,15 +34,15 @@ const Action = ({ selectedData, renderParentComponent }) => {
       }
     })
     .filter(Boolean);
-  console.log("idsSelectedData", idsSelectedData);
+  // console.log("idsSelectedData", idsSelectedData);
   const { pathname } = useLocation();
   // let checkbox = useSelector((state) => state.dashboard.checkBox);
   const [downloadItems, setDownloadItems] = useState([]);
   // console.log("pathname", pathname.split("/").pop());
   const path = pathname.split("/").pop();
-  console.log("path", path);
+  // console.log("path", path);
   const checkIdsWithParams = idsSelectedData?.join(`&${path}_id=`);
-  console.log(checkIdsWithParams);
+  // console.log(checkIdsWithParams);
   // let dispatch = useDispatch();
   function deleteHandler() {
     console.log(
@@ -94,11 +94,11 @@ const Action = ({ selectedData, renderParentComponent }) => {
       setDownloadItems([]); // Reset download items if checkbox is empty
     }
     return () => {
-      console.log("comp unmount from action");
+      // console.log("comp unmount from action");
     };
   }, [path, checkIdsWithParams]);
   // console.log("downloadItems->", downloadItems);
-  console.log(downloadItems);
+  // console.log(downloadItems);
 
   return (
     <div className="w-full flex px-[24px] py-[20px] h-[20px] items-center justify-between ]">

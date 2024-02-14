@@ -41,12 +41,12 @@ const Agent = () => {
 
   let maxTableHeaders = useMaxHeaderValues(tableData);
   maxTableHeaders?.sort();
-  console.log("maxTableHeaders", maxTableHeaders);
+  // console.log("maxTableHeaders", maxTableHeaders);
   // console.log("newTableHeader", newTableHeader);
   // getmaxHeaderValues()
 
   function setData(val) {
-    console.log("val", val);
+    // console.log("val", val);
     setTableData(val);
     // console.log(selectedData)
   }

@@ -8,7 +8,7 @@ import createcampaignOptionsSlice from "./slices/createcampaignOptionsSlice";
 const store = configureStore({
     reducer: {
         user: userSlice,
-        dashboard: dashboardSlice,
+        dashboard: dashboardSlice, 
         fileLoader: fileSlice,
         createAgentOptions: createAgentOptionsSlice,
         createCampaignOptions: createcampaignOptionsSlice

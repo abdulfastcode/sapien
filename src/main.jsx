@@ -14,6 +14,7 @@ import Campaign from "./components/dashboard/Campaign.jsx";
 import CreateCampaign from "./components/dashboard/create/campaign/CreateCampaign.jsx";
 import CreateAgent from "./components/dashboard/create/agent/CreateAgent.jsx";
 import CreateAudience from "./components/dashboard/create/audiences/CreateAudience.jsx";
+import CreateAudienceTable from "./components/dashboard/create/audiences/CreateAudienceTable.jsx";
 
 const router = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/audience/create",
         element: <CreateAudience />,
+      },
+      {
+        path: "/dashboard/audience/create/create=json",
+        element: <CreateAudienceTable/>
       },
     ],
   },

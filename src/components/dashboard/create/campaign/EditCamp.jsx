@@ -50,7 +50,7 @@ const EditCamp = ({ indvQuery, campaignData }) => {
             {checkQueryAndCampData && (
               <>
                 <div>{campaignData[0]?.created_on}</div>
-                <div>
+                <div> 
                   <img src={reloadIcon} alt="" />
                 </div>
               </>

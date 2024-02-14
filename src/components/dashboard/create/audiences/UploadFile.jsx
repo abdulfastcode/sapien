@@ -6,6 +6,7 @@ import {
   uploadXlsxFile,
 } from "../../../../utils/slices/fileSlice";
 import useFileDataExtractor from "../../../../utils/cus-hooks/useFileDataExtractor";
+import { useNavigate } from "react-router-dom";
 
 const UploadFile = () => {
   const [jsonData, setJsonData] = useState(null);
@@ -13,7 +14,8 @@ const UploadFile = () => {
   const [xlsxData, setXlsxData] = useState(null);
   let dispatch = useDispatch();
   let jsonFileData = useSelector((state) => state.fileLoader.json);
-    console.log(jsonFileData);
+  console.log(jsonFileData);
+  const navigate = useNavigate();
 
   async function handleFileChange(e) {
     const selectedFile = e.target.files[0];
@@ -24,17 +26,24 @@ const UploadFile = () => {
 
       let res = await useFileDataExtractor(fileExtension, selectedFile);
       console.log(res);
-      if (res.json) setJsonData([res.json]);
-      if (res.csv) setCsvData([res.csv]);
+      if (res.json) {
+        console.log(res.json);
+        setJsonData(res.json);
+        dispatch(uploadJsonFile([res.json]));
+        navigate("/dashboard/audience/create/create=json");
+      }
+      if (res.csv) {
+        console.log("object", res.csv);
+        setCsvData(res.csv);
+      }
       if (res.xlsx) setXlsxData([res.xlsx]);
     }
   }
   useEffect(() => {
-    console.log(jsonData)
-    dispatch(uploadJsonFile(jsonData));
+    console.log(jsonData);
+    console.log(csvData);
     dispatch(uploadCsvFile(csvData));
     dispatch(uploadXlsxFile(xlsxData));
-    
   }, [jsonData, csvData, xlsxData]);
 
   return (

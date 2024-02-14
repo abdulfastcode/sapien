@@ -152,7 +152,7 @@ const DashboardTable = ({ tableData, setData, maxTableHeaders }) => {
             tableData.map((e, i) => {
               return (
                 <tr
-                  key={e[`${path}_id`]}
+                  key={e[`${path}_id`]||i}
                   onClick={checkedHandler}
                   name={e[`${path}_id`]}
                   // id={e?.isChecked || false}

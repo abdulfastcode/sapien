@@ -25,7 +25,8 @@ const LeftNavBar = () => {
         <div
           className={` ${
             pathname === "/dashboard/audience" ||
-            pathname === "/dashboard/audience/create"
+            pathname === "/dashboard/audience/create"||
+            pathname === "/dashboard/audience/create/create=json"
               ? "bg-[#381E50] text-white"
               : "text-[#381E50] bg-white"
           } text-base font-bold text-center py-[19px] px-[9px] leading-tight tracking-tight`}
