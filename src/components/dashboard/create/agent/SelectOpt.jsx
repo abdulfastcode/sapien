@@ -14,16 +14,21 @@ const SelectOpt = ({
   sendSelectedVal,
 }) => {
   const [dropDown, setDropDown] = useState(false);
-  //   console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@options", options);
+  // console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@options", options);
   // States for Edit And Create Conversion
   const [showCustConversion, setShowCustConversion] = useState(false);
   const [createConversion, setCreateConversion] = useState(false);
   const [editConversion, setEditConversion] = useState(false);
+
   const [selectedVal, setSelecedVal] = useState({
     name: options[0]?.name || options[0]?.full_phone,
     id:
-      options[0]?.conversion_id || options[0]?.voice_id || options[0]?.phone_id,
+      options[0]?.conversion_id ||
+      options[0]?.voice_id ||
+      options[0]?.phone_id ||
+      options[0]?.agent_id,
   });
+
   const [createConversionOptions, setCreateConversionOptions] = useState({
     name: "",
     description: "",
@@ -46,6 +51,7 @@ const SelectOpt = ({
   useEffect(() => {
     // console.log("selectedVal", selectedVal);
     sendSelectedVal(selectedVal);
+    setDropDown(false);
   }, [selectedVal]);
 
   async function saveUserOptions(url, method, body) {
@@ -130,11 +136,12 @@ const SelectOpt = ({
       saveUserOptions("update_conversion", "PUT", editConversionOptions);
     }
   }
+
   return (
-    <div className="relative group">
+    <div className={`relative ${dropDown === false ? "group" : ""}`}>
       <div
         onClick={() => setDropDown(!dropDown)}
-        className={`border border-[#381E50] cursor-pointer w-[${width.w}] sm:w-[${width.sm}] md:w-[${width.md}] lg:[${width.lg}] h-[26px] flex justify-between items-center px-1`}
+        className={`border select-none border-[#381E50] cursor-pointer w-[${width.w}] sm:w-[${width.sm}] md:w-[${width.md}] lg:[${width.lg}] h-[26px] flex justify-between items-center px-1`}
       >
         <div>{selectedVal.name ? selectedVal.name : defaultOption}</div>
         <div>
@@ -143,47 +150,53 @@ const SelectOpt = ({
       </div>
 
       <div
-        className={`w-full hidden group-hover:block absolute top-0 cursor-pointer z-10  border border-[#381E50] bg-white`}
+        className={`w-full hidden select-none group-hover:block absolute top-0 cursor-pointer z-10  border border-[#381E50] bg-white`}
       >
         {options.map((e, i) => {
           return (
-            <>
-              <div
-                onClick={() => {
-                  setSelecedVal({
-                    name: e?.name || e?.full_phone,
-                    id: e?.conversion_id || e?.voice_id || e?.phone_id,
-                  });
-                  setEditConversionOptions({
-                    ...editConversionOptions,
-                    name: e?.name,
-                    conversion_id: e?.conversion_id,
-                  });
-                }}
-                key={i}
-                className={` cursor-pointer border-[0.5px] border-b-[#381e5029]  hover:bg-[#d7c9ff] px-1 w-[${optWidth}] sm:w-[${optWidth}] ${
-                  selectedVal.id ===
-                  (e?.conversion_id || e?.voice_id || e?.phone_id)
-                    ? "bg-[#d7c9ff]"
-                    : "bg-white"
-                }`}
-              >
-                {e?.name || e?.full_phone}
-                {editOpt && (
-                  <span
-                    className="text-[10px] pl-[8px] hover:text-blue-700"
-                    onClick={() => {
-                      setEditConversion(true);
-                      setShowCustConversion(true);
-                    }}
-                  >
-                    Edit
-                  </span>
-                )}
-              </div>
-            </>
+            <div
+              key={
+                e?.conversion_id || e?.voice_id || e?.phone_id || e?.agent_id
+              }
+              onClick={() => {
+                setDropDown(true);
+                setSelecedVal({
+                  name: e?.name || e?.full_phone,
+                  id:
+                    e?.conversion_id ||
+                    e?.voice_id ||
+                    e?.phone_id ||
+                    e?.agent_id,
+                });
+                setEditConversionOptions({
+                  ...editConversionOptions,
+                  name: e?.name,
+                  conversion_id: e?.conversion_id,
+                });
+              }}
+              className={`select-none cursor-pointer border-[0.5px] border-b-[#381e5029]  hover:bg-[#d7c9ff] px-1 w-[${optWidth}] sm:w-[${optWidth}] ${
+                selectedVal.id ===
+                (e?.conversion_id || e?.voice_id || e?.phone_id || e?.agent_id)
+                  ? "bg-[#d7c9ff]"
+                  : "bg-white"
+              }`}
+            >
+              {e?.name || e?.full_phone}
+              {editOpt && (
+                <span
+                  className="text-[10px] pl-[8px] hover:text-blue-700"
+                  onClick={() => {
+                    setEditConversion(true);
+                    setShowCustConversion(true);
+                  }}
+                >
+                  Edit
+                </span>
+              )}
+            </div>
           );
         })}
+        {/* CREATE */}
         <div
           className={` cursor-pointer border-[0.5px] border-b-[#381e5029]  hover:bg-[#d7c9ff] px-1 w-[${optWidth}] sm:w-[${optWidth}] `}
           onClick={() => {
@@ -194,6 +207,7 @@ const SelectOpt = ({
           {create}
         </div>
       </div>
+      {/* POP-UP */}
       {showCustConversion && (
         <div className="w-full h-full flex items-center justify-center bg-[#878b9266] overflow-y-auto overflow-x-hidden fixed top-0 right-0 z-20">
           <div className="p-[20px] bg-white left-0 z-50 justify-center items-center w-[95%] sm:w-[70%] md:w-[50%] md:inset-0 ">
@@ -289,7 +303,6 @@ const SelectOpt = ({
                     });
                   }
                   if (createConversion) {
-                  
                     setCreateConversionOptions({
                       ...createConversionOptions,
                       description: e.target.value,

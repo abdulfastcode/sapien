@@ -4,9 +4,9 @@ const EditCampTable = () => {
   return (
     <>
       <div className="w-full h-[40vh] lg:h-[47vh] relative">
-        <div className="overflow-auto h-full w-full relative">
+        <div className="overflow-auto border-t border-t-[#381e50] h-full w-full relative">
           <table className="w-full table-auto border overflow-auto">
-            <thead className="items-center border border-[#381E50] sticky top-0 bg-white drop-shadow-md">
+            <thead className="items-center border-t-0 border border-[#381E50] sticky top-0 bg-white drop-shadow-md">
               <tr>
                 <th className="text-base border border-[#381E50] font-bold  text-[#381E50]">
                   ID

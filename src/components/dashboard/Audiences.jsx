@@ -51,7 +51,7 @@ const Audiences = () => {
 
   return (
     <div className="w-full">
-      <Filter />
+      <Filter selectedData={tableData} />
       <Action selectedData={tableData} />
       <DashboardTable
         tableData={tableData}

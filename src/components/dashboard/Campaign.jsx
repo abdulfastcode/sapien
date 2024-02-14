@@ -28,7 +28,7 @@ const Campaign = () => {
       });
   }, [updateComp]);
   let maxTableHeaders = useMaxHeaderValues(tableData);
-  maxTableHeaders?.sort();
+  // maxTableHeaders?.sort();
 
   function setData(val) {
     console.log("val", val);
@@ -41,7 +41,7 @@ const Campaign = () => {
 
   return (
     <div className="w-full">
-      <Filter />
+      <Filter selectedData={tableData}/>
       <Action
         renderParentComponent={renderParentComponent}
         selectedData={tableData}

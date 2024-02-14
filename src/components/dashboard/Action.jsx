@@ -11,7 +11,7 @@ import { CSVLink } from "react-csv";
 import { baseUrl, headers } from "../../utils/baseUrl";
 import { useLocation } from "react-router-dom";
 
-const Action = ({ selectedData,renderParentComponent }) => {
+const Action = ({ selectedData, renderParentComponent }) => {
   console.log("comp mount from action");
   console.log(selectedData);
   // function extractIds(arr) {
@@ -28,7 +28,7 @@ const Action = ({ selectedData,renderParentComponent }) => {
   let idsSelectedData = selectedData
     .map((obj) => {
       for (const key of Object.keys(obj)) {
-        if (key.includes("id") && obj.isChecked) {
+        if (key.includes("id") && obj.isChecked === true) {
           return obj[key];
         }
       }
@@ -65,6 +65,7 @@ const Action = ({ selectedData,renderParentComponent }) => {
             // query: JSON.stringify({ conversion_id: [id] }),
           }
         );
+        console.log("post", post);
         let res = await post.json();
 
         renderParentComponent(true);

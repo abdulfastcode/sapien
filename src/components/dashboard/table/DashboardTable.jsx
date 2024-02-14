@@ -9,7 +9,7 @@ import { useLocation } from "react-router-dom";
 
 const DashboardTable = ({ tableData, setData, maxTableHeaders }) => {
   // console.log("comp mount from DashboardTable");
-
+  const [checkedTr, setCheckedTr] = useState(true);
   const { pathname } = useLocation();
   const [check, setCheck] = useState([]);
   // let dashboadTable = useSelector((state) => state.dashboard.table);
@@ -49,10 +49,32 @@ const DashboardTable = ({ tableData, setData, maxTableHeaders }) => {
   console.log(check);
 
   function checkedHandler(e) {
-    let checked = e.target.checked;
-    // let value = e.target.value;
     let name = e.target.name;
+    let target = e.target;
+    let checked = e.target.checked;
+    if (!name) {
+      while (target && target.tagName !== "TR") {
+        target = target.parentElement;
+      }
+      if (target) {
+        console.log("checkedTr", checkedTr);
+        setCheckedTr(!checkedTr);
+        console.log("checkedTr", checkedTr);
+        console.log(target);
+        name = target.getAttribute("name");
+        checked = checkedTr;
+    
+        console.log("checkedTr", checkedTr);
+
+        // Use the 'name' value as needed
+        console.log("Clicked row name:", name);
+        console.log("Clicked row checked:", checked);
+      }
+    }
+
+    // let value = e.target.value;
     console.log("name", name);
+    console.log("checked", checked);
 
     // if (checked) {
     //   setCheck([...check, value]);
@@ -67,6 +89,7 @@ const DashboardTable = ({ tableData, setData, maxTableHeaders }) => {
       console.log(checkedValue);
       setData(checkedValue);
     } else {
+      console.log("object name", name);
       const checkedValue = tableData.map((data) =>
         data[`${path}_id`] === name ? { ...data, isChecked: checked } : data
       );
@@ -108,7 +131,7 @@ const DashboardTable = ({ tableData, setData, maxTableHeaders }) => {
                   name="allselect"
                   id=""
                   value=""
-                  checked={!tableData.some((data)=>data?.isChecked!==true)}
+                  checked={!tableData.some((data) => data?.isChecked !== true)}
                   onChange={checkedHandler}
                   className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 />
@@ -128,7 +151,17 @@ const DashboardTable = ({ tableData, setData, maxTableHeaders }) => {
           ) : (
             tableData.map((e, i) => {
               return (
-                <tr key={e.id} className="border border-[#381E50]">
+                <tr
+                  key={e[`${path}_id`]}
+                  onClick={checkedHandler}
+                  name={e[`${path}_id`]}
+                  // id={e?.isChecked || false}
+                  // {...(e?.isChecked !== undefined && { id: e?.isChecked })}
+                  data-checked={e?.isChecked || false}
+                  className={`border ${
+                    e.isChecked ? "bg-[#D7C9FF]" : "bg-white"
+                  } relative z-10 hover:bg-[#D7C9FF] border-[#381E50]`}
+                >
                   {maxTableHeaders.map((header) => {
                     return (
                       <td

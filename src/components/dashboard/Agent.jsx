@@ -57,7 +57,7 @@ const Agent = () => {
 
   return (
     <div className="w-full">
-      <Filter />
+      <Filter selectedData={tableData}/>
       <Action
         renderParentComponent={renderParentComponent}
         selectedData={tableData}
