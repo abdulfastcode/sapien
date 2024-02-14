@@ -105,7 +105,7 @@ const Options = ({ indvQuery, campaignData }) => {
               defaultOption="SELECT AUDIENCES"
               options={audienceList}
               sendSelectedVal={sendSelectedValAudience}
-            />
+            /> 
           </div>
         </div>
         <div className="flex justify-between sm:gap-[100px]">
