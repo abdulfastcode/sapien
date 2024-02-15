@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect,useRef, useState } from "react";
 import downArrow from "../../../../assets/icons/downArrow.svg";
 import deleteIcon from "../../../../assets/icons/deleIcon.svg";
 import { baseUrl } from "../../../../utils/baseUrl";
@@ -136,6 +136,24 @@ const SelectOpt = ({
       saveUserOptions("update_conversion", "PUT", editConversionOptions);
     }
   }
+  const dropdownRef = useRef(null);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropDown(false);
+      }
+    };
+
+    if (dropDown) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropDown]);
 
   return (
     <div className={`relative ${dropDown === false ? "group" : ""}`}>
@@ -150,7 +168,10 @@ const SelectOpt = ({
       </div>
 
       <div
-        className={`w-full hidden select-none group-hover:block absolute top-0 cursor-pointer z-10  border border-[#381E50] bg-white`}
+      ref={dropdownRef}
+        className={`w-full select-none ${
+          dropDown ? "block" : "hidden"
+        } lg:hidden lg:group-hover:block absolute top-0 cursor-pointer z-10  border border-[#381E50] bg-white`}
       >
         {options.map((e, i) => {
           return (
@@ -165,7 +186,7 @@ const SelectOpt = ({
                   id:
                     e?.conversion_id ||
                     e?.voice_id ||
-                    e?.phone_id ||
+                    e?.phone_id || 
                     e?.agent_id,
                 });
                 setEditConversionOptions({

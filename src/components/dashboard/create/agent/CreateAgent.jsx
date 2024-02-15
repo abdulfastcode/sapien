@@ -15,12 +15,17 @@ const CreateAgent = () => {
         setCallScript(data);
       });
   }, []);
+  function changeText(val) {
+    setCallScript({...callScript,script:val});
+    console.log("callScript", callScript);
+  }
+  console.log("callScript", callScript);
   return (
     <div className="w-full">
       <EditAgentComp />
       <div className="flex flex-col lg:flex-row  w-full">
-        <Text callScript={callScript} />
-        <Options  callScript={callScript} />
+        <Text callScript={callScript} changeText={changeText}/>
+        <Options callScript={callScript}  />
       </div>
     </div>
   );

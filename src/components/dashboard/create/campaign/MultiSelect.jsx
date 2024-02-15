@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect,useRef, useState } from "react";
 import downArrow from "../../../../assets/icons/downArrow.svg";
 
 const MultiSelect = ({
@@ -17,6 +17,7 @@ const MultiSelect = ({
     id: [],
   });
   console.log(selectedVal.id);
+  const dropdownRef = useRef(null);
   const toggleOption = (option) => {
     const isSelected = selectedVal.id.includes(option.audience_id);
     if (isSelected) {
@@ -39,10 +40,31 @@ const MultiSelect = ({
     setDropDown(false);
   }, [selectedVal]);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropDown(false);
+      }
+    };
+
+    if (dropDown) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropDown]);
+
   console.log("selectedVal.name", selectedVal.name);
   return (
-    <div className={`relative select-none ${dropDown === false ? "group" : ""}`}>
+    <div
+      className={`relative select-none ${dropDown === false ? "group" : ""}`}
+    >
       <div
+    
         onClick={() => setDropDown(!dropDown)}
         className={`border border-[#381E50] cursor-pointer w-[${width.w}] sm:w-[${width.sm}] md:w-[${width.md}] lg:[${width.lg}] h-[26px] flex justify-between items-center px-1 select-none`}
       >
@@ -57,7 +79,10 @@ const MultiSelect = ({
       </div>
 
       <div
-        className={`w-full hidden select-none group-hover:block absolute top-0 cursor-pointer z-10  border border-[#381E50] bg-white`}
+       ref={dropdownRef}
+        className={`w-full select-none ${
+          dropDown ? "block" : "hidden"
+        } lg:hidden lg:group-hover:block absolute top-0 cursor-pointer z-10  border border-[#381E50] bg-white`}
       >
         {options.map((e, i) => {
           return (

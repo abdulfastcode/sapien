@@ -66,7 +66,7 @@ const Options = ({ indvQuery, campaignData }) => {
       getAgnetList();
       getAudienceList();
     }
-  }, [agentId, audienceIds]);
+  }, [agentId, audienceIds,retriesVal,name]);
   console.log("audienceList", audienceList);
   return (
     <div className="flex flex-col md:flex-row justify-between px-[24px] py-[29px]">

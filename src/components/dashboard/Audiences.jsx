@@ -18,6 +18,8 @@ const Audiences = () => {
   // console.log("comp mount from main audiences");
 
   // let checkbox = useSelector((state) => state.dashboard.checkBox);
+  const [updateComp, setUpdateComp] = useState(false);
+
   let [tableData, setTableData] = useState([]);
   // const dispatch = useDispatch();
   // if (checkbox.length > 0||checkbox===null) {
@@ -38,7 +40,7 @@ const Audiences = () => {
     return () => {
       // console.log("comp unmount from audiences");
     };
-  }, []);
+  }, [updateComp]);
   // console.log(tableData);
 
   let maxTableHeaders = useMaxHeaderValues(tableData);
@@ -48,11 +50,17 @@ const Audiences = () => {
     setTableData(val);
     // console.log(selectedData)
   }
+  function renderParentComponent(stateFromChild) {
+    setUpdateComp(stateFromChild);
+  }
 
   return (
     <div className="w-full">
       <Filter selectedData={tableData} />
-      <Action selectedData={tableData} />
+      <Action
+        selectedData={tableData}
+        renderParentComponent={renderParentComponent}
+      />
       <DashboardTable
         tableData={tableData}
         setData={setData}

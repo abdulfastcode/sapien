@@ -7,17 +7,30 @@ import LeftNavBar from "./LeftNavBar";
 
 const Dashbord = () => {
   const navigate = useNavigate();
-
+  const jsonFileData = useSelector((state) => state.fileLoader.json);
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
-    if (user) {
-      // console.log("user not null", user);
+    // if (!jsonFileData) {
+    //   navigate("/dashboard/audience");
+    // }
+    // if (user) {
+    //   console.log("user not null", user);
 
+    //   navigate("/dashboard/agent");
+    // } else {
+    //   // console.log("user null", user);
+    //   navigate("/");
+    // }
+    if (user) {
+      console.log("user not null", user);
       navigate("/dashboard/agent");
     } else {
-      // console.log("user null", user);
       navigate("/");
+    }
+
+    if (jsonFileData === null) {
+      navigate("/dashboard/audience");
     }
   }, []);
   return (

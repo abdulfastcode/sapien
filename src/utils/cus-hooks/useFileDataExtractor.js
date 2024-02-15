@@ -1,10 +1,18 @@
+import Papa from "papaparse";
+
 export default async function useFileDataExtractor(fileExtension, selectedFile) {
     return new Promise((resolve, reject) => {
         switch (fileExtension) {
             case "csv": {
                 console.log("Uploaded CSV file:", selectedFile);
                 // Handle CSV file
-                resolve({ csv: "data" }); // You can pass data here if needed
+                Papa.parse(selectedFile, {
+                    header: true,
+                    complete: (results) => {
+
+                        resolve({ csv: results }); // You can pass data here if needed
+                    }
+                })
             }
                 break;
             case "xlsx": {
@@ -20,7 +28,7 @@ export default async function useFileDataExtractor(fileExtension, selectedFile) 
                     try {
                         const parsedData = JSON.parse(e.target.result);
                         console.log(parsedData);
-                        resolve({ json: parsedData });
+                        resolve({ json: [parsedData] });
                     } catch (error) {
                         console.error("Error parsing JSON:", error);
                         reject(error);

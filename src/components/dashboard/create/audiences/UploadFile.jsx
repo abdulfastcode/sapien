@@ -28,22 +28,27 @@ const UploadFile = () => {
       console.log(res);
       if (res.json) {
         console.log(res.json);
-        setJsonData(res.json);
-        dispatch(uploadJsonFile([res.json]));
+        // setJsonData(res.json);
+        dispatch(uploadJsonFile(res.json));
         navigate("/dashboard/audience/create/create=json");
       }
       if (res.csv) {
         console.log("object", res.csv);
-        setCsvData(res.csv);
+        dispatch(uploadCsvFile(res.csv.data));
+        navigate("/dashboard/audience/create/create=json");
+        // setCsvData(res.csv);
       }
-      if (res.xlsx) setXlsxData([res.xlsx]);
+      // if (res.xlsx) setXlsxData([res.xlsx]);
     }
   }
   useEffect(() => {
-    console.log(jsonData);
-    console.log(csvData);
-    dispatch(uploadCsvFile(csvData));
-    dispatch(uploadXlsxFile(xlsxData));
+    dispatch(uploadJsonFile(null));
+    dispatch(uploadCsvFile(null));
+
+    // console.log(jsonData);
+    // console.log(csvData);
+    // dispatch(uploadCsvFile(csvData));
+    // dispatch(uploadXlsxFile(xlsxData));
   }, [jsonData, csvData, xlsxData]);
 
   return (
@@ -77,15 +82,20 @@ const UploadFile = () => {
               <span className="font-semibold">Click to upload</span> or drag and
               drop
             </p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
-              CSV,XLSX,JSON
-            </p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">CSV,JSON</p>
+            <ul className="text-sm text-gray-500 dark:text-gray-400 mt-2 ">
+              Your csv should have two mandatory columns: 
+              <li className="text-center before:content-['•'] text">phone  10 digit</li>
+              <li className="text-center before:content-['•'] text">phone countrycode - eg. +01</li>
+              
+            </ul>
+           
           </div>
           <input
             id="dropzone-file"
             type="file"
             className="hidden"
-            accept=".csv, .xlsx, .json, .png"
+            accept=".csv, .json, "
             onChange={handleFileChange}
           />
         </label>

@@ -11,7 +11,7 @@ const EditCamp = ({ indvQuery, campaignData }) => {
   console.log(campaignData);
   let optionsState = useSelector(
     (state) => state.createCampaignOptions.options
-  );
+  ); 
   // console.log("optionsState", optionsState);
   
   const checkQueryAndCampData = indvQuery && campaignData.length > 0;

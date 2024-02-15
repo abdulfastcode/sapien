@@ -1,16 +1,58 @@
 // import React from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { baseUrl } from "../../../../utils/baseUrl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const EditAudienceComp = () => {
+  let navigate = useNavigate()
   let jsonFileData = useSelector((state) => state.fileLoader.json);
+  let csvFileData = useSelector((state) => state.fileLoader.csv);
   let [res, setRes] = useState();
   let [messPopUp, setMessPopUp] = useState(true);
+  console.log("jsonData", jsonFileData);
+  console.log("csvData", csvFileData);
+
+  const [csvJsonData, setCsvJsonData] = useState({ contacts: [], name: "" });
+
+
+  
+  useEffect(() => {
+    const convertedData = convertToJSON(csvFileData);
+    setCsvJsonData(convertedData);
+  }, [csvFileData]);
+
+  const convertToJSON = (csvData) => {
+    let contacts = [];
+    let name = "";
+
+    csvData?.forEach((row) => {
+      if (
+        row.contacts__age ||
+        row.contacts__countrycode ||
+        row.contacts__name ||
+        row.contacts__phone
+      ) {
+        contacts.push({
+          age: row.contacts__age || "",
+          countrycode: row.contacts__countrycode || "",
+          name: row.contacts__name || "",
+          phone: row.contacts__phone || "",
+        });
+      }
+      if (row.name) {
+        name = row.name;
+      }
+    });
+
+    return { contacts, name };
+  };
+  console.log("CSVcsvJsonData", csvJsonData);
+ 
   function saveData() {
     // console.log("object")
-    console.log("jsonData", JSON.stringify(jsonFileData[0]));
+    // console.log("JsonData", JSON.stringify(jsonFileData[0]));
+    console.log("csvData", JSON.stringify(csvJsonData));
     async function saveUserOptions() {
       try {
         let post = await fetch(`${baseUrl}/audiences/create_audience`, {
@@ -24,11 +66,14 @@ const EditAudienceComp = () => {
         });
         let res = await post.json();
         setRes(res);
-        
+
         setTimeout(() => {
-          setMessPopUp(false)
+          setMessPopUp(false);
         }, 4000);
         console.log("res-", res);
+        if(post.status === 201){
+          navigate('/dashboard/audience')
+        }
       } catch (e) {
         console.error(e);
       }
@@ -43,14 +88,15 @@ const EditAudienceComp = () => {
             <div>Create Audience</div>
           </div>
         </div>
-        {res&&
-        <div
-          className={`p-4 ${messPopUp?"block":"hidden"} text-white ${
-            res?.error ? "bg-red-500 " : "bg-green-600"
-          }`}
-        >
-          {res?.error ? res?.error : res?.message}
-        </div>}
+        {res && (
+          <div
+            className={`p-4 ${messPopUp ? "block" : "hidden"} text-white ${
+              res?.error ? "bg-red-500 " : "bg-green-600"
+            }`}
+          >
+            {res?.error ? res?.error : res?.message}
+          </div>
+        )}
         <div className="flex items-center gap-[15px]">
           <button
             className=" py-[3px] px-[25px] items-center bg-[#381E50] text-white  text-md font-bold"
