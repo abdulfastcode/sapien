@@ -70,8 +70,16 @@ const Filter = ({ selectedData }) => {
               : `/dashboard/${finalPathName}/create`
           }
         >
-          <button className=" py-[3px] px-[25px] items-center bg-[#381E50] text-white text-md font-bold">
-            {idsSelectedData?.length >= 1 ? "Edit" : "Create"}
+          <button
+            className={`${
+              idsSelectedData?.length === 0 ||idsSelectedData?.length ===  1 ? "py-[3px] px-[25px]" : ""
+            }  items-center bg-[#381E50] text-white text-md font-bold`}
+          >
+            {idsSelectedData?.length === 1
+              ? "Edit"
+              : idsSelectedData?.length === 0
+              ? "Create"
+              : ""}
           </button>
         </Link>
       </div>

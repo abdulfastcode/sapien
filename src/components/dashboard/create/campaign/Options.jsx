@@ -66,7 +66,7 @@ const Options = ({ indvQuery, campaignData }) => {
       getAgnetList();
       getAudienceList();
     }
-  }, [agentId, audienceIds,retriesVal,name]);
+  }, [agentId, audienceIds, retriesVal, name]);
   console.log("audienceList", audienceList);
   return (
     <div className="flex flex-col md:flex-row justify-between px-[24px] py-[29px]">
@@ -97,7 +97,7 @@ const Options = ({ indvQuery, campaignData }) => {
             />
           </div>
         </div>
-        <div className="flex justify-between sm:gap-[100px]"> 
+        <div className="flex justify-between sm:gap-[100px]">
           <div>Audiences</div>
           <div>
             <MultiSelect
@@ -105,7 +105,7 @@ const Options = ({ indvQuery, campaignData }) => {
               defaultOption="SELECT AUDIENCES"
               options={audienceList}
               sendSelectedVal={sendSelectedValAudience}
-            /> 
+            />
           </div>
         </div>
         <div className="flex justify-between sm:gap-[100px]">

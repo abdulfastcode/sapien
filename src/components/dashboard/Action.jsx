@@ -40,7 +40,7 @@ const Action = ({ selectedData, renderParentComponent }) => {
   const [downloadItems, setDownloadItems] = useState([]);
   // console.log("pathname", pathname.split("/").pop());
   const path = pathname.split("/").pop();
-  // console.log("path", path);
+  console.log("path", path);
   const checkIdsWithParams = idsSelectedData?.join(`&${path}_id=`);
   // console.log(checkIdsWithParams);
   // let dispatch = useDispatch();
@@ -112,20 +112,23 @@ const Action = ({ selectedData, renderParentComponent }) => {
               src={downloadIcon}
               alt="downloadIcon"
             /> */}
-
-        <CSVLink
-          data={downloadItems}
-          filename={`${path}_data_${new Date().toString()}.csv`}
-          className="cursor-pointer"
-        >
-          {idsSelectedData?.length >= 1 && (
-            <img
-              // onClick={downloadCsv}
-              src={downloadIcon}
-              alt="downloadIcon"
-            />
-          )}
-        </CSVLink>
+        {path === "agent" ? (
+          ""
+        ) : (
+          <CSVLink
+            data={downloadItems}
+            filename={`${path}_data_${new Date().toString()}.csv`}
+            className="cursor-pointer"
+          >
+            {idsSelectedData?.length >= 1 && (
+              <img
+                // onClick={downloadCsv}
+                src={downloadIcon}
+                alt="downloadIcon"
+              />
+            )}
+          </CSVLink>
+        )}
 
         <img
           className="cursor-pointer"
