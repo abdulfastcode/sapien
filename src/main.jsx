@@ -15,6 +15,7 @@ import CreateCampaign from "./components/dashboard/create/campaign/CreateCampaig
 import CreateAgent from "./components/dashboard/create/agent/CreateAgent.jsx";
 import CreateAudience from "./components/dashboard/create/audiences/CreateAudience.jsx";
 import CreateAudienceTable from "./components/dashboard/create/audiences/CreateAudienceTable.jsx";
+import Payment from "./components/dashboard/Payment.jsx";
 
 const router = createBrowserRouter([
   {
@@ -29,12 +30,17 @@ const router = createBrowserRouter([
         path: "/user-info",
         element: <UserInfo />,
       },
+      
     ],
   },
   {
     paths: "/dashbord",
     element: <Dashboard />,
     children: [
+      {
+        path: "/dashboard/user-payment",
+        element: <Payment/>
+      },
       {
         path: "/dashboard/agent",
         element: <Agent />,

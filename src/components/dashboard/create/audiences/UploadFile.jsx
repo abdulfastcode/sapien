@@ -14,7 +14,7 @@ const UploadFile = () => {
   const [xlsxData, setXlsxData] = useState(null);
   let dispatch = useDispatch();
   let jsonFileData = useSelector((state) => state.fileLoader.json);
-  console.log(jsonFileData);
+  console.log(jsonFileData); 
   const navigate = useNavigate();
 
   async function handleFileChange(e) {

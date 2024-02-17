@@ -62,7 +62,7 @@ const EditAudienceComp = () => {
               "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYWJkdWwifQ.QRyeI86pVtG8vJuQCWM-l0mAbC6IAUrp8ppcD7gzHBc",
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(jsonFileData[0]),
+          body: JSON.stringify(jsonFileData),
         });
         let res = await post.json();
         setRes(res);

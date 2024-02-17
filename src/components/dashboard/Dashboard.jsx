@@ -26,13 +26,14 @@ const Dashbord = () => {
       console.log("user not null", user);
       navigate("/dashboard/agent");
     } else {
+      console.log("user null", user);
       navigate("/");
     }
 
-    if (jsonFileData === null) {
-      navigate("/dashboard/audience");
-    }
-  }, []);
+    // if (jsonFileData === null) {
+    //   navigate("/dashboard/audience");
+    // }
+  }, [user]);
   return (
     <>
       <DashBoardHeader user={user} />

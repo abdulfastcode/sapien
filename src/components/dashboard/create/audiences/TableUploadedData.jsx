@@ -2,9 +2,9 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 const TableUploadedData = () => {
-//   console.log("jsonData", jsonData);
-//   console.log("csvData", csvData);
-const jsonData = useSelector((state) => state.fileLoader.json);
+  //   console.log("csvData", csvData);
+  const jsonData = useSelector((state) => state.fileLoader.json);
+    console.log("jsonData", jsonData);
   const csvData = useSelector((state) => state.fileLoader.csv);
   if (jsonData) {
     const renderContacts = (contacts) => {
@@ -13,10 +13,18 @@ const jsonData = useSelector((state) => state.fileLoader.json);
         <table className="w-full table-auto ">
           <thead className="items-center border border-[#381E50]">
             <tr>
-              <th className="text-base border border-[#381E50] font-bold  text-[#381E50]">age</th>
-              <th className="text-base border border-[#381E50] font-bold  text-[#381E50]">countrycode</th>
-              <th className="text-base border border-[#381E50] font-bold  text-[#381E50]">name</th>
-              <th className="text-base border border-[#381E50] font-bold  text-[#381E50]">phone</th>
+              <th className="text-base border border-[#381E50] font-bold  text-[#381E50]">
+                age
+              </th>
+              <th className="text-base border border-[#381E50] font-bold  text-[#381E50]">
+                countrycode
+              </th>
+              <th className="text-base border border-[#381E50] font-bold  text-[#381E50]">
+                name
+              </th>
+              <th className="text-base border border-[#381E50] font-bold  text-[#381E50]">
+                phone
+              </th>
             </tr>
           </thead>
           <tbody className="text-center border border-[#381E50]">
@@ -25,7 +33,9 @@ const jsonData = useSelector((state) => state.fileLoader.json);
               return (
                 <tr key={index}>
                   <td className="border border-[#381E50] ">{contact?.age}</td>
-                  <td className="border border-[#381E50] ">{contact?.countrycode}</td>
+                  <td className="border border-[#381E50] ">
+                    {contact?.countrycode}
+                  </td>
                   <td className="border border-[#381E50] ">{contact?.name}</td>
                   <td className="border border-[#381E50] ">{contact?.phone}</td>
                 </tr>
@@ -41,8 +51,12 @@ const jsonData = useSelector((state) => state.fileLoader.json);
         <table className="w-full table-auto ">
           <thead className="items-center border border-[#381E50]">
             <tr>
-              <th className="text-base border border-[#381E50] font-bold  text-[#381E50]">contacts</th>
-              <th className="text-base border border-[#381E50] font-bold  text-[#381E50]">name</th>
+              <th className="text-base border border-[#381E50] font-bold  text-[#381E50]">
+                contacts
+              </th>
+              <th className="text-base border border-[#381E50] font-bold  text-[#381E50]">
+                name
+              </th>
             </tr>
           </thead>
           <tbody className="text-center border border-[#381E50]">
@@ -57,6 +71,15 @@ const jsonData = useSelector((state) => state.fileLoader.json);
   }
   if (csvData) {
     console.log(csvData);
+    let headerValues = csvData.reduce((acc, curr) => {
+      Object.keys(curr).forEach((key) => {
+        if (!acc.includes(key)) {
+          acc.push(key);
+        }
+      });
+      return acc;
+    }, []);
+    console.log(headerValues);
     const renderData = () => {
       return (
         <>
@@ -67,50 +90,46 @@ const jsonData = useSelector((state) => state.fileLoader.json);
             ))} */}
           </div>
           <div className="overflow-auto">
-          <table className="w-full table-auto ">
-            <thead className="items-center border border-[#381E50]">
-              <tr>
-                <th className="text-base border border-[#381E50] font-bold  text-[#381E50]">
-                  contacts
-                </th>
-                <th className="text-base border border-[#381E50] font-bold  text-[#381E50]">
-                  name
-                </th>
-              </tr>
-            </thead>
-            <tbody className="text-center border border-[#381E50]">
-              {csvData.map((item, index) => (
-                <tr key={index} className={` relative z-10 `}>
-                  <td className="p-0 ">
-                    <table className="w-full table-auto border border-[#381E50]">
-                      <tbody className="text-center">
-                        {Object.keys(item).map((key) => {
-                          if (key.startsWith("contacts")) {
-                            const fieldName = key.split("__")[1];
-                            return (
-                              <tr
-                                key={key}
-                                className={`odd:bg-white even:bg-slate-50 relative z-10  `}
-                              >
-                                {fieldName && item[key] && (
-                                  <>
-                                    <td className="">{fieldName}</td>
-                                    <td className="">{item[key]}</td>
-                                  </>
-                                )}
-                              </tr>
-                            );
-                          }
-                          return null;
-                        })}
-                      </tbody>
-                    </table>
-                  </td>
-                  {item && <td>{item.name}</td>}
+            <table className="w-full table-auto ">
+              <thead className="items-center border border-[#381E50]">
+               
+                <tr>
+                  {headerValues.map((e, i) => {
+                    return (
+                      <th
+                        className="text-base border border-[#381E50] font-bold  text-[#381E50]"
+                        key={i}
+                      >
+                        {e.charAt(0).toUpperCase() + e.slice(1)}
+                      </th>
+                    );
+                  })}
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="text-center border border-[#381E50]">
+              
+                {csvData.map((e, i) => {
+                  return (
+                    <tr
+                      key={ i}
+                     
+                      
+                    >
+                      {headerValues.map((header) => {
+                        return (
+                          <td
+                            className="border border-[#381E50]"
+                            key={`${i}-${header}`}
+                          >
+                            {e[header]||"null"}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
         </>
       );

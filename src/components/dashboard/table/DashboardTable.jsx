@@ -6,7 +6,7 @@ import {
 } from "../../../utils/slices/dashboardSlice";
 import { useLocation } from "react-router-dom";
 // import React from 'react'
-
+ 
 const DashboardTable = ({ tableData, setData, maxTableHeaders }) => {
   // console.log("comp mount from DashboardTable");
   const [checkedTr, setCheckedTr] = useState(true);
