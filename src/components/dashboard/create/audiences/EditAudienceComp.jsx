@@ -1,10 +1,12 @@
 // import React from "react";
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { baseUrl } from "../../../../utils/baseUrl";
 import { useEffect, useState } from "react";
 
 const EditAudienceComp = () => {
+  let {fileType}= useParams() 
+  console.log("fileType",fileType)
   let navigate = useNavigate()
   let jsonFileData = useSelector((state) => state.fileLoader.json);
   let csvFileData = useSelector((state) => state.fileLoader.csv);
@@ -22,34 +24,53 @@ const EditAudienceComp = () => {
     setCsvJsonData(convertedData);
   }, [csvFileData]);
 
+  const audienceName = useSelector((state) => state.fileLoader.audienceName);
+  
   const convertToJSON = (csvData) => {
     let contacts = [];
-    let name = "";
+    let name = audienceName;
 
     csvData?.forEach((row) => {
-      if (
-        row.contacts__age ||
-        row.contacts__countrycode ||
-        row.contacts__name ||
-        row.contacts__phone
-      ) {
-        contacts.push({
-          age: row.contacts__age || "",
-          countrycode: row.contacts__countrycode || "",
-          name: row.contacts__name || "",
-          phone: row.contacts__phone || "",
+        let contact = {};
+
+        Object.keys(row).forEach((key) => {
+            contact[key] = row[key];
         });
-      }
-      if (row.name) {
-        name = row.name;
-      }
+
+        contacts.push(contact);
     });
 
     return { contacts, name };
-  };
+};
+
   console.log("CSVcsvJsonData", csvJsonData);
+
+
+  // if(fileType==="json"){
+  //   setDataToSend(JSON.stringify(jsonFileData[0]))
+  //   console.log("dataToSendJSon",dataToSend)
+  // }
+
+  // if(fileType==="csv"){
+  //   setDataToSend(csvJsonData)
+  //   console.log("dataToSendCSv",setDataToSend)
+  // }
+
  
-  function saveData() {
+  function saveData() { 
+    let dataToSend;
+
+    switch (fileType) {
+      case "json":
+        dataToSend = JSON.stringify(jsonFileData[0]);
+        break;
+      case "csv":
+        dataToSend = JSON.stringify(csvJsonData);
+        break;
+      default:
+        // Handle default case
+        break;
+    }
     // console.log("object")
     // console.log("JsonData", JSON.stringify(jsonFileData[0]));
     console.log("csvData", JSON.stringify(csvJsonData));
@@ -62,7 +83,11 @@ const EditAudienceComp = () => {
               "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYWJkdWwifQ.QRyeI86pVtG8vJuQCWM-l0mAbC6IAUrp8ppcD7gzHBc",
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(jsonFileData),
+          
+            // body: JSON.stringify(jsonFileData[0])
+            body: dataToSend
+          
+          // body: JSON.stringify(csvJsonData),
         });
         let res = await post.json();
         setRes(res);

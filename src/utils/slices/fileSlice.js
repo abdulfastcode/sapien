@@ -2,10 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const fileSlice = createSlice({
     name: 'fileLoader',
-    initialState : {
+    initialState : { 
         json:null,
         csv:null,
-        xlsx:null
+        xlsx:null,
+        audienceName:""
     },
     reducers:{
         uploadJsonFile : (state,action)=>{
@@ -16,9 +17,12 @@ const fileSlice = createSlice({
         },
         uploadXlsxFile : (state,action)=>{
             state.json = action.payload
+        },
+        uploadAudienceName : (state,action)=>{
+            state.audienceName = action.payload
         }
     }
 })
 
-export const  {uploadJsonFile,uploadCsvFile,uploadXlsxFile} = fileSlice.actions
+export const  {uploadJsonFile,uploadCsvFile,uploadXlsxFile,uploadAudienceName} = fileSlice.actions
 export default fileSlice.reducer

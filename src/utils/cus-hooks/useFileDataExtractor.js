@@ -8,6 +8,7 @@ export default async function useFileDataExtractor(fileExtension, selectedFile) 
                 // Handle CSV file
                 Papa.parse(selectedFile, {
                     header: true,
+                    skipEmptyLines: true,
                     complete: (results) => {
 
                         resolve({ csv: results }); // You can pass data here if needed

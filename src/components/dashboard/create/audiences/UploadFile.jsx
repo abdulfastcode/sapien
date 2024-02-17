@@ -3,20 +3,21 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   uploadCsvFile,
   uploadJsonFile,
-  uploadXlsxFile,
+  uploadAudienceName,
 } from "../../../../utils/slices/fileSlice";
 import useFileDataExtractor from "../../../../utils/cus-hooks/useFileDataExtractor";
 import { useNavigate } from "react-router-dom";
 
 const UploadFile = () => {
-  const [jsonData, setJsonData] = useState(null);
-  const [csvData, setCsvData] = useState(null);
-  const [xlsxData, setXlsxData] = useState(null);
+  // const [jsonData, setJsonData] = useState(null);
+  // const [csvData, setCsvData] = useState(null);
+  // const [xlsxData, setXlsxData] = useState(null);
   let dispatch = useDispatch();
   let jsonFileData = useSelector((state) => state.fileLoader.json);
-  console.log(jsonFileData); 
   const navigate = useNavigate();
-
+  let [audienceName,setAudienceName] = useState('')
+  console.log(jsonFileData);
+  
   async function handleFileChange(e) {
     const selectedFile = e.target.files[0];
 
@@ -28,14 +29,18 @@ const UploadFile = () => {
       console.log(res);
       if (res.json) {
         console.log(res.json);
-        // setJsonData(res.json);
-        dispatch(uploadJsonFile(res.json));
-        navigate("/dashboard/audience/create/create=json");
+        dispatch(uploadAudienceName(audienceName));
+        dispatch(uploadJsonFile([{...res.json[0],name:audienceName}]));
+        // dispatch(uploadJsonFile(res.json));
+
+        navigate("/dashboard/audience/create/create/json");
       }
       if (res.csv) {
         console.log("object", res.csv);
+        
+        dispatch(uploadAudienceName(audienceName));
         dispatch(uploadCsvFile(res.csv.data));
-        navigate("/dashboard/audience/create/create=json");
+        navigate("/dashboard/audience/create/create/csv");
         // setCsvData(res.csv);
       }
       // if (res.xlsx) setXlsxData([res.xlsx]);
@@ -44,18 +49,24 @@ const UploadFile = () => {
   useEffect(() => {
     dispatch(uploadJsonFile(null));
     dispatch(uploadCsvFile(null));
+    console.log("call useEff@@@@@@@@@@@@@@@")
 
     // console.log(jsonData);
     // console.log(csvData);
     // dispatch(uploadCsvFile(csvData));
     // dispatch(uploadXlsxFile(xlsxData));
-  }, [jsonData, csvData, xlsxData]);
+  }, [audienceName]);
 
   return (
     <div className="px-[24px] py-[29px] ">
-      <div className="flex gap-[40px] sm:gap-[50px] pb-[30px]">
+      <div className="flex items-center gap-[40px] sm:gap-[50px] pb-[30px]">
         <div>Name</div>
-        <div className="border border-black px-2">Real-Estate-NYC-HNIs</div>
+        <input
+          value={audienceName}
+          onChange={(e) => setAudienceName((e.target.value))}
+          type="text"
+          className="border border-[#381E50] py-[2px] px-2"
+        ></input>
       </div>
       <div className="w-full h-[50vh] ">
         <label
@@ -84,12 +95,14 @@ const UploadFile = () => {
             </p>
             <p className="text-xs text-gray-500 dark:text-gray-400">CSV,JSON</p>
             <ul className="text-sm text-gray-500 dark:text-gray-400 mt-2 ">
-              Your csv should have two mandatory columns: 
-              <li className="text-center before:content-['•'] text">phone  10 digit</li>
-              <li className="text-center before:content-['•'] text">phone countrycode - eg. +01</li>
-              
+              Your csv should have two mandatory columns:
+              <li className="text-center before:content-['•'] text">
+                phone 10 digit
+              </li>
+              <li className="text-center before:content-['•'] text">
+                phone countrycode - eg. +01
+              </li>
             </ul>
-           
           </div>
           <input
             id="dropzone-file"

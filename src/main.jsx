@@ -66,7 +66,7 @@ const router = createBrowserRouter([
         element: <CreateAudience />,
       },
       {
-        path: "/dashboard/audience/create/create=json",
+        path: "/dashboard/audience/create/create/:fileType",
         element: <CreateAudienceTable/>
       },
     ],
