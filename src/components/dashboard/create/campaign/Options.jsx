@@ -29,8 +29,12 @@ const Options = ({ indvQuery, campaignData }) => {
   }
 
   function getAgnetList() {
+    let token = localStorage.getItem("auth_token");
     fetch(`${baseUrl}/agents/get_agent_list`, {
-      headers,
+      headers: {
+        Authorization:
+          `Bearer ${token}`,
+      },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -39,8 +43,12 @@ const Options = ({ indvQuery, campaignData }) => {
   }
 
   function getAudienceList() {
+    let token = localStorage.getItem("auth_token");
     fetch(`${baseUrl}/audiences/get_audience_list`, {
-      headers,
+      headers: {
+        Authorization:
+          `Bearer ${token}`,
+      },
     })
       .then((response) => response.json())
       .then((data) => {

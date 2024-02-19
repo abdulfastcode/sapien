@@ -10,7 +10,7 @@ const userSlice = createSlice({
     initialState: null,
     // initialState: {email:"zaw@gmail.com"},
     reducers: {
-        addUserDetails: (state, action) => {
+        addUserEmail: (state, action) => {
             return action.payload
         },
         removeUser: (state, action) => {
@@ -19,5 +19,5 @@ const userSlice = createSlice({
     }
 })
 
-export const { addUserDetails, removeUser } = userSlice.actions;
+export const { addUserEmail, removeUser } = userSlice.actions;
 export default userSlice.reducer;

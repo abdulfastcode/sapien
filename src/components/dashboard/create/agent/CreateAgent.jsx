@@ -7,8 +7,13 @@ import Text from "./Text";
 const CreateAgent = () => {
   const [callScript, setCallScript] = useState(null);
   useEffect(() => {
+  let token = localStorage.getItem("auth_token");
+
     fetch(`${baseUrl}/agents/get_call_script`, {
-      headers,
+      headers: {
+        Authorization:
+          `Bearer ${token}`,
+      },
     })
       .then((response) => response.json())
       .then((data) => {

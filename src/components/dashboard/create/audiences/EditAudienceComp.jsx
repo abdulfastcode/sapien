@@ -76,11 +76,12 @@ const EditAudienceComp = () => {
     console.log("csvData", JSON.stringify(csvJsonData));
     async function saveUserOptions() {
       try {
+    let token = localStorage.getItem("auth_token");
         let post = await fetch(`${baseUrl}/audiences/create_audience`, {
           method: "POST",
           headers: {
             Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYWJkdWwifQ.QRyeI86pVtG8vJuQCWM-l0mAbC6IAUrp8ppcD7gzHBc",
+              `Bearer ${token}`,
             "Content-Type": "application/json",
           },
           

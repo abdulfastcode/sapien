@@ -140,14 +140,14 @@ const DashboardTable = ({ tableData, setData, maxTableHeaders }) => {
             </tr>
           ) : (
             <tr>
-              <th>Loading...</th>
+              <th>No Data</th>
             </tr>
           )}
         </thead>
         <tbody className="text-center border border-[#381E50]">
           {tableData === null || maxTableHeaders === undefined ? (
             <tr>
-              <td>Loading...</td>
+              <td>No Data</td>
             </tr>
           ) : (
             tableData.map((e, i) => {

@@ -14,7 +14,8 @@ import { baseUrl, headers } from "../../utils/baseUrl";
 const Agent = () => {
   // console.log("agentData", agentData);
   // console.log("comp mount from main agent");
-
+  const user = useSelector((state) => state.user);
+console.log("userrmail",user)
   // const dispatch = useDispatch();
   const [updateComp, setUpdateComp] = useState(false);
   let [tableData, setTableData] = useState([]);
@@ -22,20 +23,23 @@ const Agent = () => {
   // let checkbox = useSelector((state) => state.dashboard.checkBox);
   // if (checkbox.length > 0 || checkbox === null) {
   //   dispatch(addCheckboxState([]));
-  // }
-  useEffect(() => { 
-    // console.log("agent useEffect")
-
+  // } 
+  let token = localStorage.getItem("auth_token");
+  console.log("token", token);
+  useEffect(() => {
+    // console.log("agent headers",headers)
+    let token = localStorage.getItem("auth_token");
     fetch(`${baseUrl}/agents/get_agent_list`, {
-      headers,
+      headers: {
+        Authorization:
+          `Bearer ${token}`,
+      },
     })
       .then((response) => response.json())
       .then((data) => {
         setTableData(data);
         // dispatch(addDataTable(data));
       });
-
-    
   }, [updateComp]);
   // console.log(tableData);
 
@@ -57,7 +61,7 @@ const Agent = () => {
 
   return (
     <div className="w-full">
-      <Filter selectedData={tableData}/>
+      <Filter selectedData={tableData} />
       <Action
         renderParentComponent={renderParentComponent}
         selectedData={tableData}

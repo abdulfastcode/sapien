@@ -1,4 +1,5 @@
 export function useMaxHeaderValues(tableData) {
+  console.log("tableData+++++++",tableData)
   if (tableData == null || undefined) return
   let tableHeading = tableData?.map((e) => {
     let header = Object.keys(e);

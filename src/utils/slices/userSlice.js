@@ -17,7 +17,7 @@ const userSlice = createSlice({
       };
     },
   },
-});
+}); 
 
 export const { updateUserInfo } = userSlice.actions;
 

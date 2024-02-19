@@ -18,8 +18,13 @@ const Campaign = () => {
   let [tableData, setTableData] = useState([]);
   useEffect(() => {
     // dispatch(addDataTable(campaignData));
+    let token = localStorage.getItem("auth_token");
+
     fetch(`${baseUrl}/campaigns/get_campaigns_list`, {
-      headers,
+      headers: {
+        Authorization:
+          `Bearer ${token}`,
+      },
     })
       .then((response) => response.json())
       .then((data) => {

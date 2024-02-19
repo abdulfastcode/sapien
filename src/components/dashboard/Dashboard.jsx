@@ -11,7 +11,7 @@ const Dashbord = () => {
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
-    // if (!jsonFileData) {
+    // if (!jsonFileData) { 
     //   navigate("/dashboard/audience");
     // }
     // if (user) {
@@ -21,8 +21,11 @@ const Dashbord = () => {
     // } else {
     //   // console.log("user null", user);
     //   navigate("/");
+
     // }
-    if (user) {
+  let token = localStorage.getItem("auth_token");
+
+    if (token) {
       console.log("user not null", user);
       navigate("/dashboard/agent");
     } else {

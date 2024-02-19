@@ -84,8 +84,11 @@ const Options = ({ callScript }) => {
   // console.log("conversionList!!!!!!!!!!!!!!!!!!!!", conversionList);
 
   function getVoiceList() {
+    let token = localStorage.getItem("auth_token");
     fetch(`${baseUrl}/voices/get_voice_list`, {
-      headers,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -94,8 +97,12 @@ const Options = ({ callScript }) => {
   }
 
   function getConversationList() {
+    let token = localStorage.getItem("auth_token");
+
     fetch(`${baseUrl}/conversions/get_conversion_list`, {
-      headers,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -104,8 +111,12 @@ const Options = ({ callScript }) => {
   }
 
   function getPhoneList() {
+    let token = localStorage.getItem("auth_token");
+
     fetch(`${baseUrl}/phones/get_phone_list`, {
-      headers,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -234,6 +245,8 @@ const Options = ({ callScript }) => {
         </button>
       </div> */}
       {/* NAME */}
+        {voiceList.error&&<div className="text-red-500">No Voice List</div>}
+        {phoneList.error&&<div className="text-red-500">No Phone List</div>}
       <div className="flex flex-wrap gap-3 justify-between ">
         <div>Name</div>
         <div>
@@ -248,10 +261,11 @@ const Options = ({ callScript }) => {
         </div>
       </div>
       {/* VOICE */}
-      <div className="flex flex-wrap gap-3 justify-between ">
-        <div>Voice </div>
-        <div>
-          {/* <select className="border px-[6px] border-black w-[210px]">
+      {!voiceList.error && (
+        <div className="flex flex-wrap gap-3 justify-between ">
+          <div>Voice </div>
+          <div>
+            {/* <select className="border px-[6px] border-black w-[210px]">
             {voiceList != null ? (
               voiceList.map((e) => {
                 return (
@@ -265,65 +279,68 @@ const Options = ({ callScript }) => {
             )}
            
           </select> */}
-          <SelectOpt
-            width={{ w: "210px", sm: "210px", md: "210px", lg: "210px" }}
-            defaultOption={voiceList[0]?.name}
-            options={voiceList}
-            sendSelectedVal={sendSelectedValVoice}
-          />
-        </div>
-      </div>
-      {/* CONVERSION */}
-      <div className="flex flex-wrap gap-3 justify-between ">
-        <div>Conversion</div>
-        <div>
-          <div className="flex flex-wrap justify-end pb-[15px]  gap-[10px]">
-            <SelectOpt
-              width={{ w: "52px", sm: "52px", md: "52px", lg: "52px" }}
-              optWidth="50px"
-              options={[
-                { name: "OR", conversion_id: "1" },
-                { name: "AND", conversion_id: "2" },
-              ]}
-              defaultOption="Operator"
-              // sendSelectedValOperator={sendSelectedVal}
-              sendSelectedVal={sendSelectedValOperator}
-            />
             <SelectOpt
               width={{ w: "210px", sm: "210px", md: "210px", lg: "210px" }}
-              optWidth="50px"
-              options={conversationList}
-              defaultOption={conversationList[0]?.name}
-              editOpt="true"
-              create="Create Conversion"
-              renderParentComponent={renderParentComponent}
-              sendSelectedVal={sendSelectedValConversion}
-            />
-          </div>
-          <div className="float-right">
-            <input
-              type="button"
-              value="+ Add Condition"
-              className="cursor-pointer border ml-[55px] px-4 border-black bg-[#D7C9FF]"
+              defaultOption={voiceList[0]?.name}
+              options={voiceList}
+              sendSelectedVal={sendSelectedValVoice}
             />
           </div>
         </div>
-      </div>
+      )}
+      {/* CONVERSION */}
+      {conversationList && (
+        <div className="flex flex-wrap gap-3 justify-between ">
+          <div>Conversion</div>
+          <div>
+            <div className="flex flex-wrap justify-end pb-[15px]  gap-[10px]">
+              <SelectOpt
+                width={{ w: "52px", sm: "52px", md: "52px", lg: "52px" }}
+                optWidth="50px"
+                options={[
+                  { name: "OR", conversion_id: "1" },
+                  { name: "AND", conversion_id: "2" },
+                ]}
+                defaultOption="Operator"
+                // sendSelectedValOperator={sendSelectedVal}
+                sendSelectedVal={sendSelectedValOperator}
+              />
+              <SelectOpt
+                width={{ w: "210px", sm: "210px", md: "210px", lg: "210px" }}
+                optWidth="50px"
+                options={conversationList}
+                defaultOption={conversationList[0]?.name}
+                editOpt="true"
+                create="Create Conversion"
+                renderParentComponent={renderParentComponent}
+                sendSelectedVal={sendSelectedValConversion}
+              />
+            </div>
+            <div className="float-right">
+              <input
+                type="button"
+                value="+ Add Condition"
+                className="cursor-pointer border ml-[55px] px-4 border-black bg-[#D7C9FF]"
+              />
+            </div>
+          </div>
+        </div>
+      )}
       {/* AGENT OPRIONS */}
       <div className="flex flex-wrap flex-col gap-[20px]">
         <div className="pb-2 text-[#7B777E]">Agent </div>
         {/* CALL FROM */}
-        <div className="flex flex-wrap gap-3 justify-between ">
-          <div>Call From </div>
-
-          <div>
-            <SelectOpt
-              width={{ w: "210px", sm: "210px", md: "210px", lg: "210px" }}
-              defaultOption={phoneList[0]?.full_phone}
-              options={phoneList}
-              sendSelectedVal={sendSelectedValPhone}
-            />
-            {/* <select className="border px-[6px] border-black w-[155px]">
+        {!phoneList.error && (
+          <div className="flex flex-wrap gap-3 justify-between ">
+            <div>Call From </div>
+            <div>
+              <SelectOpt
+                width={{ w: "210px", sm: "210px", md: "210px", lg: "210px" }}
+                defaultOption={phoneList[0]?.full_phone}
+                options={phoneList}
+                sendSelectedVal={sendSelectedValPhone}
+              />
+              {/* <select className="border px-[6px] border-black w-[155px]">
               {phoneList != null ? (
                 phoneList.map((e) => {
                   return (
@@ -337,8 +354,9 @@ const Options = ({ callScript }) => {
               )}
               
             </select> */}
+            </div>
           </div>
-        </div>
+        )}
         {/* CALL TO */}
         <div className="flex flex-wrap gap-3 justify-between ">
           <div>Call To </div>

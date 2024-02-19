@@ -57,11 +57,12 @@ const SelectOpt = ({
   async function saveUserOptions(url, method, body) {
     renderParentComponent(false);
     try {
+    let token = localStorage.getItem("auth_token");
       let post = await fetch(`${baseUrl}/conversions/${url}`, {
         method: method,
         headers: {
           Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYWJkdWwifQ.QRyeI86pVtG8vJuQCWM-l0mAbC6IAUrp8ppcD7gzHBc",
+            `Bearer ${token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify(body),
@@ -94,13 +95,14 @@ const SelectOpt = ({
     renderParentComponent(false);
 
     try {
+    let token = localStorage.getItem("auth_token");
       let post = await fetch(
         `${baseUrl}/conversions/${url}?conversion_id=${id}`,
         {
           method: method,
           headers: {
             Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYWJkdWwifQ.QRyeI86pVtG8vJuQCWM-l0mAbC6IAUrp8ppcD7gzHBc",
+              `Bearer ${token}`,
             "Content-Type": "application/json",
           },
           // query: JSON.stringify({ conversion_id: [id] }),
@@ -173,7 +175,7 @@ const SelectOpt = ({
           dropDown ? "block" : "hidden"
         } lg:hidden lg:group-hover:block absolute top-0 cursor-pointer z-10  border border-[#381E50] bg-white`}
       >
-        {options.map((e, i) => {
+        {options?.map((e, i) => {
           return (
             <div
               key={

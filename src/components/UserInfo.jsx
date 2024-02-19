@@ -1,18 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { updateUserInfo } from "../utils/slices/userSlice";
 // import { updateUserInfo } from './userSlice';
 
 import { baseUrl } from "../utils/baseUrl";
+import { addUserEmail } from "../utils/userSlice";
 const UserInfo = () => {
   let navigate = useNavigate();
+
+  const user = useSelector((state) => state.user);
+
+  // useEffect(() => {
+  //   localStorage.removeItem("auth_token");
+  // }, []);
   const [activeDivIndex, setActiveDivIndex] = useState(0);
   const [userInfo, setUserInfo] = useState({
     country_code: "",
     current_usage: [],
     designation: "",
-    have_dev_team: false,
+    has_dev_team: false,
     phone: "",
   });
   const dispatch = useDispatch();
@@ -23,23 +30,28 @@ const UserInfo = () => {
         dispatch(updateUserInfo(userInfo));
         console.log("User Info:", userInfo); // Print the user info slice values
         const urlParams = new URLSearchParams(window.location.search);
-        // const authToken = urlParams.get("auth_token");
-        const authToken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYWJkdWxAZmFzdGNvZGUuYWkifQ.RrtWBbgI2NHxkUJS3iH-sT1AN3iCJDP8PxF3ssJCZjw";
+        console.log("urlParams---",urlParams)
+        const authToken = urlParams.get("auth_token");
+        // const authToken =
+        //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYWJkdWxAZmFzdGNvZGUuYWkifQ.dSNnYNrD6WRTzV-weQeJwj0RaOrUXhq3jEqVVU2r1cA";
         if (authToken) {
           const apiUrl = `${baseUrl}/login/update_user_info`;
           const requestOptions = {
-            method: "POST",
+            method: "PUT",
             headers: {
               "Content-Type": "application/json",
-              Authorization: authToken,
+              Authorization: `Bearer ${authToken}`,
             },
             body: JSON.stringify(userInfo),
           };
           try {
             const response = await fetch(apiUrl, requestOptions);
             if (response.ok) {
-              localStorage.setItem("auth_token", authToken);
+              let dataRes = await response.json();
+              console.log("data", dataRes);
+              dispatch(addUserEmail(dataRes.user_id));
               navigate("/dashboard/agent");
+              localStorage.setItem("auth_token", authToken);
             } else {
               console.error("Failed to update user info");
             }
@@ -84,6 +96,14 @@ const UserInfo = () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
   }, [activeDivIndex, userInfo, dispatch]);
+  
+  // useEffect(() => {
+  //   const urlParams = new URLSearchParams(window.location.search);
+  //   const authToken = urlParams.get("auth_token");
+  //   if (!authToken) {
+  //     navigate("/");
+  //   }
+  // }, []);
 
   const renderDiv = (index, content) => (
     <div
@@ -269,7 +289,7 @@ const UserInfo = () => {
                   name="dev-team"
                   value="YES"
                   className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  onChange={(e) => handleInputChange(e, "have_dev_team")}
+                  onChange={(e) => handleInputChange(e, "has_dev_team")}
                 />
                 <label
                   htmlFor="dev-team-yes"
@@ -285,7 +305,7 @@ const UserInfo = () => {
                   type="checkbox"
                   value="NO"
                   className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  onChange={(e) => handleInputChange(e, "have_dev_team")}
+                  onChange={(e) => handleInputChange(e, "has_dev_team")}
                 />
                 <label
                   htmlFor="dev-team-no"

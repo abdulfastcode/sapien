@@ -23,8 +23,13 @@ const CreateCampaign = () => {
   );
   console.log("createdCampResponse",createdCampResponse)
   function getCamp() {
+    let token = localStorage.getItem("auth_token");
+
     fetch(`${baseUrl}/campaigns/get_campaign?${indvQuery}`, {
-      headers,
+      headers: {
+        Authorization:
+          `Bearer ${token}`,
+      },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -35,8 +40,12 @@ const CreateCampaign = () => {
   }
 
   function getCampTableData() {
+    let token = localStorage.getItem("auth_token");
     fetch(`${baseUrl}/calls/get_call_by_campaign?${indvQuery}`, {
-      headers,
+      headers: {
+        Authorization:
+          `Bearer ${token}`,
+      },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -66,13 +75,13 @@ const CreateCampaign = () => {
   function startCamp(){
     async function saveUserOptions() {
       console.log("json",JSON.stringify({campaign_id:createdCampResponse.campaign_id}),)
+      let token = localStorage.getItem("auth_token");
       try {
-        let post = await fetch(`${baseUrl}/campaigns/start_campaign`, {
-          method: "POST",
+      let post = await fetch(`${baseUrl}/campaigns/start_campaign`, {
+        method: "POST",
           headers: {
             Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYWJkdWwifQ.QRyeI86pVtG8vJuQCWM-l0mAbC6IAUrp8ppcD7gzHBc",
-            "Content-Type": "application/json",
+              `Bearer ${token}`,
           },
           body: JSON.stringify({campaign_id:createdCampResponse.campaign_id}),
         });
