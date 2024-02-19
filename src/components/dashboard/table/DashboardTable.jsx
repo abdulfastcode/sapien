@@ -17,6 +17,7 @@ const DashboardTable = ({ tableData, setData, maxTableHeaders }) => {
   // let dispatch = useDispatch();
 
   const path = pathname.split("/").pop();
+  console.log("path!!!",path)
   const allIds = tableData?.map((e) => {
     return e[`${path}_id`];
   });
@@ -168,7 +169,7 @@ const DashboardTable = ({ tableData, setData, maxTableHeaders }) => {
                         className="border border-[#381E50]"
                         key={`${i}-${header}`}
                       >
-                        {e[header]}
+                        {e[header]??"null"}
                       </td>
                     );
                   })}

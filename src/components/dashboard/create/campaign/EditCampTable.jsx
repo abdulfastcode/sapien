@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-const EditCampTable = () => {
+const EditCampTable = ({indvQuery}) => {
+  
   return (
     <>
       <div className="w-full h-[40vh] lg:h-[47vh] relative">
@@ -124,13 +125,13 @@ const EditCampTable = () => {
               </tr>
             </tbody>
           </table>
-          <div className="hidden sm:flex w-full h-[66px] px-[24px] justify-end items-center border bg-white border-[#433456] sticky  bottom-0">
+          {/* <div className="hidden sm:flex w-full h-[66px] px-[24px] justify-end items-center border bg-white border-[#433456] sticky  bottom-0">
             <button className="border border-[#381E50] py-1 px-4">Pause</button>
-          </div>
+          </div> */}
         </div>
-        <div className="flex sm:hidden w-full h-[66px] px-[24px] justify-end items-center border bg-white border-[#433456] sticky  bottom-0">
+        {/* <div className="flex sm:hidden w-full h-[66px] px-[24px] justify-end items-center border bg-white border-[#433456] sticky  bottom-0">
           <button className="border border-[#381E50] py-1 px-4">Pause</button>
-        </div>
+        </div> */}
       </div>
     </>
   );

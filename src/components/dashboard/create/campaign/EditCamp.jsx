@@ -4,18 +4,21 @@ import deleteIcon from "../../../../assets/icons/deleIcon.svg";
 import reloadIcon from "../../../../assets/icons/reload.svg";
 import downloadIcon from "../../../../assets/icons/Download.svg";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { baseUrl } from "../../../../utils/baseUrl";
+import { createdCampaignResponse } from "../../../../utils/slices/createcampaignOptionsSlice";
 
-const EditCamp = ({ indvQuery, campaignData }) => {
+const EditCamp = ({ indvQuery,campStarted, campaignData }) => {
+  let dispatch = useDispatch()
   console.log(campaignData);
+  console.log(campStarted);
   let optionsState = useSelector(
     (state) => state.createCampaignOptions.options
-  ); 
+  );
   // console.log("optionsState", optionsState);
-  
-  const checkQueryAndCampData = indvQuery && campaignData.length > 0;
 
+  const checkQueryAndCampData = indvQuery && campaignData.length > 0;
+console.log("checkQueryAndCampData",checkQueryAndCampData)
   function saveData() {
     // console.log("object")
     console.log("jsonData", JSON.stringify(optionsState));
@@ -31,7 +34,7 @@ const EditCamp = ({ indvQuery, campaignData }) => {
           body: JSON.stringify(optionsState),
         });
         let res = await post.json();
-      
+        dispatch(createdCampaignResponse(res))
         console.log("res-", res);
       } catch (e) {
         console.error(e);
@@ -45,12 +48,16 @@ const EditCamp = ({ indvQuery, campaignData }) => {
         <div className="flex gap-[20px] sm:gap-[35px] flex-wrap items-center ">
           <div className="flex  text-[#381E50] gap-[12px] items-center">
             <div>
-              {checkQueryAndCampData ? campaignData[0]?.name : "CUST NAME"}
+              {checkQueryAndCampData
+                ? campaignData[0]?.name
+                : optionsState?.name.length > 0
+                ? optionsState?.name
+                : "Campaign Name"}
             </div>
-            {checkQueryAndCampData && (
+            {(checkQueryAndCampData || campStarted) && (
               <>
                 <div>{campaignData[0]?.created_on}</div>
-                <div> 
+                <div>
                   <img src={reloadIcon} alt="" />
                 </div>
               </>
@@ -78,12 +85,16 @@ const EditCamp = ({ indvQuery, campaignData }) => {
               {checkQueryAndCampData && campaignData[0]?.status}
             </div>
           )}
-          <button>
-            <img src={downloadIcon} alt="downloadIcon" />
-          </button>
-          <button>
-            <img src={deleteIcon} alt="deleteIcon" />
-          </button>
+          {checkQueryAndCampData ? (
+            <>
+              <button>
+                <img src={downloadIcon} alt="downloadIcon" />
+              </button>
+              <button>
+                <img src={deleteIcon} alt="deleteIcon" />
+              </button>
+            </>
+          ) : null}
           <Link to={`/dashboard/campaign`}>
             <button className=" py-[3px]  items-center text-[#381E50]  text-md font-bold">
               X

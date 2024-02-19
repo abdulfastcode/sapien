@@ -180,11 +180,11 @@ const Options = ({ callScript }) => {
   //   "voiceId-",
   //   voiceId
   // );
-  // console.log("voiceList", voiceList);
-  // console.log("phoneList", phoneList);
-  // console.log("conversationList", conversationList);
-  // console.log("agentName->", agentName);
-  // console.log("optionsState->", optionsState);
+  console.log("voiceList", voiceList);
+  console.log("phoneList", phoneList);
+  console.log("conversationList", conversationList);
+  console.log("agentName->", agentName);
+  console.log("optionsState->", optionsState);
   return (
     <div className="w-full py-[20px] px-[24px] lg:w-[40%] flex flex-col gap-[30px]">
       {/* Success Message */}
@@ -267,7 +267,7 @@ const Options = ({ callScript }) => {
           </select> */}
           <SelectOpt
             width={{ w: "210px", sm: "210px", md: "210px", lg: "210px" }}
-            defaultOption="SELECT VOICE"
+            defaultOption={voiceList[0]?.name}
             options={voiceList}
             sendSelectedVal={sendSelectedValVoice}
           />
@@ -293,7 +293,7 @@ const Options = ({ callScript }) => {
               width={{ w: "210px", sm: "210px", md: "210px", lg: "210px" }}
               optWidth="50px"
               options={conversationList}
-              defaultOption="SELECT CONVERSION"
+              defaultOption={conversationList[0]?.name}
               editOpt="true"
               create="Create Conversion"
               renderParentComponent={renderParentComponent}
@@ -319,7 +319,7 @@ const Options = ({ callScript }) => {
           <div>
             <SelectOpt
               width={{ w: "210px", sm: "210px", md: "210px", lg: "210px" }}
-              defaultOption="SELECT PHONE"
+              defaultOption={phoneList[0]?.full_phone}
               options={phoneList}
               sendSelectedVal={sendSelectedValPhone}
             />

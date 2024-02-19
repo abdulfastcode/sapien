@@ -4,27 +4,44 @@ import { useDispatch } from "react-redux";
 import { addUserDetails } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { baseUrl } from "../utils/baseUrl";
 
 const Email = () => {
   const [showFirstDiv, setShowFirstDiv] = useState(true);
   const [email, setEmail] = useState("");
   const [validEmail, setValidEmail] = useState();
   const [inputFocus, setInputFocus] = useState(false);
- 
+
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   console.log(user);
   const navigate = useNavigate();
-  
+
+  async function sendMail() {
+    console.log(email);
+    console.log( JSON.stringify({ email: email }))
+    try {
+      let post = await fetch(`${baseUrl}/login/send_verification_link`, {
+        method: "POST",
+        body: JSON.stringify({ email: email }),
+      });
+      let res = await post.json();
+      // navigate('/dashboard/agent')
+      console.log("res-", res);
+    } catch (e) {
+      console.error("Error sending mail:", e);
+    }
+  }
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       if (showFirstDiv && validEmail) {
         console.log("email valid", email);
         dispatch(addUserDetails({ email: email }));
+    
         setShowFirstDiv(false);
-
-        // navigate("/agent");
+        // sendMail();
+        navigate("dashboard/agent");
       } else if (!showFirstDiv) {
         setShowFirstDiv(true);
       }
@@ -53,15 +70,16 @@ const Email = () => {
 
   useEffect(() => {
     document.addEventListener("keydown", handleKeyPress);
-    if (user) {
-      console.log("user not null", user);
-      setTimeout(() => {
-        navigate("/dashboard/agent");
-      }, 5000);
-    } else {
-      console.log("user null", user);
-      navigate("/");
-    }
+    // if (user) {
+    //   console.log("user not null", user);
+    //   setTimeout(() => {
+    //     navigate("/dashboard/agent");
+    //   }, 5000);
+    // } else {
+    //   console.log("user null", user);
+    //   navigate("/");
+    // }
+    
 
     return () => {
       document.removeEventListener("keydown", handleKeyPress);
@@ -89,7 +107,7 @@ const Email = () => {
                   : "focus:outline-none focus:ring text-pink-900 focus:ring-pink-600"
               }`}
               type="email"
-              disabled={user??false}
+              disabled={user ?? false}
               placeholder="john@smallest.ai"
               value={email}
               onFocus={() =>
@@ -132,7 +150,10 @@ const Email = () => {
             Check your inbox for confirmation email
           </div>
           <div>
-            <button className="w-[90px] p-[8px] mr-[10px] text-white bg-indigo-950">
+            <button
+              className="w-[90px] p-[8px] mr-[10px] text-white bg-indigo-950"
+              onClick={sendMail}
+            >
               Resend
             </button>
             <button

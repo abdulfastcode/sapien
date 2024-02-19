@@ -1,11 +1,55 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { updateUserInfo } from "../utils/slices/userSlice";
+// import { updateUserInfo } from './userSlice';
 
+import { baseUrl } from "../utils/baseUrl";
 const UserInfo = () => {
+  let navigate = useNavigate();
   const [activeDivIndex, setActiveDivIndex] = useState(0);
+  const [userInfo, setUserInfo] = useState({
+    country_code: "",
+    current_usage: [],
+    designation: "",
+    have_dev_team: false,
+    phone: "",
+  });
+  const dispatch = useDispatch();
 
-  const handleKeyPress = (e) => {
+  const handleKeyPress = async (e) => {
     if (e.key === "Enter") {
-      if (activeDivIndex < 4) {
+      if (activeDivIndex === 4) {
+        dispatch(updateUserInfo(userInfo));
+        console.log("User Info:", userInfo); // Print the user info slice values
+        const urlParams = new URLSearchParams(window.location.search);
+        // const authToken = urlParams.get("auth_token");
+        const authToken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYWJkdWxAZmFzdGNvZGUuYWkifQ.RrtWBbgI2NHxkUJS3iH-sT1AN3iCJDP8PxF3ssJCZjw";
+        if (authToken) {
+          const apiUrl = `${baseUrl}/login/update_user_info`;
+          const requestOptions = {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: authToken,
+            },
+            body: JSON.stringify(userInfo),
+          };
+          try {
+            const response = await fetch(apiUrl, requestOptions);
+            if (response.ok) {
+              localStorage.setItem("auth_token", authToken);
+              navigate("/dashboard/agent");
+            } else {
+              console.error("Failed to update user info");
+            }
+          } catch (error) {
+            console.error("Error updating user info:", error);
+          }
+        } else {
+          console.error("Auth token not found in URL");
+        }
+      } else if (activeDivIndex < 4) {
         setActiveDivIndex((prevIndex) => prevIndex + 1);
       }
     } else if (e.key === "Backspace") {
@@ -15,13 +59,31 @@ const UserInfo = () => {
     }
   };
 
+  const handleInputChange = (e, key) => {
+    let value =
+      e.target.type === "checkbox" ? e.target.checked : e.target.value;
+    if (key === "current_usage") {
+      if (e.target.checked) {
+        value = [...userInfo.current_usage, e.target.value];
+      } else {
+        value = userInfo.current_usage.filter(
+          (item) => item !== e.target.value
+        );
+      }
+    }
+    setUserInfo((prevState) => ({
+      ...prevState,
+      [key]: value,
+    }));
+  };
+
   useEffect(() => {
     document.addEventListener("keydown", handleKeyPress);
 
     return () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
-  }, [activeDivIndex]);
+  }, [activeDivIndex, userInfo, dispatch]);
 
   const renderDiv = (index, content) => (
     <div
@@ -70,9 +132,16 @@ const UserInfo = () => {
           </div>
           <div>
             <input
+              className={`w-[55px] mr-[10px]  h-[50px] p-2 border border-gray-500`}
+              type="tel"
+              placeholder="+91"
+              onChange={(e) => handleInputChange(e, "country_code")}
+            />
+            <input
               className={`w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px]  h-[50px] p-3 border border-gray-500`}
               type="tel"
               placeholder="123456789"
+              onChange={(e) => handleInputChange(e, "phone")}
             />
           </div>
         </>
@@ -89,6 +158,7 @@ const UserInfo = () => {
               className={`w-[70vw] md:w-[50vw] rounded-sm lg:w-[460px]  h-[50px] p-3 border border-gray-500`}
               type="text"
               placeholder="John Smith"
+              onChange={(e) => handleInputChange(e, "full_name")}
             />
           </div>
         </>
@@ -105,6 +175,7 @@ const UserInfo = () => {
               className={`w-[70vw] md:w-[50vw] rounded-sm lg:w-[460px]  h-[50px] p-3 border border-gray-500`}
               type="text"
               placeholder="Data Science"
+              onChange={(e) => handleInputChange(e, "designation")}
             />
           </div>
         </>
@@ -122,8 +193,9 @@ const UserInfo = () => {
                 <input
                   id="robo"
                   type="checkbox"
-                  value=""
+                  value="Robo Calls"
                   className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  onChange={(e) => handleInputChange(e, "current_usage")}
                 />
                 <label
                   htmlFor="robo"
@@ -136,8 +208,9 @@ const UserInfo = () => {
                 <input
                   id="outbound-sales"
                   type="checkbox"
-                  value=""
+                  value="Outbound"
                   className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  onChange={(e) => handleInputChange(e, "current_usage")}
                 />
                 <label
                   htmlFor="outbound-sales"
@@ -150,8 +223,9 @@ const UserInfo = () => {
                 <input
                   id="inbound-sales"
                   type="checkbox"
-                  value=""
+                  value="Inbound"
                   className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  onChange={(e) => handleInputChange(e, "current_usage")}
                 />
                 <label
                   htmlFor="inbound-sales"
@@ -164,8 +238,9 @@ const UserInfo = () => {
                 <input
                   id="cus-support"
                   type="checkbox"
-                  value=""
+                  value="Support"
                   className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  onChange={(e) => handleInputChange(e, "current_usage")}
                 />
                 <label
                   htmlFor="cus-support"
@@ -192,8 +267,9 @@ const UserInfo = () => {
                   id="dev-team-yes"
                   type="checkbox"
                   name="dev-team"
-                  value=""
+                  value="YES"
                   className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  onChange={(e) => handleInputChange(e, "have_dev_team")}
                 />
                 <label
                   htmlFor="dev-team-yes"
@@ -207,8 +283,9 @@ const UserInfo = () => {
                   name="dev-team"
                   id="dev-team-no"
                   type="checkbox"
-                  value=""
+                  value="NO"
                   className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  onChange={(e) => handleInputChange(e, "have_dev_team")}
                 />
                 <label
                   htmlFor="dev-team-no"

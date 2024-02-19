@@ -15,12 +15,12 @@ const Options = ({ indvQuery, campaignData }) => {
   const [retriesVal, setRetriesVal] = useState();
   const [name, setName] = useState("");
 
-  console.log(retriesVal);
+  console.log("campaignData",campaignData);
   const checkQueryAndCampData = indvQuery && campaignData.length > 0;
 
   function sendSelectedValAgent(val) {
     console.log("Agent***************", val);
-    setAgentId(val.id);
+    setAgentId(val.id); 
   }
 
   function sendSelectedValAudience(val) {
@@ -125,19 +125,19 @@ const Options = ({ indvQuery, campaignData }) => {
       </div>
 
       {indvQuery && (
-        <div className="flex flex-col gap-[16px]">
+        <div className="flex flex-col gap-[16px] pr-[15px]">
           <div className="font-bold">Analytics</div>
           <div className="flex justify-between gap-[80px]">
-            <div>Connected</div>
-            <div>328</div>
+            <div>Called</div>
+            <div>{campaignData[0]?.called}</div>
           </div>
           <div className="flex justify-between gap-[80px]">
-            <div>Voicebox</div>
-            <div>28</div>
+            <div>Connected</div>
+            <div>{campaignData[0]?.connected}</div>
           </div>
           <div className="flex justify-between gap-[80px]">
             <div>Converted</div>
-            <div>120</div>
+            <div>{campaignData[0]?.converted}</div>
           </div>
         </div>
       )}

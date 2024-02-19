@@ -4,6 +4,7 @@ import dashboardSlice from "./slices/dashboardSlice";
 import fileSlice from "./slices/fileSlice";
 import createAgentOptionsSlice from "./slices/createAgentOptionsSlice";
 import createcampaignOptionsSlice from "./slices/createcampaignOptionsSlice";
+import userReducer from './userSlice';
 
 const store = configureStore({
     reducer: {
@@ -11,7 +12,8 @@ const store = configureStore({
         dashboard: dashboardSlice, 
         fileLoader: fileSlice,
         createAgentOptions: createAgentOptionsSlice,
-        createCampaignOptions: createcampaignOptionsSlice
+        createCampaignOptions: createcampaignOptionsSlice,
+        user_info: userReducer,
     }
 })
 

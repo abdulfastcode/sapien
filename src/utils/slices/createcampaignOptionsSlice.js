@@ -20,14 +20,18 @@ import { createSlice } from "@reduxjs/toolkit";
 let createCampaignOptionsSlice = createSlice({
     name: 'createCampaignOptions',
     initialState: {
-        options: null
+        options: null,
+        createdCampaignResponse:null
     },
     reducers: {
         setCampaignOptions: (state, action) => {
             state.options = action.payload;
+        },
+        createdCampaignResponse: (state,action) => {
+            state.createdCampaignResponse = action.payload;
         }
     }
 })
 
-export const { setCampaignOptions } = createCampaignOptionsSlice.actions;
+export const { setCampaignOptions,createdCampaignResponse } = createCampaignOptionsSlice.actions;
 export default createCampaignOptionsSlice.reducer
