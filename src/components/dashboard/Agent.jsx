@@ -24,6 +24,14 @@ console.log("userrmail",user)
   // if (checkbox.length > 0 || checkbox === null) {
   //   dispatch(addCheckboxState([]));
   // } 
+  const urlParams = new URLSearchParams(window.location.search);
+  console.log("urlParams---", urlParams);
+  const authToken = urlParams.get("auth_token");
+  if (authToken) {
+    localStorage.setItem("auth_token", authToken);
+  }
+
+
   let token = localStorage.getItem("auth_token");
   console.log("token", token);
   useEffect(() => {
