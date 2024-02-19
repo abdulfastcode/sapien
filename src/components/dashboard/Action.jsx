@@ -53,14 +53,14 @@ const Action = ({ selectedData, renderParentComponent }) => {
       console.log("dekete user");
       renderParentComponent(false);
       try {
+  let token = localStorage.getItem("auth_token");
         let post = await fetch(
           `${baseUrl}/${path}s/delete_${path}?${path}_id=${checkIdsWithParams}`,
           {
             method: "DELETE",
             headers: {
               Authorization:
-                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYWJkdWwifQ.QRyeI86pVtG8vJuQCWM-l0mAbC6IAUrp8ppcD7gzHBc",
-              "Content-Type": "application/json",
+                `Bearer ${token}`,
             },
             // query: JSON.stringify({ conversion_id: [id] }),
           }
@@ -78,6 +78,8 @@ const Action = ({ selectedData, renderParentComponent }) => {
   }
 
   useEffect(() => {
+  let token = localStorage.getItem("auth_token");
+
     if (idsSelectedData?.length >= 1) {
       console.log(
         `${baseUrl}/${path}s/get_${path}?${path}_id=${checkIdsWithParams}`
@@ -85,7 +87,10 @@ const Action = ({ selectedData, renderParentComponent }) => {
       fetch(
         `${baseUrl}/${path}s/get_${path}?${path}_id=${checkIdsWithParams}`,
         {
-          headers,
+          headers: {
+            Authorization:
+              `Bearer ${token}`,
+          },
         }
       )
         .then((response) => response.json())
