@@ -11,7 +11,7 @@ const Dashbord = () => {
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
-    // if (!jsonFileData) { 
+    // if (!jsonFileData) {
     //   navigate("/dashboard/audience");
     // }
     // if (user) {
@@ -23,7 +23,15 @@ const Dashbord = () => {
     //   navigate("/");
 
     // }
-  let token = localStorage.getItem("auth_token");
+    // checking for existing user 
+    const urlParams = new URLSearchParams(window.location.search);
+    console.log("urlParams---", urlParams);
+    const authToken = urlParams.get("auth_token");
+    if (authToken) {
+      localStorage.setItem("auth_token", authToken);
+    }
+
+    let token = localStorage.getItem("auth_token");
 
     if (token) {
       console.log("user not null", user);
