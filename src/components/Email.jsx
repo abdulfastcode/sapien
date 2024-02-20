@@ -168,13 +168,13 @@ const Email = () => {
           showFirstDiv ? "transform translate-x-full" : ""
         }`}
       >
-        <div className="flex flex-col items-start gap-[12px] ml-[20px]">
+        <div className="flex flex-col items-center gap-[12px]">
           <div className="text-black text-lg font-normal leading-tight tracking-tight">
             {errorMessage
               ? `${errorMessage}, Recheck your email`
               : " Check your inbox for confirmation email"}
           </div>
-          <div>
+          <div className="">
             <button
               className="w-[90px] p-[8px] mr-[10px] text-white bg-indigo-950"
               onClick={sendMail}
