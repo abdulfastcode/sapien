@@ -10,7 +10,7 @@ import { useLocation } from "react-router-dom";
 const DashboardTable = ({ tableData, setData, maxTableHeaders }) => {
   // console.log("comp mount from DashboardTable");
   const [checkedTr, setCheckedTr] = useState(true);
-  const { pathname } = useLocation();
+  const { pathname } = useLocation(); 
   const [check, setCheck] = useState([]);
   // let dashboadTable = useSelector((state) => state.dashboard.table);
   let checkState = useSelector((state) => state.dashboard.checkBox);
@@ -140,7 +140,7 @@ const DashboardTable = ({ tableData, setData, maxTableHeaders }) => {
             </tr>
           ) : (
             <tr>
-              <th>No Data</th>
+              <th>{path==="agent"?"Agent_id":path==="audience"?"Audinece_id"?"Campaign Id"}</th>
             </tr>
           )}
         </thead>

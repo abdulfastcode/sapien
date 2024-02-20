@@ -53,14 +53,13 @@ const Action = ({ selectedData, renderParentComponent }) => {
       console.log("dekete user");
       renderParentComponent(false);
       try {
-  let token = localStorage.getItem("auth_token");
+        let token = localStorage.getItem("auth_token");
         let post = await fetch(
           `${baseUrl}/${path}s/delete_${path}?${path}_id=${checkIdsWithParams}`,
           {
             method: "DELETE",
             headers: {
-              Authorization:
-                `Bearer ${token}`,
+              Authorization: `Bearer ${token}`,
             },
             // query: JSON.stringify({ conversion_id: [id] }),
           }
@@ -78,7 +77,7 @@ const Action = ({ selectedData, renderParentComponent }) => {
   }
 
   useEffect(() => {
-  let token = localStorage.getItem("auth_token");
+    let token = localStorage.getItem("auth_token");
 
     if (idsSelectedData?.length >= 1) {
       console.log(
@@ -88,8 +87,7 @@ const Action = ({ selectedData, renderParentComponent }) => {
         `${baseUrl}/${path}s/get_${path}?${path}_id=${checkIdsWithParams}`,
         {
           headers: {
-            Authorization:
-              `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       )

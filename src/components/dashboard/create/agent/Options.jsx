@@ -23,7 +23,30 @@ const Options = ({ callScript }) => {
 
   const [additionalDivs, setAdditionalDivs] = useState([]);
 
- 
+  const handleAddCondition = () => {
+    setAdditionalDivs([...additionalDivs, <div key={additionalDivs.length} className="flex flex-wrap justify-end pb-[15px] gap-[10px]">
+      <SelectOpt
+        width={{ w: "52px", sm: "52px", md: "52px", lg: "52px" }}
+        optWidth="50px"
+        options={[
+          { name: "OR", conversion_id: "1" },
+          { name: "AND", conversion_id: "2" },
+        ]}
+        defaultOption="Operator"
+        sendSelectedVal={sendSelectedValOperator}
+      />
+      <SelectOpt
+        width={{ w: "210px", sm: "210px", md: "210px", lg: "210px" }}
+        optWidth="50px"
+        options={conversationList}
+        defaultOption={conversationList[0]?.name}
+        editOpt="true"
+        create="Create Conversion"
+        renderParentComponent={renderParentComponent}
+        sendSelectedVal={sendSelectedValConversion}
+      />
+    </div>]);
+  };
 
 
   let optionsState = useSelector((state) => state.createAgentOptions.options);
@@ -107,31 +130,6 @@ const Options = ({ callScript }) => {
       });
   }
 
-
-  const handleAddCondition = () => {
-    setAdditionalDivs([...additionalDivs, <div key={additionalDivs.length} className="flex flex-wrap justify-end pb-[15px] gap-[10px]">
-      <SelectOpt
-        width={{ w: "52px", sm: "52px", md: "52px", lg: "52px" }}
-        optWidth="50px"
-        options={[
-          { name: "OR", conversion_id: "1" },
-          { name: "AND", conversion_id: "2" },
-        ]}
-        defaultOption="Operator"
-        sendSelectedVal={sendSelectedValOperator}
-      />
-      <SelectOpt
-        width={{ w: "210px", sm: "210px", md: "210px", lg: "210px" }}
-        optWidth="50px"
-        options={conversationList}
-        defaultOption={conversationList[0]?.name}
-        editOpt="true"
-        create="Create Conversion"
-        renderParentComponent={renderParentComponent}
-        sendSelectedVal={sendSelectedValConversion}
-      />
-    </div>]);
-  };
  
 
   useEffect(() => {

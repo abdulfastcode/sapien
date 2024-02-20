@@ -80,6 +80,7 @@ const CreateCampaign = () => {
       let post = await fetch(`${baseUrl}/campaigns/start_campaign`, {
         method: "POST",
           headers: {
+            "Content-Type": "application/json",
             Authorization:
               `Bearer ${token}`,
           },
