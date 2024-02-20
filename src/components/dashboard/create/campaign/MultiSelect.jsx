@@ -10,6 +10,7 @@ const MultiSelect = ({
   create,
   renderParentComponent,
   sendSelectedVal,
+  optionName
 }) => {
   const [dropDown, setDropDown] = useState(false);
   const [selectedVal, setSelectedVal] = useState({
@@ -84,6 +85,7 @@ const MultiSelect = ({
           dropDown ? "block" : "hidden"
         } lg:hidden lg:group-hover:block absolute top-0 cursor-pointer z-10  border border-[#381E50] bg-white`}
       >
+        <div className={`px-1 bg-gray-200 cursor-auto  ${optionName?"text-start":"text-center"}`}>{optionName?optionName:"- - -"}</div>
         {options.map((e, i) => {
           return (
             <div

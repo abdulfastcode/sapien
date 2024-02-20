@@ -1,15 +1,16 @@
 import React, { useEffect,useRef, useState } from "react";
 import downArrow from "../../../../assets/icons/downArrow.svg";
-import deleteIcon from "../../../../assets/icons/deleIcon.svg";
+import deleteIcon from "../../../../assets/icons/deleIcon.svg"; 
 import { baseUrl } from "../../../../utils/baseUrl";
 
-const SelectOpt = ({
+const SelectOpt = ({ 
   width,
   options,
   optWidth,
   defaultOption,
   editOpt,
   create,
+  optionName,
   renderParentComponent,
   sendSelectedVal,
 }) => {
@@ -175,6 +176,7 @@ const SelectOpt = ({
           dropDown ? "block" : "hidden"
         } lg:hidden lg:group-hover:block absolute top-0 cursor-pointer z-10  border border-[#381E50] bg-white`}
       >
+        <div className={`px-1 bg-gray-200 cursor-auto  ${optionName?"text-start":"text-center"}`}>{optionName?optionName:"- - -"}</div>
         {options?.map((e, i) => {
           return (
             <div

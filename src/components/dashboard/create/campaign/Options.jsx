@@ -99,8 +99,9 @@ const Options = ({ indvQuery, campaignData }) => {
           <div>Agent</div>
           <div>
             <SelectOpt
+            optionName={indvQuery?"Cannot Select Option":"Select Agent"}
               width={{ w: "210px", sm: "210px", md: "210px", lg: "210px" }}
-              defaultOption={checkQueryAndCampData?campaignData[0]?.agent_id:"SELECT AGENT"}
+              defaultOption={checkQueryAndCampData?campaignData[0]?.agent_id:"Select Agent"}
               options={agentList}
               sendSelectedVal={sendSelectedValAgent}
             />
@@ -110,8 +111,9 @@ const Options = ({ indvQuery, campaignData }) => {
           <div>Audiences</div>
           <div>
             <MultiSelect
+             optionName={indvQuery?"Cannot Select Option":"Select Audiences"}
               width={{ w: "210px", sm: "210px", md: "210px", lg: "210px" }}
-              defaultOption={checkQueryAndCampData?`${campaignData[0]?.audience_list.length} SELECTED`:"SELECT AUDIENCES"}
+              defaultOption={checkQueryAndCampData?`${campaignData[0]?.audience_list.length} SELECTED`:"Select Audiences"}
               options={audienceList}
               sendSelectedVal={sendSelectedValAudience}
             />

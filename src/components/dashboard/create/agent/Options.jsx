@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAgentOptions } from "../../../../utils/slices/createAgentOptionsSlice";
 import SelectOpt from "./SelectOpt";
 
-const Options = ({ callScript }) => {
+const Options = ({ callScript,resErrData }) => {
   const [voiceList, setvoiceList] = useState([]);
   const [conversationList, setconversationList] = useState([]);
   const [updateComp, setUpdateComp] = useState(false);
@@ -20,34 +20,40 @@ const Options = ({ callScript }) => {
   const [voiceId, setVoiceId] = useState("");
   const [script, setScript] = useState("");
 
-
   const [additionalDivs, setAdditionalDivs] = useState([]);
 
-  const handleAddCondition = () => {
-    setAdditionalDivs([...additionalDivs, <div key={additionalDivs.length} className="flex flex-wrap justify-end pb-[15px] gap-[10px]">
-      <SelectOpt
-        width={{ w: "52px", sm: "52px", md: "52px", lg: "52px" }}
-        optWidth="50px"
-        options={[
-          { name: "OR", conversion_id: "1" },
-          { name: "AND", conversion_id: "2" },
-        ]}
-        defaultOption="Operator"
-        sendSelectedVal={sendSelectedValOperator}
-      />
-      <SelectOpt
-        width={{ w: "210px", sm: "210px", md: "210px", lg: "210px" }}
-        optWidth="50px"
-        options={conversationList}
-        defaultOption={conversationList[0]?.name}
-        editOpt="true"
-        create="Create Conversion"
-        renderParentComponent={renderParentComponent}
-        sendSelectedVal={sendSelectedValConversion}
-      />
-    </div>]);
-  };
+  const [showMess, setShowMess] = useState(false);
 
+  const handleAddCondition = () => {
+    setAdditionalDivs([
+      ...additionalDivs,
+      <div
+        key={additionalDivs.length}
+        className="flex flex-wrap justify-end pb-[15px] gap-[10px]"
+      >
+        <SelectOpt
+          width={{ w: "52px", sm: "52px", md: "52px", lg: "52px" }}
+          optWidth="50px"
+          options={[
+            { name: "OR", conversion_id: "1" },
+            { name: "AND", conversion_id: "2" },
+          ]}
+          defaultOption="Operator"
+          sendSelectedVal={sendSelectedValOperator}
+        />
+        <SelectOpt
+          width={{ w: "210px", sm: "210px", md: "210px", lg: "210px" }}
+          optWidth="50px"
+          options={conversationList}
+          defaultOption={conversationList[0]?.name}
+          editOpt="true"
+          create="Create Conversion"
+          renderParentComponent={renderParentComponent}
+          sendSelectedVal={sendSelectedValConversion}
+        />
+      </div>,
+    ]);
+  };
 
   let optionsState = useSelector((state) => state.createAgentOptions.options);
   let dispatch = useDispatch();
@@ -84,10 +90,7 @@ const Options = ({ callScript }) => {
   function sendSelectedValPhone(val) {
     // console.log("Phone***************", val);
     setPhoneId(val.id);
-
   }
-
- 
 
   function getVoiceList() {
     let token = localStorage.getItem("auth_token");
@@ -130,11 +133,10 @@ const Options = ({ callScript }) => {
       });
   }
 
- 
-
   useEffect(() => {
     setScript(callScript?.script);
 
+    if(conversionId&&operator&&agentName&&phoneId&&script&&voiceId){
     dispatch(
       setAgentOptions(
         // body
@@ -151,11 +153,25 @@ const Options = ({ callScript }) => {
           voice_id: voiceId,
         }
       )
-    );
+    )}
     getVoiceList();
     getConversationList();
     getPhoneList();
-  }, [
+
+  //   if (resErrData) {
+  //     setShowMess(true);
+  //     const timeout = setTimeout(() => {
+  //       setShowMess(false);
+  //     }, 3000);
+
+  //     return () => clearTimeout(timeout);
+  //   }
+  // }
+  
+      },
+
+ [
+    resErrData,
     agentName,
     updateComp,
     callScript,
@@ -232,14 +248,15 @@ const Options = ({ callScript }) => {
         </button>
       </div> */}
       {/* NAME */}
-        {voiceList.error&&<div className="text-red-500">No Voice List</div>}
-        {phoneList.error&&<div className="text-red-500">No Phone List</div>}
+      {voiceList.error && <div className="text-red-500">No Voice List</div>}
+      {phoneList.error && <div className="text-red-500">No Phone List</div>}
+      {/* {showMess&&<div className="text-red-500">{ resErrData}</div>} */}
       <div className="flex flex-wrap gap-3 justify-between ">
         <div>Name</div>
         <div>
           <input
             type="text"
-            placeholder="Real-Estate-Hindi"
+            placeholder="Agent Name"
             // ref={agentName}
             value={agentName}
             onChange={(e) => setAgentName(e.target.value)}
@@ -267,6 +284,7 @@ const Options = ({ callScript }) => {
            
           </select> */}
             <SelectOpt
+              optionName="Voice"
               width={{ w: "210px", sm: "210px", md: "210px", lg: "210px" }}
               defaultOption={voiceList[0]?.name}
               options={voiceList}
@@ -293,6 +311,7 @@ const Options = ({ callScript }) => {
                 sendSelectedVal={sendSelectedValOperator}
               />
               <SelectOpt
+                optionName="Conversion"
                 width={{ w: "210px", sm: "210px", md: "210px", lg: "210px" }}
                 optWidth="50px"
                 options={conversationList}
@@ -304,9 +323,9 @@ const Options = ({ callScript }) => {
               />
             </div>
             {additionalDivs.map((div, index) => (
-          <React.Fragment key={index}>{div}</React.Fragment>
-        ))}
-              {/* Add Condition */}
+              <React.Fragment key={index}>{div}</React.Fragment>
+            ))}
+            {/* Add Condition */}
             <div className="float-right">
               <input
                 type="button"
@@ -327,6 +346,7 @@ const Options = ({ callScript }) => {
             <div>Call From </div>
             <div>
               <SelectOpt
+                optionName="Call From"
                 width={{ w: "210px", sm: "210px", md: "210px", lg: "210px" }}
                 defaultOption={phoneList[0]?.full_phone}
                 options={phoneList}

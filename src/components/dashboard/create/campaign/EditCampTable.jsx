@@ -62,6 +62,234 @@ const EditCampTable = ({indvQuery}) => {
                     className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                 </td>
+              </tr><tr className="border border-[#381E50]">
+                <td className="border border-[#381E50]">CK323</td>
+                <td className="border border-[#381E50]">9837441234</td>
+                <td className="border border-[#381E50]">12.04.2023</td>
+                <td className="border border-[#381E50]">YES</td>
+                <td className="border border-[#381E50]">YES</td>
+                <td className="border border-[#381E50]">NO</td>
+                <td className="border border-[#381E50]">
+                  Went straight to voicebox.
+                </td>
+                <td className="pt-[4px]">
+                  <input
+                    type="checkbox"
+                    name=""
+                    id=""
+                    value=""
+                    className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                </td>
+              </tr><tr className="border border-[#381E50]">
+                <td className="border border-[#381E50]">CK323</td>
+                <td className="border border-[#381E50]">9837441234</td>
+                <td className="border border-[#381E50]">12.04.2023</td>
+                <td className="border border-[#381E50]">YES</td>
+                <td className="border border-[#381E50]">YES</td>
+                <td className="border border-[#381E50]">NO</td>
+                <td className="border border-[#381E50]">
+                  Went straight to voicebox.
+                </td>
+                <td className="pt-[4px]">
+                  <input
+                    type="checkbox"
+                    name=""
+                    id=""
+                    value=""
+                    className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                </td>
+              </tr><tr className="border border-[#381E50]">
+                <td className="border border-[#381E50]">CK323</td>
+                <td className="border border-[#381E50]">9837441234</td>
+                <td className="border border-[#381E50]">12.04.2023</td>
+                <td className="border border-[#381E50]">YES</td>
+                <td className="border border-[#381E50]">YES</td>
+                <td className="border border-[#381E50]">NO</td>
+                <td className="border border-[#381E50]">
+                  Went straight to voicebox.
+                </td>
+                <td className="pt-[4px]">
+                  <input
+                    type="checkbox"
+                    name=""
+                    id=""
+                    value=""
+                    className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                </td>
+              </tr><tr className="border border-[#381E50]">
+                <td className="border border-[#381E50]">CK323</td>
+                <td className="border border-[#381E50]">9837441234</td>
+                <td className="border border-[#381E50]">12.04.2023</td>
+                <td className="border border-[#381E50]">YES</td>
+                <td className="border border-[#381E50]">YES</td>
+                <td className="border border-[#381E50]">NO</td>
+                <td className="border border-[#381E50]">
+                  Went straight to voicebox.
+                </td>
+                <td className="pt-[4px]">
+                  <input
+                    type="checkbox"
+                    name=""
+                    id=""
+                    value=""
+                    className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                </td>
+              </tr><tr className="border border-[#381E50]">
+                <td className="border border-[#381E50]">CK323</td>
+                <td className="border border-[#381E50]">9837441234</td>
+                <td className="border border-[#381E50]">12.04.2023</td>
+                <td className="border border-[#381E50]">YES</td>
+                <td className="border border-[#381E50]">YES</td>
+                <td className="border border-[#381E50]">NO</td>
+                <td className="border border-[#381E50]">
+                  Went straight to voicebox.
+                </td>
+                <td className="pt-[4px]">
+                  <input
+                    type="checkbox"
+                    name=""
+                    id=""
+                    value=""
+                    className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                </td>
+              </tr><tr className="border border-[#381E50]">
+                <td className="border border-[#381E50]">CK323</td>
+                <td className="border border-[#381E50]">9837441234</td>
+                <td className="border border-[#381E50]">12.04.2023</td>
+                <td className="border border-[#381E50]">YES</td>
+                <td className="border border-[#381E50]">YES</td>
+                <td className="border border-[#381E50]">NO</td>
+                <td className="border border-[#381E50]">
+                  Went straight to voicebox.
+                </td>
+                <td className="pt-[4px]">
+                  <input
+                    type="checkbox"
+                    name=""
+                    id=""
+                    value=""
+                    className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                </td>
+              </tr><tr className="border border-[#381E50]">
+                <td className="border border-[#381E50]">CK323</td>
+                <td className="border border-[#381E50]">9837441234</td>
+                <td className="border border-[#381E50]">12.04.2023</td>
+                <td className="border border-[#381E50]">YES</td>
+                <td className="border border-[#381E50]">YES</td>
+                <td className="border border-[#381E50]">NO</td>
+                <td className="border border-[#381E50]">
+                  Went straight to voicebox.
+                </td>
+                <td className="pt-[4px]">
+                  <input
+                    type="checkbox"
+                    name=""
+                    id=""
+                    value=""
+                    className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                </td>
+              </tr><tr className="border border-[#381E50]">
+                <td className="border border-[#381E50]">CK323</td>
+                <td className="border border-[#381E50]">9837441234</td>
+                <td className="border border-[#381E50]">12.04.2023</td>
+                <td className="border border-[#381E50]">YES</td>
+                <td className="border border-[#381E50]">YES</td>
+                <td className="border border-[#381E50]">NO</td>
+                <td className="border border-[#381E50]">
+                  Went straight to voicebox.
+                </td>
+                <td className="pt-[4px]">
+                  <input
+                    type="checkbox"
+                    name=""
+                    id=""
+                    value=""
+                    className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                </td>
+              </tr><tr className="border border-[#381E50]">
+                <td className="border border-[#381E50]">CK323</td>
+                <td className="border border-[#381E50]">9837441234</td>
+                <td className="border border-[#381E50]">12.04.2023</td>
+                <td className="border border-[#381E50]">YES</td>
+                <td className="border border-[#381E50]">YES</td>
+                <td className="border border-[#381E50]">NO</td>
+                <td className="border border-[#381E50]">
+                  Went straight to voicebox.
+                </td>
+                <td className="pt-[4px]">
+                  <input
+                    type="checkbox"
+                    name=""
+                    id=""
+                    value=""
+                    className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                </td>
+              </tr><tr className="border border-[#381E50]">
+                <td className="border border-[#381E50]">CK323</td>
+                <td className="border border-[#381E50]">9837441234</td>
+                <td className="border border-[#381E50]">12.04.2023</td>
+                <td className="border border-[#381E50]">YES</td>
+                <td className="border border-[#381E50]">YES</td>
+                <td className="border border-[#381E50]">NO</td>
+                <td className="border border-[#381E50]">
+                  Went straight to voicebox.
+                </td>
+                <td className="pt-[4px]">
+                  <input
+                    type="checkbox"
+                    name=""
+                    id=""
+                    value=""
+                    className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                </td>
+              </tr><tr className="border border-[#381E50]">
+                <td className="border border-[#381E50]">CK323</td>
+                <td className="border border-[#381E50]">9837441234</td>
+                <td className="border border-[#381E50]">12.04.2023</td>
+                <td className="border border-[#381E50]">YES</td>
+                <td className="border border-[#381E50]">YES</td>
+                <td className="border border-[#381E50]">NO</td>
+                <td className="border border-[#381E50]">
+                  Went straight to voicebox.
+                </td>
+                <td className="pt-[4px]">
+                  <input
+                    type="checkbox"
+                    name=""
+                    id=""
+                    value=""
+                    className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                </td>
+              </tr><tr className="border border-[#381E50]">
+                <td className="border border-[#381E50]">CK323</td>
+                <td className="border border-[#381E50]">9837441234</td>
+                <td className="border border-[#381E50]">12.04.2023</td>
+                <td className="border border-[#381E50]">YES</td>
+                <td className="border border-[#381E50]">YES</td>
+                <td className="border border-[#381E50]">NO</td>
+                <td className="border border-[#381E50]">
+                  Went straight to voicebox.
+                </td>
+                <td className="pt-[4px]">
+                  <input
+                    type="checkbox"
+                    name=""
+                    id=""
+                    value=""
+                    className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                </td>
               </tr>
               <tr className="border border-[#381E50]">
                 <td className="border border-[#381E50]">CK323</td>

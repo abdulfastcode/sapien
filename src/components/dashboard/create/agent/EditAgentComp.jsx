@@ -3,30 +3,34 @@ import { Link, useNavigate } from "react-router-dom";
 import deleteIcon from "../../../../assets/icons/deleIcon.svg";
 import { useSelector } from "react-redux";
 import { baseUrl } from "../../../../utils/baseUrl";
+import { useEffect } from "react";
 
-const EditAgentComp = () => {
+const EditAgentComp = ({ sendResData }) => {
   let optionsState = useSelector((state) => state.createAgentOptions.options);
-  let navigate  = useNavigate()
+  let navigate = useNavigate();
   // console.log("optionsStateEDIT", optionsState);
-
   function saveData() {
     // console.log("object")
+    sendResData(null);
     console.log("jsonData", JSON.stringify(optionsState));
     async function saveUserOptions() {
       try {
-    let token = localStorage.getItem("auth_token");
+        let token = localStorage.getItem("auth_token");
 
         let post = await fetch(`${baseUrl}/agents/create_agent`, {
           method: "POST",
           headers: {
-            Authorization:
-              `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
           body: JSON.stringify(optionsState),
         });
         let res = await post.json();
-        navigate('/dashboard/agent')
+        console.log("res", post);
+        if (post.status == 400) {
+          sendResData("Field Missing");
+        }
+        // navigate('/dashboard/agent')
         console.log("res-", res);
       } catch (e) {
         console.error(e);
@@ -34,6 +38,9 @@ const EditAgentComp = () => {
     }
     saveUserOptions();
   }
+
+
+
   return (
     <div>
       <div className="w-full flex px-[24px] py-[29px] items-center flex-wrap gap-[20px] justify-between border border-b-[#381E50]">
@@ -44,7 +51,7 @@ const EditAgentComp = () => {
                 ? "Agent Name"
                 : optionsState?.name}
             </div>
-          </div> 
+          </div>
         </div>
         <div className="flex items-center gap-[15px]">
           <button

@@ -13,16 +13,17 @@ const CreateCampaign = () => {
   let dispatch = useDispatch();
   const [campaignData, setCampaignData] = useState([]);
   const [tableData, setTableData] = useState([]);
-  const [campStarted, setCampStarted] = useState(false);
+  const [showStartBtn, setShowStartBtn] = useState(false);
+  const [btnStatusStartCamp, setBtnStatusStartCamp] = useState(false);
 
-  console.log("campStarted", campStarted);
+  console.log("showStartBtn", showStartBtn);
   let { search } = useLocation();
   let querySearch = search?.split("?");
   let indvQuery = querySearch[1];
   let campIdfromQuery = indvQuery?.split("").pop();
   console.log("qieryNO", indvQuery?.split("").pop());
   // if (indvQuery) {
-  //   setCampStarted(true);
+  //   setShowStartBtn(true);
   // }
   let createdCampResponse = useSelector(
     (state) => state.createCampaignOptions?.createdCampaignResponse
@@ -31,7 +32,7 @@ const CreateCampaign = () => {
 
   function getCamp() {
     let token = localStorage.getItem("auth_token");
-
+// will get the resp status
     fetch(`${baseUrl}/campaigns/get_campaign?${indvQuery}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -74,10 +75,10 @@ const CreateCampaign = () => {
     let campId;
     if (!campIdfromQuery) {
       campId = createdCampResponse;
-      console.log("campId",campId)
+      console.log("campId", campId);
     } else {
       campId = campIdfromQuery;
-      console.log("campId",campId)
+      console.log("campId", campId);
     }
     console.log("json", JSON.stringify({ campaign_id: campIdfromQuery }));
     let token = localStorage.getItem("auth_token");
@@ -95,48 +96,49 @@ const CreateCampaign = () => {
       let res = await post.json();
       // navigate('/dashboard/agent')
       console.log("res-", res);
-      setCampStarted(true);
-      console.log("campStarted", campStarted);
+      setBtnStatusStartCamp(true);
+      console.log("showStartBtn", showStartBtn);
     } catch (e) {
       console.error(e);
     }
   }
   if (indvQuery) {
-    
   }
   useEffect(() => {
     if (indvQuery) {
       getCamp();
       getCampTableData();
-      setCampStarted(true);
+      setShowStartBtn(true);
       // dispatch(createdCampaignResponse())
-      console.log("campStarted", campStarted);
+      console.log("showStartBtn", showStartBtn);
     }
   }, []);
-  console.log("campStarted", campStarted);
+  console.log("showStartBtn", showStartBtn);
 
   return (
     <div className="w-full ">
       <EditCamp
-        campStarted={campStarted}
+        showStartBtn={showStartBtn}
         campaignData={campaignData}
         indvQuery={indvQuery}
       />
-      <Options campStarted={campStarted} campaignData={campaignData} indvQuery={indvQuery} />
+      <Options
+        showStartBtn={showStartBtn}
+        campaignData={campaignData}
+        indvQuery={indvQuery}
+      />
       {indvQuery && (
-        // <EditCampTable campaignData={campaignData} indvQuery={indvQuery} />
-
+        
         // PAUSE
         <>
+        {/* <EditCampTable campaignData={campaignData} indvQuery={indvQuery} /> */}
           <div className="w-full h-[40vh] lg:h-[47vh] relative">
             <DashboardTable
               tableData={tableData}
               setData={setData}
               maxTableHeaders={maxTableHeaders}
             />
-            {/* <div className="hidden  z-20 sm:flex w-full h-[66px] px-[24px] justify-end items-center border bg-white border-[#433456] sticky  bottom-0">
-            <button className="border border-[#381E50] py-1 px-4">Pause</button>
-          </div>  */}
+           
           </div>
 
           {/* <div className="flex z-20  sm:hidden w-full h-[66px] px-[24px] justify-end items-center border bg-white border-[#433456] sticky  bottom-0">
@@ -144,30 +146,31 @@ const CreateCampaign = () => {
         </div>  */}
         </>
       )}
-      {(createdCampResponse ||
-        campStarted) && (
-          <>
-            <div className="w-full h-[40vh] lg:h-[47vh] relative">
-              <div className="hidden  z-20  sm:flex w-full h-[66px] px-[24px] justify-end items-center border bg-white border-[#433456] sticky  bottom-0">
-                <button
-                  className="border border-[#381E50] py-1 px-4"
-                  onClick={startCamp}
-                >
-                  Start
-                </button>
-              </div>
-            </div>
-
-            <div className="flex  z-20  sm:hidden w-full h-[66px] px-[24px] justify-end items-center border bg-white border-[#433456] sticky  bottom-0">
+      {(createdCampResponse || showStartBtn) && (
+        <>
+          <div className="hidden sm:block w-full h-auto relative bg-white">
+            <div className="hidden  z-20  sm:flex w-full h-[66px] px-[24px] justify-end items-center border bg-white border-[#433456] sticky  bottom-0">
               <button
-                className="border border-[#381E50] py-1  px-4"
+                disabled={btnStatusStartCamp?true:false}
+                className={`border border-[#381E50] ${btnStatusStartCamp?"cursor-not-allowed":"cursor-pointer"} py-1  px-4`}
                 onClick={startCamp}
               >
                 Start
               </button>
             </div>
-          </>
-        )}
+          </div>
+
+          <div className="flex  z-20  sm:hidden w-full h-[66px] px-[24px] justify-end items-center border bg-white border-[#433456] sticky  bottom-0">
+            <button
+              disabled={btnStatusStartCamp?true:false}
+              className={`border border-[#381E50] ${btnStatusStartCamp?"cursor-not-allowed":"cursor-pointer"} py-1  px-4`}
+              onClick={startCamp}
+            >
+              Start
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 };
