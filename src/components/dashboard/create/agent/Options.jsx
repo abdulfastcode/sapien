@@ -369,8 +369,8 @@ const Options = ({ callScript,resErrData }) => {
             </div>
           </div>
         )}
-        {/* CALL TO */}
-        <div className="flex flex-wrap gap-3 justify-between ">
+        {/* CALL TO Disabled for now*/}
+        {/* <div className="flex flex-wrap gap-3 justify-between ">
           <div>Call To </div>
 
           <div className="flex flex-col gap-[20px]">
@@ -383,9 +383,7 @@ const Options = ({ callScript,resErrData }) => {
                 placeholder="9637842074"
                 className="border px-[6px] border-black w-[155px]"
               />
-              {/* <select className="border px-[6px] border-black w-[155px]">
-                <option value="">9213234232</option>
-              </select> */}
+             
             </div>
             <div className="text-right">
               <button className="border bg-[#381E50] border-[#381E50] text-white py-2 px-4">
@@ -393,7 +391,7 @@ const Options = ({ callScript,resErrData }) => {
               </button>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* <div className="flex flex-col gap-[20px]">
