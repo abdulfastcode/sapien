@@ -140,7 +140,7 @@ const DashboardTable = ({ tableData, setData, maxTableHeaders }) => {
             </tr>
           ) : (
             <tr>
-              <th>{path==="agent"?"Agent_id":path==="audience"?"Audinece_id"?"Campaign Id"}</th>
+              <th>{path==="agent"?"Agent_id":""}</th>
             </tr>
           )}
         </thead>

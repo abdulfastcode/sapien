@@ -35,7 +35,8 @@ console.log("checkQueryAndCampData",checkQueryAndCampData)
           body: JSON.stringify(optionsState),
         });
         let res = await post.json();
-        dispatch(createdCampaignResponse(res))
+        // dispatch(createdCampaignResponse([res]))
+        dispatch(createdCampaignResponse(res.campaign_id));
         console.log("res-", res);
       } catch (e) {
         console.error(e);
@@ -45,8 +46,14 @@ console.log("checkQueryAndCampData",checkQueryAndCampData)
   }
 
   function reload(){
-    
+
   }
+
+  useEffect(()=>{
+    return ()=>{
+      console.log("edit camp unmpunt")
+      dispatch(createdCampaignResponse())}
+  },[])
   return (
     <div>
       <div className="w-full flex px-[24px] py-[29px] items-center flex-wrap gap-[20px] justify-between border border-b-[#381E50]">
