@@ -168,7 +168,7 @@ const Email = () => {
           showFirstDiv ? "transform translate-x-full" : ""
         }`}
       >
-        <div className="flex flex-col items-start gap-[12px]">
+        <div className="flex flex-col items-start gap-[12px] ml-[20px]">
           <div className="text-black text-lg font-normal leading-tight tracking-tight">
             {errorMessage
               ? `${errorMessage}, Recheck your email`

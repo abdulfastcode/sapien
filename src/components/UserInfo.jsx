@@ -188,7 +188,7 @@ const UserInfo = () => {
               }}
             >
               <option value="+91">+91</option>
-              <option value="+1">+1</option>
+              <option value="+01">+01</option>
             </select>
             <input
               className={`w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px]  h-[50px] p-3 border border-gray-500`}
