@@ -3,8 +3,11 @@ import { baseUrl, headers } from "../../../../utils/baseUrl";
 import EditAgentComp from "./EditAgentComp";
 import Options from "./Options";
 import Text from "./Text";
+import { useDispatch } from "react-redux";
+import { setAgentOptions } from "../../../../utils/slices/createAgentOptionsSlice";
 
 const CreateAgent = () => {
+  let dispatch = useDispatch()
   const [callScript, setCallScript] = useState(null);
   const [resData,setResData]  = useState(null);
   useEffect(() => {
@@ -20,7 +23,11 @@ const CreateAgent = () => {
       .then((data) => {
         setCallScript(data);
       });
-  }, []);
+
+      return () => {
+        dispatch(setAgentOptions());
+      };
+  }, [dispatch]);
   function changeText(val) {
     setCallScript({...callScript,script:val});
     console.log("callScript", callScript);

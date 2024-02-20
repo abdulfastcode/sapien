@@ -3,11 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import deleteIcon from "../../../../assets/icons/deleIcon.svg";
 import { useSelector } from "react-redux";
 import { baseUrl } from "../../../../utils/baseUrl";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const EditAgentComp = ({ sendResData }) => {
   let optionsState = useSelector((state) => state.createAgentOptions.options);
   let navigate = useNavigate();
+  let [updateBtn, setUpdateBtn] = useState(false);
   // console.log("optionsStateEDIT", optionsState);
   function saveData() {
     // console.log("object")
@@ -29,6 +30,9 @@ const EditAgentComp = ({ sendResData }) => {
         console.log("res", post);
         if (post.status == 400) {
           sendResData("Field Missing");
+        }
+        if (post.status === 201) {
+          setUpdateBtn(true);
         }
         // navigate('/dashboard/agent')
         console.log("res-", res);
@@ -54,13 +58,31 @@ const EditAgentComp = ({ sendResData }) => {
           </div>
         </div>
         <div className="flex items-center gap-[15px]">
-          <button
-         disabled={optionsState?false:true}
-            onClick={saveData}
-            className={` py-[3px] px-[25px] items-center ${optionsState?"bg-[#381E50] cursor-pointer":"bg-red-400 cursor-not-allowed"} text-white  text-md font-bold`}
-          >
-            {optionsState?"Save":"Select all the below field"}
-          </button>
+          {updateBtn === false ? (
+            <button
+              disabled={optionsState ? false : true}
+              onClick={saveData}
+              className={` py-[3px] px-[25px] items-center ${
+                optionsState
+                  ? "bg-[#381E50] cursor-pointer"
+                  : "bg-red-400 cursor-not-allowed"
+              } text-white  text-md font-bold`}
+            >
+              {optionsState ? "Save" : "Select all the below field"}
+            </button>
+          ) : (
+            <button
+              disabled={optionsState ? false : true}
+              // onClick={}
+              className={` py-[3px] px-[25px] items-center ${
+                optionsState
+                  ? "bg-[#381E50] cursor-pointer"
+                  : "bg-red-400 cursor-not-allowed"
+              } text-white  text-md font-bold`}
+            >
+              {optionsState ? "Update" : "Select all the below field"}
+            </button>
+          )}
           {/* <button>
             <img src={deleteIcon} alt="deleteIcon" />
           </button> */}
