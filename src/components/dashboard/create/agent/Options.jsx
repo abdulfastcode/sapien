@@ -161,14 +161,14 @@ const Options = ({ callScript, resErrData }) => {
     getConversationList();
     getPhoneList();
 
-    if (responseMessage) {
-      setShowMess(true);
-      const timeout = setTimeout(() => {
-        setShowMess(false);
-      }, 4000);
+    // if (responseMessage) {
+    //   setShowMess(true);
+    //   const timeout = setTimeout(() => {
+    //     setShowMess(false);
+    //   }, 4000);
 
-      return () => clearTimeout(timeout);
-    }
+    //   return () => clearTimeout(timeout);
+    // }
   }, [
     resErrData,
     agentName,
@@ -250,7 +250,7 @@ const Options = ({ callScript, resErrData }) => {
       {/* NAME */}
       {voiceList.error && <div className="text-red-500">No Voice List</div>}
       {phoneList.error && <div className="text-red-500">No Phone List</div>}
-      {showMess && responseMessage && (
+      { responseMessage && (
         <div className="text-[#156534] p-[10px] rounded-sm bg-[#f0fdf5]">
           {responseMessage}
         </div>
