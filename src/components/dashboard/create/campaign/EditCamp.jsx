@@ -77,12 +77,12 @@ console.log("checkQueryAndCampData",checkQueryAndCampData)
           </div>
         </div>
         <div className="flex items-center gap-[15px]">
-          <button
+          {checkQueryAndCampData?"":<button
             onClick={saveData}
             className=" py-[3px] px-[25px] items-center bg-[#381E50] text-white  text-md font-bold"
           >
             Save
-          </button>
+          </button>}
           {checkQueryAndCampData && (
             <div
               className={` py-[3px] px-[25px] items-center ${

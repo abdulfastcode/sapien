@@ -122,7 +122,7 @@ const CreateCampaign = () => {
         campaignData={campaignData}
         indvQuery={indvQuery}
       />
-      <Options campaignData={campaignData} indvQuery={indvQuery} />
+      <Options campStarted={campStarted} campaignData={campaignData} indvQuery={indvQuery} />
       {indvQuery && (
         // <EditCampTable campaignData={campaignData} indvQuery={indvQuery} />
 

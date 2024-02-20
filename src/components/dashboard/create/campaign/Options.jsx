@@ -84,10 +84,11 @@ const Options = ({ indvQuery, campaignData }) => {
           <div>
             <input
               type="text"
+              disabled={checkQueryAndCampData?true:false}
               placeholder={
                 checkQueryAndCampData ? campaignData[0]?.name : "Name"
               }
-              className="border px-[6px] border-black w-[210px]"
+              className="border px-[6px]  border-black w-[210px]"
               // disabled={indvQuery?true:false}
               value={checkQueryAndCampData ? campaignData[0]?.name : name}
               onChange={(e) => setName(e.target.value)}
@@ -99,7 +100,7 @@ const Options = ({ indvQuery, campaignData }) => {
           <div>
             <SelectOpt
               width={{ w: "210px", sm: "210px", md: "210px", lg: "210px" }}
-              defaultOption="SELECT AGENT"
+              defaultOption={checkQueryAndCampData?campaignData[0]?.agent_id:"SELECT AGENT"}
               options={agentList}
               sendSelectedVal={sendSelectedValAgent}
             />
@@ -110,7 +111,7 @@ const Options = ({ indvQuery, campaignData }) => {
           <div>
             <MultiSelect
               width={{ w: "210px", sm: "210px", md: "210px", lg: "210px" }}
-              defaultOption="SELECT AUDIENCES"
+              defaultOption={checkQueryAndCampData?`${campaignData[0]?.audience_list.length} SELECTED`:"SELECT AUDIENCES"}
               options={audienceList}
               sendSelectedVal={sendSelectedValAudience}
             />
@@ -121,7 +122,11 @@ const Options = ({ indvQuery, campaignData }) => {
           <div>
             <input
               type="number"
-              placeholder="2"
+              
+              placeholder={
+                checkQueryAndCampData ? campaignData[0]?.retries : "Name"
+              }
+              disabled={checkQueryAndCampData?true:false}
               className="border px-[6px] border-black w-[210px]"
               value={retriesVal}
               onChange={(e) => {
