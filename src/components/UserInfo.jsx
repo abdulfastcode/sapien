@@ -3,20 +3,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { updateUserInfo } from "../utils/slices/userSlice";
 // import { updateUserInfo } from './userSlice';
-
+import rightIcon from "../assets/icons/rightIcon.svg";
 import { baseUrl } from "../utils/baseUrl";
 import { addUserEmail } from "../utils/userSlice";
 const UserInfo = () => {
   let navigate = useNavigate();
 
   const user = useSelector((state) => state.user);
+  const [valueSel, setValueSel] = useState("+91");
 
   // useEffect(() => {
   //   localStorage.removeItem("auth_token");
   // }, []);
   const [activeDivIndex, setActiveDivIndex] = useState(0);
   const [userInfo, setUserInfo] = useState({
-    country_code: "",
+    country_code: "+91",
     current_usage: [],
     designation: "",
     has_dev_team: false,
@@ -25,12 +26,14 @@ const UserInfo = () => {
   const dispatch = useDispatch();
 
   const handleKeyPress = async (e) => {
-    if (e.key === "Enter") {
+    
+    if (e.key === "Enter" || e.target.id === "arrow-right") {
+      console.log("entered!!!!");
       if (activeDivIndex === 4) {
         dispatch(updateUserInfo(userInfo));
         console.log("User Info:", userInfo); // Print the user info slice values
         const urlParams = new URLSearchParams(window.location.search);
-        console.log("urlParams---",urlParams)
+        console.log("urlParams---", urlParams);
         const authToken = urlParams.get("auth_token");
         // const authToken =
         //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYWJkdWxAZmFzdGNvZGUuYWkifQ.dSNnYNrD6WRTzV-weQeJwj0RaOrUXhq3jEqVVU2r1cA";
@@ -64,11 +67,12 @@ const UserInfo = () => {
       } else if (activeDivIndex < 4) {
         setActiveDivIndex((prevIndex) => prevIndex + 1);
       }
-    } else if (e.key === "Backspace") {
-      if (activeDivIndex > 0) {
-        setActiveDivIndex((prevIndex) => prevIndex - 1);
-      }
     }
+    // else if (e.key === "Backspace") {
+    //   if (activeDivIndex > 0) {
+    //     setActiveDivIndex((prevIndex) => prevIndex - 1);
+    //   }
+    // }
   };
 
   const handleInputChange = (e, key) => {
@@ -85,7 +89,7 @@ const UserInfo = () => {
     }
     setUserInfo((prevState) => ({
       ...prevState,
-      [key]: value,
+      [key]: key === "country_code" ? e.target.value : value,
     }));
   };
 
@@ -96,7 +100,7 @@ const UserInfo = () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
   }, [activeDivIndex, userInfo, dispatch]);
-  
+
   // useEffect(() => {
   //   const urlParams = new URLSearchParams(window.location.search);
   //   const authToken = urlParams.get("auth_token");
@@ -114,7 +118,7 @@ const UserInfo = () => {
     >
       <div className="flex flex-col ml-[39px] items-start gap-[12px]">
         {content}
-        <div className="w-[70vw] md:w-[50vw] lg:w-[460px]">
+        <div className="w-full">
           <div className="flex justify-between">
             <div>
               <span className="text-zinc-500 text-[12px] font-normal leading-[8.80px]">
@@ -124,17 +128,35 @@ const UserInfo = () => {
                 Enter
               </span>
             </div>
-            <div>
+            <div className="flex items-center gap-5">
               {activeDivIndex > 0 && (
-                <button
-                  className="w-[70px]  bg-white border text-[#71717a] border-[#e4e4e473 rounded-md]"
+                // <button
+                //   className="w-[70px]  bg-white border text-[#71717a] border-[#e4e4e473 rounded-md]"
+                //   onClick={() =>
+                //     setActiveDivIndex((prevIndex) => prevIndex - 1)
+                //   }
+                // >
+                //   Back
+                // </button>
+                <img
+                  className="w-[15px] h-[15px] cursor-pointer"
                   onClick={() =>
                     setActiveDivIndex((prevIndex) => prevIndex - 1)
                   }
-                >
-                  Back
-                </button>
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAABcklEQVR4nO2ay0oDMRSGz9KFqNWXEGGozDlTXBTCJGNxpwjnLOpCEBW8PJWKVH0RUSo+0VTipRRbaTtQPBnyQbZDPv4/M0kYAAVYlNQRnxfIF3lLmhAaBfKqI3lyJIPRYVF6e62jFQiBzg6vO+L+bwk3HPwIAUqUk2RyzTWbnoSMVuwUQpdwJIMi4zMIWKIciiAnEHIS7rNWfAc1kHhV9fo1zf01i/wyp8SblwctRAktxCS0YOLCVoKJSSjBxCSUYOqQRDvpNqpsAL08aMKi9OogkQYv4fF3TsFLeCzy9eyJ8LO/swKNOJJswoSDlbmvhUzHn7+R32sh0066Db+Y55Tpq/og/hBlKCazeGLNKNZs8cSaUazZ4ok1I6U1c9nBRpWNptniZaiFDMotaKSCTNnBw00IS+b7rE9jkieglWkyLhSRP2Qm/cJRqv6FY+ZkUG4gFL6uYMcvNCzKgzHHS/89v7nJU0ZHcmmJr3Yz3q7ykA+g2U1XUWxJ1wAAAABJRU5ErkJggg=="
+                ></img>
               )}
+              {/* next image */}
+              <img
+                onClick={(e) => {
+                  handleKeyPress(e);
+                  // setActiveDivIndex((prevIndex) => prevIndex + 1)
+                  console.log("@@@@@@@@");
+                }}
+                id="arrow-right"
+                className="w-[15px] h-[15px] cursor-pointer"
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAABUklEQVR4nO2az0rDQBCH5+rFRnyMorGdTelBWLIbwVsEmaHovdU8lSiCfy6+hiL6RlUWERWLNIHg7DIf7H0+5reTTTYAHfBmNvKGG4e8OChoD2JjOqUNb/jeG377sZAvK6QBxIIzfP1L4ms97++cbIF0yjHhHxLxyDikszVE5Mt4w82aIrJlyuJ46A0vk5BxyDctROTKHE5ON0NxScjYvM684cc2Mg751RdH2yANqzKsnekdjRlqzPpHY4Yas/7RmKHQmIUDY5eDps3rDJKQQb4CiXSRcaPZLqQhQ3NIQcQhLyCFaJUTziH6/WH4AiSRxPi1eZ05pKd27/f0IuqBqBJS0E5IwerGFoLVTgjBaieEYFPoRIU0SOKixyHfpiAx/lbgMkqJQIV0HnUnOojIlUjqF46AM/QQvcTn+F09uegu3MFDbJQfMWvCB7Qwzf67nsA7a8lLpiWSw/MAAAAASUVORK5CYII="
+              />
             </div>
           </div>
         </div>
@@ -151,12 +173,23 @@ const UserInfo = () => {
             Phone
           </div>
           <div>
-            <input
+            {/* <input
               className={`w-[55px] mr-[10px]  h-[50px] p-2 border border-gray-500`}
               type="tel"
               placeholder="+91"
               onChange={(e) => handleInputChange(e, "country_code")}
-            />
+            /> */}
+            <select
+              value={valueSel}
+              className={`w-[55px] rounded-sm mr-[10px] h-[50px] p-0 border border-gray-500`}
+              onChange={(e) => {
+                setValueSel(e.target.value);
+                handleInputChange(e, "country_code");
+              }}
+            >
+              <option value="+91">+91</option>
+              <option value="+1">+1</option>
+            </select>
             <input
               className={`w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px]  h-[50px] p-3 border border-gray-500`}
               type="tel"
