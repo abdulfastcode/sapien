@@ -43,6 +43,10 @@ console.log("checkQueryAndCampData",checkQueryAndCampData)
     }
     saveUserOptions();
   }
+
+  function reload(){
+    
+  }
   return (
     <div>
       <div className="w-full flex px-[24px] py-[29px] items-center flex-wrap gap-[20px] justify-between border border-b-[#381E50]">
@@ -59,7 +63,7 @@ console.log("checkQueryAndCampData",checkQueryAndCampData)
               <>
                 <div>{campaignData[0]?.created_on}</div>
                 <div>
-                  <img src={reloadIcon} alt="" />
+                  <img onClick={reload} src={reloadIcon} alt="reloadIcon" />
                 </div>
               </>
             )}

@@ -19,27 +19,12 @@ const Options = ({ callScript }) => {
   const [phoneId, setPhoneId] = useState("");
   const [voiceId, setVoiceId] = useState("");
   const [script, setScript] = useState("");
-  // const [conversionList, setConversionList] = useState({
-  //   conversion_id: "",
-  //   operator: "",
-  // });
-  // console.log("callscript____________", callScript);
-  // const [body, setBody] = useState({
-  //   conversions_list: [
-  //     {
-  //       conversion_id: "3",
-  //       operator: "AND",
-  //     },
-  //     {
-  //       conversion_id: "4",
-  //       operator: "OR",
-  //     },
-  //   ],
-  //   name: agentName,
-  //   phone_id: "",
-  //   script: callScript?.script,
-  //   voice_id: "",
-  // });
+
+
+  const [additionalDivs, setAdditionalDivs] = useState([]);
+
+ 
+
 
   let optionsState = useSelector((state) => state.createAgentOptions.options);
   let dispatch = useDispatch();
@@ -76,12 +61,10 @@ const Options = ({ callScript }) => {
   function sendSelectedValPhone(val) {
     // console.log("Phone***************", val);
     setPhoneId(val.id);
-    // setBody({ ...body, phone_id: val?.phone_id });
 
-    // setConversionList({ ...conversionList, conversion_id: val});
   }
 
-  // console.log("conversionList!!!!!!!!!!!!!!!!!!!!", conversionList);
+ 
 
   function getVoiceList() {
     let token = localStorage.getItem("auth_token");
@@ -124,26 +107,32 @@ const Options = ({ callScript }) => {
       });
   }
 
-  //   "body": {
-  //     "conversions_list": [
-  //         {
-  //             "conversion_id": "1",
-  //             "operator": "AND"
-  //         },
-  //         {
-  //             "conversion_id": "2",
-  //             "operator": "OR"
-  //         }
-  //     ],
-  //     "name": "dummy_name",
-  //     "phone_id": "2",
-  //     "script": "You are an AI sales agent",
-  //     "voice_id": "1"
-  // },
 
-  // fetchDataFun(url){
-
-  // }
+  const handleAddCondition = () => {
+    setAdditionalDivs([...additionalDivs, <div key={additionalDivs.length} className="flex flex-wrap justify-end pb-[15px] gap-[10px]">
+      <SelectOpt
+        width={{ w: "52px", sm: "52px", md: "52px", lg: "52px" }}
+        optWidth="50px"
+        options={[
+          { name: "OR", conversion_id: "1" },
+          { name: "AND", conversion_id: "2" },
+        ]}
+        defaultOption="Operator"
+        sendSelectedVal={sendSelectedValOperator}
+      />
+      <SelectOpt
+        width={{ w: "210px", sm: "210px", md: "210px", lg: "210px" }}
+        optWidth="50px"
+        options={conversationList}
+        defaultOption={conversationList[0]?.name}
+        editOpt="true"
+        create="Create Conversion"
+        renderParentComponent={renderParentComponent}
+        sendSelectedVal={sendSelectedValConversion}
+      />
+    </div>]);
+  };
+ 
 
   useEffect(() => {
     setScript(callScript?.script);
@@ -316,10 +305,15 @@ const Options = ({ callScript }) => {
                 sendSelectedVal={sendSelectedValConversion}
               />
             </div>
+            {additionalDivs.map((div, index) => (
+          <React.Fragment key={index}>{div}</React.Fragment>
+        ))}
+              {/* Add Condition */}
             <div className="float-right">
               <input
                 type="button"
                 value="+ Add Condition"
+                onClick={handleAddCondition}
                 className="cursor-pointer border ml-[55px] px-4 border-black bg-[#D7C9FF]"
               />
             </div>
