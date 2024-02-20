@@ -1,15 +1,25 @@
 // import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import deleteIcon from "../../../../assets/icons/deleIcon.svg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { baseUrl } from "../../../../utils/baseUrl";
 import { useEffect, useState } from "react";
+import { setResponseMessage } from "../../../../utils/slices/responseSlice";
 
 const EditAgentComp = ({ sendResData }) => {
   let optionsState = useSelector((state) => state.createAgentOptions.options);
   let navigate = useNavigate();
   let [updateBtn, setUpdateBtn] = useState(false);
+  let [agentCreatedId, setAgentCreatedId] = useState(null);
+  const dispatch = useDispatch()
   // console.log("optionsStateEDIT", optionsState);
+  
+  let { search } = useLocation();
+  let querySearch = search?.split("?");
+  let indvQuery = querySearch[1];
+  let agentIdfromQuery = indvQuery?.split("").pop();
+  console.log("qieryNO", agentIdfromQuery);
+
   function saveData() {
     // console.log("object")
     sendResData(null);
@@ -32,7 +42,10 @@ const EditAgentComp = ({ sendResData }) => {
           sendResData("Field Missing");
         }
         if (post.status === 201) {
+          setAgentCreatedId(res.agent_id)
+          console.log("agentCreatedId",agentCreatedId)
           setUpdateBtn(true);
+          dispatch(setResponseMessage("Agent Created Successfully"))
         }
         // navigate('/dashboard/agent')
         console.log("res-", res);
@@ -45,6 +58,47 @@ const EditAgentComp = ({ sendResData }) => {
     }
   }
 
+  function updateHandler(){
+    // /agents/update_agent
+    console.log("agentCreatedId",agentCreatedId)
+    console.log("jsonData", JSON.stringify(optionsState));
+    async function saveUserOptions() {
+      try {
+        let token = localStorage.getItem("auth_token");
+
+        let post = await fetch(`${baseUrl}/agents/update_agent?agent_id=${agentCreatedId}`, {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(optionsState),
+        });
+        let res = await post.json();
+        console.log("res", post);
+        if (post.status == 400) {
+          sendResData("Field Missing");
+          // setUpdateBtn(true);
+        }
+        if (post.status === 201) {
+          dispatch(setResponseMessage("Agent Updated"))
+
+          // navigate('/dashboard/agent')
+        }
+        console.log("res-", res);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    if (optionsState) {
+      saveUserOptions();
+    }
+  }
+
+  useEffect(()=>{
+  setAgentCreatedId(agentIdfromQuery)
+},[])
+console.log("agentCreatedId",agentCreatedId)
   return (
     <div>
       <div className="w-full flex px-[24px] py-[29px] items-center flex-wrap gap-[20px] justify-between border border-b-[#381E50]">
@@ -58,7 +112,21 @@ const EditAgentComp = ({ sendResData }) => {
           </div>
         </div>
         <div className="flex items-center gap-[15px]">
-          {updateBtn === false ? (
+          {updateBtn === true||agentIdfromQuery ?  (
+            <button
+              disabled={optionsState ? false : true}
+              onClick={updateHandler}
+              className={` py-[3px] px-[25px] items-center ${
+                optionsState
+                  ? "bg-[#381E50] cursor-pointer"
+                  : "bg-red-400 cursor-not-allowed"
+              } text-white  text-md font-bold`}
+            >
+              {optionsState ? "Update" : "Select all the below field"}
+            </button>
+          )
+           : 
+           (
             <button
               disabled={optionsState ? false : true}
               onClick={saveData}
@@ -70,19 +138,8 @@ const EditAgentComp = ({ sendResData }) => {
             >
               {optionsState ? "Save" : "Select all the below field"}
             </button>
-          ) : (
-            <button
-              disabled={optionsState ? false : true}
-              // onClick={}
-              className={` py-[3px] px-[25px] items-center ${
-                optionsState
-                  ? "bg-[#381E50] cursor-pointer"
-                  : "bg-red-400 cursor-not-allowed"
-              } text-white  text-md font-bold`}
-            >
-              {optionsState ? "Update" : "Select all the below field"}
-            </button>
-          )}
+          )
+         }
           {/* <button>
             <img src={deleteIcon} alt="deleteIcon" />
           </button> */}
