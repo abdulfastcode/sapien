@@ -10,8 +10,7 @@ const Filter = ({ selectedData }) => {
   const { pathname } = useLocation();
   let finalPathName = pathname.split("/").pop();
   // console.log(finalPathName);
-  let idsSelectedData = selectedData
-    ?.map((obj) => {
+  let idsSelectedData = selectedData?.map((obj) => {
       for (const key of Object.keys(obj)) {
         if (key.includes("id") && obj.isChecked === true) {
           return obj[key];
@@ -26,7 +25,7 @@ const Filter = ({ selectedData }) => {
   return (
     <div className="w-full flex px-[24px] py-[29px] items-center flex-wrap gap-[20px] justify-between border border-b-[#381E50]">
       <div className="flex gap-[20px] sm:gap-[35px] flex-wrap items-center ">
-        <div className="flex gap-[12px] items-center">
+        {/* <div className="flex gap-[12px] items-center">
           <div>Date</div>
           <div>
             <input
@@ -36,8 +35,9 @@ const Filter = ({ selectedData }) => {
               id=""
             />
           </div>
-        </div>
-        {pathname == "/dashboard/campaign" ? (
+        </div> */}
+        {/* STATUS */}
+        {/* {pathname == "/dashboard/campaign" ? (
           <div className="flex gap-[12px] items-center">
             <div>Status</div>
             <div>
@@ -53,14 +53,17 @@ const Filter = ({ selectedData }) => {
           </div>
         ) : (
           ""
-        )}
-        <div>
+        )} */}
+        {/* STATUS END */}
+        
+        {/* FILTER CLEAR */}
+        {/* <div>
           <input
             className="border-2 border-[#381E50] text-[#381e50a9] py-[1px] px-[15px] cursor-pointer "
             type="button"
             value="Clear Filters"
           />
-        </div>
+        </div> */}
       </div>
       <div>
         <Link
