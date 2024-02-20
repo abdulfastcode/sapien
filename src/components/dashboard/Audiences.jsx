@@ -28,7 +28,7 @@ const Audiences = () => {
   useEffect(() => {
     // console.log("audience useEffect");
     let token = localStorage.getItem("auth_token");
-    fetch(`${baseUrl}/audiences/get_audience_list`, {
+    fetch(`${baseUrl}/audiences/get_audience_list?items=20000&page=1`, {
       // referrerPolicy: "unsafe_url" ,
       headers: {
         Authorization:

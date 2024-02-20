@@ -48,7 +48,7 @@ const CreateCampaign = () => {
 
   function getCampTableData() {
     let token = localStorage.getItem("auth_token");
-    fetch(`${baseUrl}/calls/get_call_by_campaign?${indvQuery}`, {
+    fetch(`${baseUrl}/calls/get_call_by_campaign?${indvQuery}&items=20000&page=1`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

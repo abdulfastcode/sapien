@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAgentOptions } from "../../../../utils/slices/createAgentOptionsSlice";
 import SelectOpt from "./SelectOpt";
 
-const Options = ({ callScript,resErrData }) => {
+const Options = ({ callScript, resErrData }) => {
   const [voiceList, setvoiceList] = useState([]);
   const [conversationList, setconversationList] = useState([]);
   const [updateComp, setUpdateComp] = useState(false);
@@ -24,6 +24,8 @@ const Options = ({ callScript,resErrData }) => {
 
   const [showMess, setShowMess] = useState(false);
 
+  const responseMessage = useSelector((state) => state.response.message);
+  console.log("responseMessage", responseMessage);
   const handleAddCondition = () => {
     setAdditionalDivs([
       ...additionalDivs,
@@ -136,42 +138,38 @@ const Options = ({ callScript,resErrData }) => {
   useEffect(() => {
     setScript(callScript?.script);
 
-    if(conversionId&&operator&&agentName&&phoneId&&script&&voiceId){
-    dispatch(
-      setAgentOptions(
-        // body
-        {
-          conversions_list: [
-            {
-              conversion_id: conversionId,
-              operator: operator,
-            },
-          ],
-          name: agentName,
-          phone_id: phoneId,
-          script: script,
-          voice_id: voiceId,
-        }
-      )
-    )
-  }
+    if (conversionId && operator && agentName && phoneId && script && voiceId) {
+      dispatch(
+        setAgentOptions(
+          // body
+          {
+            conversions_list: [
+              {
+                conversion_id: conversionId,
+                operator: operator,
+              },
+            ],
+            name: agentName,
+            phone_id: phoneId,
+            script: script,
+            voice_id: voiceId,
+          }
+        )
+      );
+    }
     getVoiceList();
     getConversationList();
     getPhoneList();
 
-  //   if (resErrData) {
-  //     setShowMess(true);
-  //     const timeout = setTimeout(() => {
-  //       setShowMess(false);
-  //     }, 3000);
+    if (responseMessage) {
+      setShowMess(true);
+      const timeout = setTimeout(() => {
+        setShowMess(false);
+      }, 4000);
 
-  //     return () => clearTimeout(timeout);
-  //   }
-  // }
-  
-      },
-
- [
+      return () => clearTimeout(timeout);
+    }
+  }, [
     resErrData,
     agentName,
     updateComp,
@@ -200,6 +198,7 @@ const Options = ({ callScript,resErrData }) => {
   console.log("conversationList", conversationList);
   console.log("agentName->", agentName);
   console.log("optionsState->", optionsState);
+  console.log("showMess->", showMess);
   return (
     <div className="w-full py-[20px] px-[24px] lg:w-[40%] flex flex-col gap-[30px]">
       {/* Success Message */}
@@ -251,7 +250,11 @@ const Options = ({ callScript,resErrData }) => {
       {/* NAME */}
       {voiceList.error && <div className="text-red-500">No Voice List</div>}
       {phoneList.error && <div className="text-red-500">No Phone List</div>}
-      {/* {showMess&&<div className="text-red-500">{ resErrData}</div>} */}
+      {showMess && responseMessage && (
+        <div className="text-[#156534] p-[10px] rounded-sm bg-[#f0fdf5]">
+          {responseMessage}
+        </div>
+      )}
       <div className="flex flex-wrap gap-3 justify-between ">
         <div>Name</div>
         <div>

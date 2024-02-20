@@ -20,7 +20,7 @@ const Campaign = () => {
     // dispatch(addDataTable(campaignData));
     let token = localStorage.getItem("auth_token");
 
-    fetch(`${baseUrl}/campaigns/get_campaigns_list`, {
+    fetch(`${baseUrl}/campaigns/get_campaigns_list?items=20000&page=1`, {
       headers: {
         Authorization:
           `Bearer ${token}`,

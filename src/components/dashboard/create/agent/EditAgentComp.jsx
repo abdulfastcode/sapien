@@ -81,7 +81,7 @@ const EditAgentComp = ({ sendResData }) => {
           // setUpdateBtn(true);
         }
         if (post.status === 201) {
-          dispatch(setResponseMessage("Agent Updated"))
+          dispatch(setResponseMessage("Agent Updated Successfully"))
 
           // navigate('/dashboard/agent')
         }
@@ -97,6 +97,7 @@ const EditAgentComp = ({ sendResData }) => {
 
   useEffect(()=>{
   setAgentCreatedId(agentIdfromQuery)
+  // dispatch(setResponseMessage())
 },[])
 console.log("agentCreatedId",agentCreatedId)
   return (
