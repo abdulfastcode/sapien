@@ -36,10 +36,10 @@ const EditAgentComp = ({ sendResData }) => {
         console.error(e);
       }
     }
-    saveUserOptions();
+    if (optionsState) {
+      saveUserOptions();
+    }
   }
-
-
 
   return (
     <div>
@@ -55,10 +55,11 @@ const EditAgentComp = ({ sendResData }) => {
         </div>
         <div className="flex items-center gap-[15px]">
           <button
+         disabled={optionsState?false:true}
             onClick={saveData}
-            className=" py-[3px] px-[25px] items-center bg-[#381E50] text-white  text-md font-bold"
+            className={` py-[3px] px-[25px] items-center ${optionsState?"bg-[#381E50] cursor-pointer":"bg-red-400 cursor-not-allowed"} text-white  text-md font-bold`}
           >
-            Save
+            {optionsState?"Save":"Select all the below field"}
           </button>
           {/* <button>
             <img src={deleteIcon} alt="deleteIcon" />

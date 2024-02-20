@@ -153,7 +153,8 @@ const Options = ({ callScript,resErrData }) => {
           voice_id: voiceId,
         }
       )
-    )}
+    )
+  }
     getVoiceList();
     getConversationList();
     getPhoneList();
@@ -369,7 +370,8 @@ const Options = ({ callScript,resErrData }) => {
             </div>
           </div>
         )}
-        {/* CALL TO Disabled for now*/}
+
+        {/* CALL TO Disabled for now!!!!!!!!!!!!!!!!*/}
         {/* <div className="flex flex-wrap gap-3 justify-between ">
           <div>Call To </div>
 

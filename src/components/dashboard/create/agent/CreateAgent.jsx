@@ -30,9 +30,7 @@ const CreateAgent = () => {
     console.log("resdata",data)
     setResData(data)
   }
-  useEffect(()=>{
-    return ()=>{setResData(null)}
-  },[])
+  
   return (
     <div className="w-full">
       <EditAgentComp sendResData={sendResData} />
