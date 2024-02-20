@@ -15,6 +15,7 @@ const EditAudienceComp = () => {
   console.log("jsonData", jsonFileData);
   console.log("csvData", csvFileData);
 
+  const audienceName = useSelector((state) => state.fileLoader.audienceName);
   const [csvJsonData, setCsvJsonData] = useState({ contacts: [], name: "" });
 
 
@@ -22,9 +23,8 @@ const EditAudienceComp = () => {
   useEffect(() => {
     const convertedData = convertToJSON(csvFileData);
     setCsvJsonData(convertedData);
-  }, [csvFileData]);
+  }, [csvFileData,audienceName]);
 
-  const audienceName = useSelector((state) => state.fileLoader.audienceName);
   
   const convertToJSON = (csvData) => {
     let contacts = [];
@@ -65,6 +65,7 @@ const EditAudienceComp = () => {
         dataToSend = JSON.stringify(jsonFileData[0]);
         break;
       case "csv":
+        console.log("csvData", JSON.stringify(csvJsonData));
         dataToSend = JSON.stringify(csvJsonData);
         break;
       default:
@@ -73,7 +74,6 @@ const EditAudienceComp = () => {
     }
     // console.log("object")
     // console.log("JsonData", JSON.stringify(jsonFileData[0]));
-    console.log("csvData", JSON.stringify(csvJsonData));
     async function saveUserOptions() {
       try {
     let token = localStorage.getItem("auth_token");

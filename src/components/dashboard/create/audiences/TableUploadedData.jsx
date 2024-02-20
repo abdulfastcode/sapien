@@ -4,6 +4,9 @@ import { uploadAudienceName, uploadJsonFile } from "../../../../utils/slices/fil
 
 const TableUploadedData = () => {
   //   console.log("csvData", csvData);
+
+  const audienceNameRedux = useSelector((state) => state.fileLoader.audienceName);
+
   let dispatch = useDispatch()
   const jsonData = useSelector((state) => state.fileLoader.json);
   console.log("jsonData", jsonData);
@@ -11,8 +14,12 @@ const TableUploadedData = () => {
   const audienceName = useSelector((state) => state.fileLoader.audienceName);
   console.log("audienceName", audienceName);
   let [audienceNameReset,setAudienceNameReset] = useState('')
-  
-  dispatch(uploadAudienceName(audienceNameReset))
+console.log("audienceNameRedux",audienceNameRedux)
+
+  if(audienceNameReset){
+console.log("audienceNameRedux",audienceNameRedux)
+    dispatch(uploadAudienceName(audienceNameReset))
+  }
   // useEffect(() => {
   //   dispatch(uploadCsvFile({ ...jsonData, name: audienceName }));
   // }, []);

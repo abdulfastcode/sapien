@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const fileSlice = createSlice({
     name: 'fileLoader',
     initialState : { 
-        json:null,
+        json:null, 
         csv:null,
         xlsx:null,
         audienceName:""
