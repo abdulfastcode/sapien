@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useState,useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { uploadJsonFile } from "../../../../utils/slices/fileSlice";
+import { uploadAudienceName, uploadJsonFile } from "../../../../utils/slices/fileSlice";
 
 const TableUploadedData = () => {
   //   console.log("csvData", csvData);
@@ -10,7 +10,9 @@ const TableUploadedData = () => {
   const csvData = useSelector((state) => state.fileLoader.csv);
   const audienceName = useSelector((state) => state.fileLoader.audienceName);
   console.log("audienceName", audienceName);
+  let [audienceNameReset,setAudienceNameReset] = useState('')
   
+  dispatch(uploadAudienceName(audienceNameReset))
   // useEffect(() => {
   //   dispatch(uploadCsvFile({ ...jsonData, name: audienceName }));
   // }, []);
@@ -108,9 +110,16 @@ const TableUploadedData = () => {
           <div>
             <div className="flex flex-wrap px-6 py-4 text-[#381E50] items-center gap-20">
               <div>Name</div>
-              <div className="border text-[#381E50] border-[#381E50] p-1">
+              {/* <div className="border text-[#381E50] border-[#381E50] p-1">
                 {audienceName || "No Name"}
-              </div>
+              </div> */}
+               <input
+               placeholder={audienceName?audienceName:"No Name"}
+          value={audienceNameReset}
+          onChange={(e) => setAudienceNameReset((e.target.value))}
+          type="text"
+          className="border border-[#381E50] py-[2px] px-2"
+        ></input>
             </div>
             <div className="text-[#381E50] flex flex-wrap px-6 pb-4 items-center gap-20">
               <div>Custom Fields</div>
