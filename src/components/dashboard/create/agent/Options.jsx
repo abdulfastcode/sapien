@@ -303,18 +303,18 @@ const Options = ({ callScript, resErrData }) => {
                 sendSelectedVal={sendSelectedValConversion}
               />
             </div>
-            {additionalDivs.map((div, index) => (
+            {/* {additionalDivs.map((div, index) => (
               <React.Fragment key={index}>{div}</React.Fragment>
-            ))}
+            ))} */}
             {/* Add Condition */}
-            <div className="float-right">
+            {/* <div className="float-right">
               <input
                 type="button"
                 value="+ Add Condition"
                 onClick={handleAddCondition}
                 className="cursor-pointer border ml-[55px] px-4 border-black bg-[#D7C9FF]"
               />
-            </div>
+            </div> */}
           </div>
         </div>
       )}
