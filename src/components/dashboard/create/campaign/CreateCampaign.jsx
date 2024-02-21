@@ -20,8 +20,8 @@ const CreateCampaign = () => {
   let { search } = useLocation();
   let querySearch = search?.split("?");
   let indvQuery = querySearch[1];
-  let campIdfromQuery = indvQuery?.split("").pop();
-  console.log("qieryNO", indvQuery?.split("").pop());
+  let campIdfromQuery = indvQuery?.split("=").pop();
+  console.log("qieryNO", indvQuery?.split("=").pop());
   // if (indvQuery) {
   //   setShowStartBtn(true);
   // }

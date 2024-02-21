@@ -1,6 +1,14 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 
 const Text = ({ callScript, changeText }) => {
+  
+  let { search } = useLocation();
+  let querySearch = search?.split("?");
+  let indvQuery = querySearch[1];
+  let agentIdfromQuery = indvQuery?.split("=").pop();
+  console.log("agentIdfromQuery!!@!@!@!@@!@!@!", agentIdfromQuery);
+
   return (
     <div className="w-full lg:w-[60%] lg:min-h-[calc(100vh-154.64px)] bg-[#22182A]">
       {/* <div className="mt-[25px] ">
@@ -25,7 +33,7 @@ const Text = ({ callScript, changeText }) => {
             changeText(e.target.value)
             // console.log(e.target.value);
           }}
-          value={callScript ? callScript?.script : "Script"}
+          value={callScript ?  callScript?.script : "Script"}
           className="bg-[#381E50] w-[83%] ml-[43px] h-full px-[19px] py-[8px]  text-white"
         >
           {callScript != null ? callScript?.script : "Loading..."}

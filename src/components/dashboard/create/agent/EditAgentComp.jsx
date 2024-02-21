@@ -17,7 +17,7 @@ const EditAgentComp = ({ sendResData }) => {
   let { search } = useLocation();
   let querySearch = search?.split("?");
   let indvQuery = querySearch[1];
-  let agentIdfromQuery = indvQuery?.split("").pop();
+  let agentIdfromQuery = indvQuery?.split("=").pop();
   console.log("qieryNO", agentIdfromQuery);
 
   function saveData() {

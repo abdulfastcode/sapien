@@ -6,32 +6,56 @@ import Text from "./Text";
 import { useDispatch } from "react-redux";
 import { setAgentOptions } from "../../../../utils/slices/createAgentOptionsSlice";
 import { setResponseMessage } from "../../../../utils/slices/responseSlice";
+import { useLocation } from "react-router-dom";
 
 const CreateAgent = () => {
   let dispatch = useDispatch();
   const [callScript, setCallScript] = useState(null);
   const [resData, setResData] = useState(null);
+
+  let { search } = useLocation();
+  let querySearch = search?.split("?");
+  let indvQuery = querySearch[1];
+  let agentIdfromQuery = indvQuery?.split("=").pop();
+  console.log("agentIdfromQuery!!@!@!@!@@!@!@!", agentIdfromQuery);
+
   useEffect(() => {
     let token = localStorage.getItem("auth_token");
 
-    fetch(`${baseUrl}/agents/get_call_script`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setCallScript(data);
-      });
-
+    if (agentIdfromQuery) {
+      fetch(`${baseUrl}/agents/get_agent?agent_id=${agentIdfromQuery}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setCallScript({script:data[0]?.script});
+          console.log("responseeeeeee", data[0].script);
+        });
+    } else {
+      fetch(`${baseUrl}/agents/get_call_script`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setCallScript(data);
+        });
+    }
     return () => {
       dispatch(setAgentOptions());
       dispatch(setResponseMessage());
     };
   }, [dispatch]);
+  console.log("callScript", callScript);
   function changeText(val) {
-    setCallScript({ ...callScript, script: val });
-    console.log("callScript", callScript);
+  console.log("callScript", callScript);
+   
+      setCallScript({ ...callScript, script: val });
+    
+
   }
   console.log("callScript", callScript);
   function sendResData(data) {

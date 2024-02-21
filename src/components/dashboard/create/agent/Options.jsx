@@ -6,8 +6,15 @@ import { baseUrl, headers } from "../../../../utils/baseUrl";
 import { useDispatch, useSelector } from "react-redux";
 import { setAgentOptions } from "../../../../utils/slices/createAgentOptionsSlice";
 import SelectOpt from "./SelectOpt";
+import { useLocation } from "react-router-dom";
 
 const Options = ({ callScript, resErrData }) => {
+  let { search } = useLocation();
+  let querySearch = search?.split("?");
+  let indvQuery = querySearch[1];
+  let agentIdfromQuery = indvQuery?.split("=").pop();
+  console.log("agentIdfromQuery!!@!@!@!@@!@!@!", agentIdfromQuery);
+
   const [voiceList, setvoiceList] = useState([]);
   const [conversationList, setconversationList] = useState([]);
   const [updateComp, setUpdateComp] = useState(false);
@@ -70,7 +77,6 @@ const Options = ({ callScript, resErrData }) => {
     setUpdateComp(stateFromChild);
   }
 
-  // useEffect(()=>{},[])
   function sendSelectedValConversion(val) {
     console.log("Conversion***************", val);
     setConversionId(val.id || conversationList[0]?.conversion_id);
@@ -110,7 +116,7 @@ const Options = ({ callScript, resErrData }) => {
   function getConversationList() {
     let token = localStorage.getItem("auth_token");
 
-    fetch(`${baseUrl}/conversions/get_conversion_list`, {
+    fetch(`${baseUrl}/conversions/get_conversion_list?items=20000&page=1`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -124,7 +130,7 @@ const Options = ({ callScript, resErrData }) => {
   function getPhoneList() {
     let token = localStorage.getItem("auth_token");
 
-    fetch(`${baseUrl}/phones/get_phone_list`, {
+    fetch(`${baseUrl}/phones/get_phone_list?items=20000&page=1`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -134,6 +140,34 @@ const Options = ({ callScript, resErrData }) => {
         setPhoneList(data);
       });
   }
+
+  function getAdgentById() {
+    let token = localStorage.getItem("auth_token");
+
+    fetch(`${baseUrl}/agents/get_agent?agent_id=${agentIdfromQuery}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setAgentName(data[0]?.name);
+        console.log("responseeeeeee", data);
+      });
+  }
+
+  useEffect(() => {
+    getVoiceList();
+    getConversationList();
+    getPhoneList();
+
+    // For update
+    if (agentIdfromQuery) {
+      getAdgentById();
+    }
+  
+  }, [])
+  
 
   useEffect(() => {
     setScript(callScript?.script);
@@ -176,10 +210,7 @@ const Options = ({ callScript, resErrData }) => {
     //     )
     //   );
     // }
-    getVoiceList();
-    getConversationList();
-    getPhoneList();
-
+   
     // if (responseMessage) {
     //   setShowMess(true);
     //   const timeout = setTimeout(() => {
@@ -200,11 +231,12 @@ const Options = ({ callScript, resErrData }) => {
   ]);
 
   console.log("optionsState-", optionsState);
-  console.log("voiceId-",voiceId)
-  console.log("conversionId-",conversionId)
+  console.log("voiceId-", voiceId);
+  console.log("conversionId-", conversionId);
   console.log("conversionList-", conversationList);
   console.log("voiceList-", voiceList);
   console.log("phoneList-", phoneList);
+  console.log("agentName-", agentName);
   return (
     <div className="w-full py-[20px] px-[24px] lg:w-[40%] flex flex-col gap-[30px]">
       {/* NAME */}
