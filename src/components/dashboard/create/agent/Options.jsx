@@ -158,7 +158,7 @@ const Options = ({ callScript, resErrData }) => {
 
   useEffect(() => {
     getVoiceList();
-    getConversationList();
+    // getConversationList();
     getPhoneList();
 
     // For update
@@ -191,6 +191,8 @@ const Options = ({ callScript, resErrData }) => {
         )
       );
     }
+    getConversationList();
+
     // else{
     //    dispatch(
     //     setAgentOptions(
