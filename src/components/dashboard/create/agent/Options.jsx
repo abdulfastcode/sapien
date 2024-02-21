@@ -72,8 +72,8 @@ const Options = ({ callScript, resErrData }) => {
 
   // useEffect(()=>{},[])
   function sendSelectedValConversion(val) {
-    // console.log("Conversion***************", val);
-    setConversionId(val.id);
+    console.log("Conversion***************", val);
+    setConversionId(val.id || conversationList[0]?.conversion_id);
     // setConversionList({ ...conversionList, conversion_id: val.id });
   }
 
@@ -85,13 +85,13 @@ const Options = ({ callScript, resErrData }) => {
 
   function sendSelectedValVoice(val) {
     // console.log("Voice***************", val);
-    setVoiceId(val.id);
+    setVoiceId(val.id || voiceList[0]?.voice_id);
     // setBody({ ...body, voice_id: val?.voice_id });
     // setConversionList({ ...conversionList, conversion_id: val});
   }
   function sendSelectedValPhone(val) {
     // console.log("Phone***************", val);
-    setPhoneId(val.id);
+    setPhoneId(val.id || phoneList[0]?.phone_id);
   }
 
   function getVoiceList() {
@@ -138,7 +138,7 @@ const Options = ({ callScript, resErrData }) => {
   useEffect(() => {
     setScript(callScript?.script);
 
-    if (conversionId && operator && agentName && phoneId && script && voiceId) {
+    if (conversionId || operator || agentName || phoneId || script || voiceId) {
       dispatch(
         setAgentOptions(
           // body
@@ -151,12 +151,31 @@ const Options = ({ callScript, resErrData }) => {
             ],
             name: agentName,
             phone_id: phoneId,
-            script: script,
+            script: callScript?.script,
             voice_id: voiceId,
           }
         )
       );
     }
+    // else{
+    //    dispatch(
+    //     setAgentOptions(
+    //       // body
+    //       {
+    //         conversions_list: [
+    //           {
+    //             conversion_id: conversationList[0]?.conversion_id,
+    //             operator: operator,
+    //           },
+    //         ],
+    //         name: agentName,
+    //         phone_id: phoneList[0]?.phone_id,
+    //         script: callScript?.script,
+    //         voice_id: voiceList[0]?.voice_id,
+    //       }
+    //     )
+    //   );
+    // }
     getVoiceList();
     getConversationList();
     getPhoneList();
@@ -179,78 +198,19 @@ const Options = ({ callScript, resErrData }) => {
     phoneId,
     voiceId,
   ]);
-  // console.log(
-  //   "conversionId-",
-  //   conversionId,
-  //   "operator-",
-  //   operator,
-  //   "agentName-",
-  //   agentName,
-  //   "phoneId-",
-  //   phoneId,
-  //   "script-",
-  //   script,
-  //   "voiceId-",
-  //   voiceId
-  // );
-  console.log("voiceList", voiceList);
-  console.log("phoneList", phoneList);
-  console.log("conversationList", conversationList);
-  console.log("agentName->", agentName);
-  console.log("optionsState->", optionsState);
-  console.log("showMess->", showMess);
+
+  console.log("optionsState-", optionsState);
+  console.log("voiceId-",voiceId)
+  console.log("conversionId-",conversionId)
+  console.log("conversionList-", conversationList);
+  console.log("voiceList-", voiceList);
+  console.log("phoneList-", phoneList);
   return (
     <div className="w-full py-[20px] px-[24px] lg:w-[40%] flex flex-col gap-[30px]">
-      {/* Success Message */}
-      {/* <div
-        id="alert-border-3"
-        className="flex items-center p-4 mb-4 text-green-800 border-t-4 border-green-300 bg-green-50 dark:text-green-400 dark:bg-gray-800 dark:border-green-800"
-        role="alert"
-      >
-        <svg
-          className="flex-shrink-0 w-4 h-4"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-        >
-          <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-        </svg>
-        <div className="ms-3 text-sm font-medium">
-          A simple success alert with an{" "}
-          <a href="#" className="font-semibold underline hover:no-underline">
-            example link
-          </a>
-          . Give it a click if you like.
-        </div>
-        <button
-          type="button"
-          className="ms-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700"
-          data-dismiss-target="#alert-border-3"
-          aria-label="Close"
-        >
-          <span className="sr-only">Dismiss</span>
-          <svg
-            className="w-3 h-3"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 14 14"
-          >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-            />
-          </svg>
-        </button>
-      </div> */}
       {/* NAME */}
       {voiceList.error && <div className="text-red-500">No Voice List</div>}
       {phoneList.error && <div className="text-red-500">No Phone List</div>}
-      { responseMessage && (
+      {responseMessage && (
         <div className="text-[#156534] p-[10px] rounded-sm bg-[#f0fdf5]">
           {responseMessage}
         </div>
@@ -273,20 +233,6 @@ const Options = ({ callScript, resErrData }) => {
         <div className="flex flex-wrap gap-3 justify-between ">
           <div>Voice </div>
           <div>
-            {/* <select className="border px-[6px] border-black w-[210px]">
-            {voiceList != null ? (
-              voiceList.map((e) => {
-                return (
-                  <option key={e.voice_id} value={e.name}>
-                    {e.name}
-                  </option>
-                );
-              })
-            ) : (
-              <option value={"loading"}>Laoding...</option>
-            )}
-           
-          </select> */}
             <SelectOpt
               optionName="Voice"
               width={{ w: "210px", sm: "210px", md: "210px", lg: "210px" }}
@@ -311,7 +257,6 @@ const Options = ({ callScript, resErrData }) => {
                   { name: "AND", conversion_id: "2" },
                 ]}
                 defaultOption="Operator"
-                // sendSelectedValOperator={sendSelectedVal}
                 sendSelectedVal={sendSelectedValOperator}
               />
               <SelectOpt
@@ -356,20 +301,6 @@ const Options = ({ callScript, resErrData }) => {
                 options={phoneList}
                 sendSelectedVal={sendSelectedValPhone}
               />
-              {/* <select className="border px-[6px] border-black w-[155px]">
-              {phoneList != null ? (
-                phoneList.map((e) => {
-                  return (
-                    <option key={e.phone_id} value={e.full_phone}>
-                      {e.full_phone}
-                    </option>
-                  );
-                })
-              ) : (
-                <option value={"loading"}>Laoding...</option>
-              )}
-              
-            </select> */}
             </div>
           </div>
         )}
