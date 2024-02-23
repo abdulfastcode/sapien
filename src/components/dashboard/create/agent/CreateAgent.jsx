@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { baseUrl, headers } from "../../../../utils/baseUrl";
 import EditAgentComp from "./EditAgentComp";
 import Options from "./Options";
@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { setAgentOptions } from "../../../../utils/slices/createAgentOptionsSlice";
 import { setResponseMessage } from "../../../../utils/slices/responseSlice";
 import { useLocation } from "react-router-dom";
+import NewOptions from "./NewOptions";
 
 const CreateAgent = () => {
   let dispatch = useDispatch();
@@ -17,9 +18,8 @@ const CreateAgent = () => {
   let querySearch = search?.split("?");
   let indvQuery = querySearch[1];
   let agentIdfromQuery = indvQuery?.split("=").pop();
-  console.log("agentIdfromQuery!!@!@!@!@@!@!@!", agentIdfromQuery);
 
-  useEffect(() => {
+  useMemo(() => {
     let token = localStorage.getItem("auth_token");
 
     if (agentIdfromQuery) {
@@ -30,7 +30,7 @@ const CreateAgent = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          setCallScript({script:data[0]?.script});
+          setCallScript({ script: data[0]?.script });
           console.log("responseeeeeee", data[0].script);
         });
     } else {
@@ -51,11 +51,9 @@ const CreateAgent = () => {
   }, [dispatch]);
   console.log("callScript", callScript);
   function changeText(val) {
-  console.log("callScript", callScript);
-   
-      setCallScript({ ...callScript, script: val });
-    
+    console.log("callScript", callScript);
 
+    setCallScript({ ...callScript, script: val });
   }
   console.log("callScript", callScript);
   function sendResData(data) {
@@ -68,7 +66,8 @@ const CreateAgent = () => {
       <EditAgentComp sendResData={sendResData} />
       <div className="flex flex-col lg:flex-row  w-full">
         <Text callScript={callScript} changeText={changeText} />
-        <Options resErrData={resData} callScript={callScript} />
+        {/* <Options resErrData={resData} callScript={callScript} /> */}
+        <NewOptions callScript={callScript} />
       </div>
     </div>
   );

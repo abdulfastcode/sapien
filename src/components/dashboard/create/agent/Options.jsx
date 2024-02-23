@@ -13,7 +13,6 @@ const Options = ({ callScript, resErrData }) => {
   let querySearch = search?.split("?");
   let indvQuery = querySearch[1];
   let agentIdfromQuery = indvQuery?.split("=").pop();
-  console.log("agentIdfromQuery!!@!@!@!@@!@!@!", agentIdfromQuery);
 
   const [voiceList, setvoiceList] = useState([]);
   const [conversationList, setconversationList] = useState([]);
@@ -33,36 +32,6 @@ const Options = ({ callScript, resErrData }) => {
 
   const responseMessage = useSelector((state) => state.response.message);
   console.log("responseMessage", responseMessage);
-  const handleAddCondition = () => {
-    setAdditionalDivs([
-      ...additionalDivs,
-      <div
-        key={additionalDivs.length}
-        className="flex flex-wrap justify-end pb-[15px] gap-[10px]"
-      >
-        <SelectOpt
-          width={{ w: "52px", sm: "52px", md: "52px", lg: "52px" }}
-          optWidth="50px"
-          options={[
-            { name: "OR", conversion_id: "1" },
-            { name: "AND", conversion_id: "2" },
-          ]}
-          defaultOption="Operator"
-          sendSelectedVal={sendSelectedValOperator}
-        />
-        <SelectOpt
-          width={{ w: "210px", sm: "210px", md: "210px", lg: "210px" }}
-          optWidth="50px"
-          options={conversationList}
-          defaultOption={conversationList[0]?.name}
-          editOpt="true"
-          create="Create Conversion"
-          renderParentComponent={renderParentComponent}
-          sendSelectedVal={sendSelectedValConversion}
-        />
-      </div>,
-    ]);
-  };
 
   let optionsState = useSelector((state) => state.createAgentOptions.options);
   let dispatch = useDispatch();
@@ -75,12 +44,28 @@ const Options = ({ callScript, resErrData }) => {
   // });
   function renderParentComponent(stateFromChild) {
     setUpdateComp(stateFromChild);
+    getConversationList()
   }
 
+  
+// const [conversionAndOperator,setConversionAndOperator] = useState([])
   function sendSelectedValConversion(val) {
     console.log("Conversion***************", val);
     setConversionId(val.id || conversationList[0]?.conversion_id);
+
     // setConversionList({ ...conversionList, conversion_id: val.id });
+
+
+    // const  updatedConversions =[...conversionAndOperator];
+    // const existingConversionIndex = updatedConversions.findIndex(conv => conv.conversionId === val.id);
+  
+    // if (existingConversionIndex !== -1) {
+    //   updatedConversions[existingConversionIndex] = { conversionId: val.id, operator };
+    // } else {
+    //   updatedConversions.push({ conversionId: val.id, operator });
+    // }
+  
+    // setConversionAndOperator(updatedConversions);
   }
 
   function sendSelectedValOperator(val) {
@@ -160,14 +145,13 @@ const Options = ({ callScript, resErrData }) => {
     getVoiceList();
     // getConversationList();
     getPhoneList();
+    getConversationList();
 
     // For update
     if (agentIdfromQuery) {
       getAdgentById();
     }
-  
-  }, [])
-  
+  }, []);
 
   useEffect(() => {
     setScript(callScript?.script);
@@ -191,7 +175,6 @@ const Options = ({ callScript, resErrData }) => {
         )
       );
     }
-    getConversationList();
 
     // else{
     //    dispatch(
@@ -212,7 +195,7 @@ const Options = ({ callScript, resErrData }) => {
     //     )
     //   );
     // }
-   
+
     // if (responseMessage) {
     //   setShowMess(true);
     //   const timeout = setTimeout(() => {
@@ -239,6 +222,38 @@ const Options = ({ callScript, resErrData }) => {
   console.log("voiceList-", voiceList);
   console.log("phoneList-", phoneList);
   console.log("agentName-", agentName);
+
+  const handleAddCondition = () => {
+    setAdditionalDivs([
+      ...additionalDivs,
+      <div
+        key={additionalDivs.length}
+        className="flex flex-wrap justify-end pb-[15px] gap-[10px]"
+      >
+        <SelectOpt
+          width={{ w: "52px", sm: "52px", md: "52px", lg: "52px" }}
+          optWidth="50px"
+          options={[
+            { name: "OR", conversion_id: "1" },
+            { name: "AND", conversion_id: "2" },
+          ]}
+          defaultOption="Operator"
+          sendSelectedVal={sendSelectedValOperator}
+        />
+        <SelectOpt
+          width={{ w: "210px", sm: "210px", md: "210px", lg: "210px" }}
+          optWidth="50px"
+          options={conversationList}
+          defaultOption={conversationList[0]?.name}
+          editOpt="true"
+          create="Create Conversion"
+          renderParentComponent={renderParentComponent}
+          sendSelectedVal={sendSelectedValConversion}
+        />
+      </div>,
+    ]);
+  };
+
   return (
     <div className="w-full py-[20px] px-[24px] lg:w-[40%] flex flex-col gap-[30px]">
       {/* NAME */}
@@ -305,18 +320,18 @@ const Options = ({ callScript, resErrData }) => {
                 sendSelectedVal={sendSelectedValConversion}
               />
             </div>
-            {/* {additionalDivs.map((div, index) => (
+            {additionalDivs.map((div, index) => (
               <React.Fragment key={index}>{div}</React.Fragment>
-            ))} */}
+            ))}
             {/* Add Condition */}
-            {/* <div className="float-right">
+            <div className="float-right">
               <input
                 type="button"
                 value="+ Add Condition"
                 onClick={handleAddCondition}
                 className="cursor-pointer border ml-[55px] px-4 border-black bg-[#D7C9FF]"
               />
-            </div> */}
+            </div>
           </div>
         </div>
       )}

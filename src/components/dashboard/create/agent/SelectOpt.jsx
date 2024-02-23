@@ -1,9 +1,9 @@
-import React, { useEffect,useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import downArrow from "../../../../assets/icons/downArrow.svg";
-import deleteIcon from "../../../../assets/icons/deleIcon.svg"; 
+import deleteIcon from "../../../../assets/icons/deleIcon.svg";
 import { baseUrl } from "../../../../utils/baseUrl";
 
-const SelectOpt = ({ 
+const SelectOpt = ({
   width,
   options,
   optWidth,
@@ -13,6 +13,7 @@ const SelectOpt = ({
   optionName,
   renderParentComponent,
   sendSelectedVal,
+  index,
 }) => {
   const [dropDown, setDropDown] = useState(false);
   // console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@options", options);
@@ -20,6 +21,8 @@ const SelectOpt = ({
   const [showCustConversion, setShowCustConversion] = useState(false);
   const [createConversion, setCreateConversion] = useState(false);
   const [editConversion, setEditConversion] = useState(false);
+
+  const [UpdateDefaultName,setUpdateDefaultName]  = useState(false);
 
   const [selectedVal, setSelecedVal] = useState({
     name: options[0]?.name || options[0]?.full_phone,
@@ -29,6 +32,8 @@ const SelectOpt = ({
       options[0]?.phone_id ||
       options[0]?.agent_id,
   });
+
+  // console.log("selectedVal",selectedVal)
 
   const [createConversionOptions, setCreateConversionOptions] = useState({
     name: "",
@@ -47,31 +52,35 @@ const SelectOpt = ({
   //   console.log("editConversionOptions", editConversionOptions);
   //   console.log("createConversion", createConversion);
   //   console.log("editConversion", editConversion);
-  sendSelectedVal(selectedVal);
-
+  // console.log("selectedVal", selectedVal);
+  // sendSelectedVal(selectedVal);
+  console.log("index", index);
+  useMemo(() => {
+    sendSelectedVal(selectedVal, index);
+  }, [ selectedVal, index]);
   useEffect(() => {
+    // sendSelectedVal(selectedVal, index);
     // console.log("selectedVal", selectedVal);
-    sendSelectedVal(selectedVal);
+    console.log("selectedVal useEffect");
     setDropDown(false);
   }, [selectedVal]);
 
   async function saveUserOptions(url, method, body) {
     renderParentComponent(false);
     try {
-    let token = localStorage.getItem("auth_token");
+      let token = localStorage.getItem("auth_token");
       let post = await fetch(`${baseUrl}/conversions/${url}`, {
         method: method,
         headers: {
-          Authorization:
-            `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify(body),
       });
       let res = await post.json();
-
-      console.log("res-", res);
-
+      // setUpdateDefaultName(true)
+      console.log("resEdit-", res);
+console.log("selectedVal",selectedVal)
       renderParentComponent(true);
     } catch (e) {
       console.error(e);
@@ -96,14 +105,13 @@ const SelectOpt = ({
     renderParentComponent(false);
 
     try {
-    let token = localStorage.getItem("auth_token");
+      let token = localStorage.getItem("auth_token");
       let post = await fetch(
         `${baseUrl}/conversions/${url}?conversion_id=${id}`,
         {
           method: method,
           headers: {
-            Authorization:
-              `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
           // query: JSON.stringify({ conversion_id: [id] }),
@@ -111,8 +119,8 @@ const SelectOpt = ({
       );
       let res = await post.json();
 
-      renderParentComponent(true);
       console.log("res-", res);
+      renderParentComponent(true);
       // console.log("options", options);
     } catch (e) {
       console.error(e);
@@ -171,12 +179,18 @@ const SelectOpt = ({
       </div>
 
       <div
-      ref={dropdownRef}
+        ref={dropdownRef}
         className={`w-full select-none ${
           dropDown ? "block" : "hidden"
         } lg:hidden lg:group-hover:block absolute top-0 cursor-pointer z-10  border border-[#381E50] bg-white`}
       >
-        <div className={`px-1 bg-gray-200 cursor-auto  ${optionName?"text-start":"text-center"}`}>{optionName?optionName:"- - -"}</div>
+        <div
+          className={`px-1 bg-gray-200 cursor-auto  ${
+            optionName ? "text-start" : "text-center"
+          }`}
+        >
+          {optionName ? optionName : "- - -"}
+        </div>
         {options?.map((e, i) => {
           return (
             <div
@@ -190,7 +204,7 @@ const SelectOpt = ({
                   id:
                     e?.conversion_id ||
                     e?.voice_id ||
-                    e?.phone_id || 
+                    e?.phone_id ||
                     e?.agent_id,
                 });
                 setEditConversionOptions({

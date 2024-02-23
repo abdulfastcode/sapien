@@ -13,6 +13,7 @@ const EditAgentComp = ({ sendResData }) => {
   let [agentCreatedId, setAgentCreatedId] = useState(null);
   const dispatch = useDispatch()
   // console.log("optionsStateEDIT", optionsState);
+  dispatch(setResponseMessage(""))
   
   let { search } = useLocation();
   let querySearch = search?.split("?");
