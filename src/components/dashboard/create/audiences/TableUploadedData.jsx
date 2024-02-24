@@ -121,7 +121,7 @@ console.log("audienceNameRedux",audienceNameRedux)
                 {audienceName || "No Name"}
               </div> */}
                <input
-               placeholder={audienceName?audienceName:"No Name"}
+               placeholder={audienceName?audienceName:"Enter Name"}
           value={audienceNameReset}
           onChange={(e) => setAudienceNameReset((e.target.value))}
           type="text"

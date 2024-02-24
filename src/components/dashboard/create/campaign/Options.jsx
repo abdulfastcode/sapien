@@ -15,12 +15,12 @@ const Options = ({ indvQuery, campaignData }) => {
   const [retriesVal, setRetriesVal] = useState();
   const [name, setName] = useState("");
 
-  console.log("campaignData",campaignData);
+  console.log("campaignData", campaignData);
   const checkQueryAndCampData = indvQuery && campaignData.length > 0;
-
+  console.log("checkQueryAndCampData", checkQueryAndCampData);
   function sendSelectedValAgent(val) {
     console.log("Agent***************", val);
-    setAgentId(val.id); 
+    setAgentId(val.id);
   }
 
   function sendSelectedValAudience(val) {
@@ -32,8 +32,7 @@ const Options = ({ indvQuery, campaignData }) => {
     let token = localStorage.getItem("auth_token");
     fetch(`${baseUrl}/agents/get_agent_list?items=20000&page=1`, {
       headers: {
-        Authorization:
-          `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => response.json())
@@ -46,8 +45,7 @@ const Options = ({ indvQuery, campaignData }) => {
     let token = localStorage.getItem("auth_token");
     fetch(`${baseUrl}/audiences/get_audience_list?items=20000&page=1`, {
       headers: {
-        Authorization:
-          `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => response.json())
@@ -84,13 +82,13 @@ const Options = ({ indvQuery, campaignData }) => {
           <div>
             <input
               type="text"
-              disabled={checkQueryAndCampData?true:false}
+              disabled={campaignData.length > 0 ? true : false}
               placeholder={
-                checkQueryAndCampData ? campaignData[0]?.name : "Name"
+                campaignData.length > 0 ? campaignData[0]?.name : "Name"
               }
               className="border px-[6px]  border-black w-[210px]"
               // disabled={indvQuery?true:false}
-              value={checkQueryAndCampData ? campaignData[0]?.name : name}
+              value={campaignData.length > 0 ? campaignData[0]?.name : name}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
@@ -98,25 +96,51 @@ const Options = ({ indvQuery, campaignData }) => {
         <div className="flex justify-between sm:gap-[100px]">
           <div>Agent</div>
           <div>
-            <SelectOpt
-            optionName={indvQuery?"Cannot Select Option":"Select Agent"}
-              width={{ w: "210px", sm: "210px", md: "210px", lg: "210px" }}
-              defaultOption={checkQueryAndCampData?campaignData[0]?.agent_id:"Select Agent"}
-              options={agentList}
-              sendSelectedVal={sendSelectedValAgent}
-            />
+            {campaignData.length > 0 ? (
+              <div className="border px-[6px]  border-black w-[210px]">
+                {campaignData[0]?.agent_id}
+              </div>
+            ) : (
+              <SelectOpt
+                optionName={
+                  campaignData.length > 0
+                    ? "Cannot Select Option"
+                    : "Select Agent"
+                }
+                width={{ w: "210px", sm: "210px", md: "210px", lg: "210px" }}
+                defaultOption={
+                  campaignData.length > 0
+                    ? campaignData[0]?.agent_id
+                    : "Select Agent"
+                }
+                options={campaignData.length > 0 ? [] : agentList}
+                sendSelectedVal={sendSelectedValAgent}
+              />
+            )}
           </div>
         </div>
         <div className="flex justify-between sm:gap-[100px]">
           <div>Audiences</div>
           <div>
-            <MultiSelect
-             optionName={indvQuery?"Cannot Select Option":"Select Audiences"}
-              width={{ w: "210px", sm: "210px", md: "210px", lg: "210px" }}
-              defaultOption={checkQueryAndCampData?`${campaignData[0]?.audience_list.length} SELECTED`:"Select Audiences"}
-              options={audienceList}
-              sendSelectedVal={sendSelectedValAudience}
-            />
+            {campaignData.length > 0 ? (
+              <div className="border px-[6px]  border-black w-[210px]">{`${campaignData[0]?.audience_list.length}-SELECTED`}</div>
+            ) : (
+              <MultiSelect
+                optionName={
+                  campaignData.length > 0
+                    ? "Cannot Select Option"
+                    : "Select Audiences"
+                }
+                width={{ w: "210px", sm: "210px", md: "210px", lg: "210px" }}
+                defaultOption={
+                  campaignData.length > 0
+                    ? `${campaignData[0]?.audience_list.length} SELECTED`
+                    : "Select Audiences"
+                }
+                options={campaignData.length > 0 ? [] : audienceList}
+                sendSelectedVal={sendSelectedValAudience}
+              />
+            )}
           </div>
         </div>
         <div className="flex justify-between sm:gap-[100px]">
@@ -124,11 +148,10 @@ const Options = ({ indvQuery, campaignData }) => {
           <div>
             <input
               type="number"
-              
               placeholder={
-                checkQueryAndCampData ? campaignData[0]?.retries : "Name"
+                campaignData.length > 0 ? campaignData[0]?.retries : "Retries"
               }
-              disabled={checkQueryAndCampData?true:false}
+              disabled={campaignData.length > 0 ? true : false}
               className="border px-[6px] border-black w-[210px]"
               value={retriesVal}
               onChange={(e) => {
@@ -139,7 +162,7 @@ const Options = ({ indvQuery, campaignData }) => {
         </div>
       </div>
 
-      {indvQuery && (
+      {campaignData.length > 0 && (
         <div className="flex flex-col gap-[16px] pr-[15px]">
           <div className="font-bold">Analytics</div>
           <div className="flex justify-between gap-[80px]">
