@@ -40,6 +40,14 @@ const Payment = () => {
           <div>Remaining Talk Time</div>
           <div>{userDetails?userDetails.remaining_talk_time:""}</div>
         </div>
+        <div className="mt-2">
+        <button
+              className=" py-[3px] px-[25px] items-center bg-[#381E50] text-white  text-md "
+              
+            >
+              Add Credit
+            </button>
+        </div>
       </div>
     </div>
   );

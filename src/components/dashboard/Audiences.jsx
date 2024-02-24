@@ -13,7 +13,7 @@ import {
   addDataTable,
 } from "../../utils/slices/dashboardSlice";
 import { baseUrl, headers } from "../../utils/baseUrl";
-
+ 
 const Audiences = () => {
   // console.log("comp mount from main audiences");
 

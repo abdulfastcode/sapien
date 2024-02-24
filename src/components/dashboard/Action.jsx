@@ -10,12 +10,13 @@ import { useEffect, useState } from "react";
 import { CSVLink } from "react-csv";
 import { baseUrl, headers } from "../../utils/baseUrl";
 import { useLocation } from "react-router-dom";
+import { audienceDownloadedData } from "../../utils/slices/downloadData";
 
 const Action = ({ selectedData, renderParentComponent }) => {
   // console.log("comp mount from action");
   // console.log(selectedData);
   // function extractIds(arr) {
-  //   const ids = [];
+  //   const ids = []; 
   //   arr.forEach((obj) => {
   //     Object.keys(obj).forEach((key) => {
   //       if (key.includes("id")) {
@@ -43,7 +44,7 @@ const Action = ({ selectedData, renderParentComponent }) => {
   console.log("path", path);
   const checkIdsWithParams = idsSelectedData?.join(`&${path}_id=`);
   // console.log(checkIdsWithParams);
-  // let dispatch = useDispatch();
+  let dispatch = useDispatch();
   function deleteHandler() {
     console.log(
       `${baseUrl}/${path}s/delete_${path}?${path}_id=${checkIdsWithParams}`
@@ -92,7 +93,9 @@ const Action = ({ selectedData, renderParentComponent }) => {
         }
       )
         .then((response) => response.json())
-        .then((data) => setDownloadItems(data));
+        .then((data) =>{
+          dispatch(audienceDownloadedData(data))
+          setDownloadItems(data)});
     } else {
       setDownloadItems([]); // Reset download items if checkbox is empty
     }
@@ -100,7 +103,8 @@ const Action = ({ selectedData, renderParentComponent }) => {
       // console.log("comp unmount from action");
     };
   }, [path, checkIdsWithParams]);
-  // console.log("downloadItems->", downloadItems);
+  console.log("downloadItems->", downloadItems);
+ 
   // console.log(downloadItems);
 
   return (

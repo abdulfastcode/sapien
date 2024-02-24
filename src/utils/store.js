@@ -6,6 +6,7 @@ import createAgentOptionsSlice from "./slices/createAgentOptionsSlice";
 import createcampaignOptionsSlice from "./slices/createcampaignOptionsSlice";
 import responseReducer from "./slices/responseSlice";
 import userReducer from './userSlice';
+import downloadData from "./slices/downloadData";
 
 const store = configureStore({
     reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
         createCampaignOptions: createcampaignOptionsSlice,
         user_info: userReducer,
         response: responseReducer,
+        downloadData:downloadData
     }
 })
 

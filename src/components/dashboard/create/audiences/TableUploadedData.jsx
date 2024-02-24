@@ -1,24 +1,38 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { uploadAudienceName, uploadJsonFile } from "../../../../utils/slices/fileSlice";
+import {
+  uploadAudienceName,
+  uploadJsonFile,
+} from "../../../../utils/slices/fileSlice";
+import { useLocation } from "react-router-dom";
 
 const TableUploadedData = () => {
   //   console.log("csvData", csvData);
 
-  const audienceNameRedux = useSelector((state) => state.fileLoader.audienceName);
+  let { search } = useLocation();
+  let querySearch = search?.split("?");
+  let indvQuery = querySearch[1];
+  let audienceIdfromQuery = indvQuery?.split("=").pop();
+  console.log("audienceIdfromQuery", audienceIdfromQuery);
+  console.log("indvQuery", indvQuery);
 
-  let dispatch = useDispatch()
+  const audienceNameRedux = useSelector(
+    (state) => state.fileLoader.audienceName
+  );
+
+  let dispatch = useDispatch();
   const jsonData = useSelector((state) => state.fileLoader.json);
   console.log("jsonData", jsonData);
   const csvData = useSelector((state) => state.fileLoader.csv);
   const audienceName = useSelector((state) => state.fileLoader.audienceName);
-  console.log("audienceName", audienceName);
-  let [audienceNameReset,setAudienceNameReset] = useState('')
-console.log("audienceNameRedux",audienceNameRedux)
 
-  if(audienceNameReset){
-console.log("audienceNameRedux",audienceNameRedux)
-    dispatch(uploadAudienceName(audienceNameReset))
+  console.log("audienceName", audienceName);
+  let [audienceNameReset, setAudienceNameReset] = useState("");
+  console.log("audienceNameRedux", audienceNameRedux);
+
+  if (audienceNameReset) {
+    console.log("audienceNameRedux", audienceNameRedux);
+    dispatch(uploadAudienceName(audienceNameReset));
   }
   // useEffect(() => {
   //   dispatch(uploadCsvFile({ ...jsonData, name: audienceName }));
@@ -81,13 +95,13 @@ console.log("audienceNameRedux",audienceNameRedux)
           <table className="w-full table-auto ">
             {/* <thead className="items-center border border-[#381E50]">
               <tr> */}
-                {/* <th className="text-base border border-[#381E50] font-bold  text-[#381E50]">
+            {/* <th className="text-base border border-[#381E50] font-bold  text-[#381E50]">
                   contacts
                 </th> */}
-                {/* <th className="text-base border border-[#381E50] font-bold  text-[#381E50]">
+            {/* <th className="text-base border border-[#381E50] font-bold  text-[#381E50]">
                   name
                 </th> */}
-              {/* </tr>
+            {/* </tr>
             </thead> */}
             <tbody className="text-center border border-[#381E50]">
               <tr>
@@ -120,13 +134,13 @@ console.log("audienceNameRedux",audienceNameRedux)
               {/* <div className="border text-[#381E50] border-[#381E50] p-1">
                 {audienceName || "No Name"}
               </div> */}
-               <input
-               placeholder={audienceName?audienceName:"Enter Name"}
-          value={audienceNameReset}
-          onChange={(e) => setAudienceNameReset((e.target.value))}
-          type="text"
-          className="border border-[#381E50] py-[2px] px-2"
-        ></input>
+              <input
+                placeholder={audienceName ? audienceName : "Enter Name"}
+                value={audienceNameReset}
+                onChange={(e) => setAudienceNameReset(e.target.value)}
+                type="text"
+                className="border border-[#381E50] py-[2px] px-2"
+              ></input>
             </div>
             <div className="text-[#381E50] flex flex-wrap px-6 pb-4 items-center gap-20">
               <div>Custom Fields</div>

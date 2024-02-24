@@ -6,23 +6,28 @@ import {
 } from "../../../utils/slices/dashboardSlice";
 import { useLocation } from "react-router-dom";
 // import React from 'react'
- 
-const DashboardTable = ({ tableData, setData, maxTableHeaders }) => {
+
+const DashboardTable = ({
+  tableData,
+  setData,
+  maxTableHeaders,
+  showCheckBox,
+}) => {
   // console.log("comp mount from DashboardTable");
   const [checkedTr, setCheckedTr] = useState(true);
-  const { pathname } = useLocation(); 
+  const { pathname } = useLocation();
   const [check, setCheck] = useState([]);
   // let dashboadTable = useSelector((state) => state.dashboard.table);
   let checkState = useSelector((state) => state.dashboard.checkBox);
   // let dispatch = useDispatch();
 
   const path = pathname.split("/").pop();
-  console.log("path!!!",path)
+  console.log("path!!!", path);
   const allIds = tableData?.map((e) => {
     return e[`${path}_id`];
   });
 
-  console.log(tableData);
+  console.log("tableData", tableData);
   useEffect(() => {
     // dispatch(addCheckboxState([1, 2]));
     // console.log("dashboard useEfect");
@@ -64,7 +69,7 @@ const DashboardTable = ({ tableData, setData, maxTableHeaders }) => {
         console.log(target);
         name = target.getAttribute("name");
         checked = checkedTr;
-    
+
         console.log("checkedTr", checkedTr);
 
         // Use the 'name' value as needed
@@ -126,21 +131,25 @@ const DashboardTable = ({ tableData, setData, maxTableHeaders }) => {
                 );
               })}
 
-              <th key={maxTableHeaders?.length} className="pt-[3px]">
-                <input
-                  type="checkbox"
-                  name="allselect"
-                  id=""
-                  value=""
-                  checked={!tableData.some((data) => data?.isChecked !== true)}
-                  onChange={checkedHandler}
-                  className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                />
-              </th>
+              {!showCheckBox && (
+                <th key={maxTableHeaders?.length} className="pt-[3px]">
+                  <input
+                    type="checkbox"
+                    name="allselect"
+                    id=""
+                    value=""
+                    checked={
+                      !tableData.some((data) => data?.isChecked !== true)
+                    }
+                    onChange={checkedHandler}
+                    className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                </th>
+              )}
             </tr>
           ) : (
             <tr>
-              <th>{path==="agent"?"Agent_id":""}</th>
+              <th>{path === "agent" ? "Agent_id" : ""}</th>
             </tr>
           )}
         </thead>
@@ -153,7 +162,7 @@ const DashboardTable = ({ tableData, setData, maxTableHeaders }) => {
             tableData.map((e, i) => {
               return (
                 <tr
-                  key={e[`${path}_id`]||i}
+                  key={e[`${path}_id`] || i}
                   onClick={checkedHandler}
                   name={e[`${path}_id`]}
                   // id={e?.isChecked || false}
@@ -169,21 +178,23 @@ const DashboardTable = ({ tableData, setData, maxTableHeaders }) => {
                         className="border border-[#381E50]"
                         key={`${i}-${header}`}
                       >
-                        {e[header]??"null"}
+                        {e[header] ?? "null"}
                       </td>
                     );
                   })}
-                  <td key={`${i}-checkbox`} className="pt-[4px]">
-                    <input
-                      type="checkbox"
-                      name={e[`${path}_id`]}
-                      value={e[`${path}_id`]}
-                      // checked={check.includes(e[`${path}_id`])}
-                      checked={e?.isChecked || false}
-                      onChange={checkedHandler}
-                      className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                    />
-                  </td>
+                  {!showCheckBox && (
+                    <td key={`${i}-checkbox`} className="pt-[4px]">
+                      <input
+                        type="checkbox"
+                        name={e[`${path}_id`]}
+                        value={e[`${path}_id`]}
+                        // checked={check.includes(e[`${path}_id`])}
+                        checked={e?.isChecked || false}
+                        onChange={checkedHandler}
+                        className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      />
+                    </td>
+                  )}
                 </tr>
               );
             })
