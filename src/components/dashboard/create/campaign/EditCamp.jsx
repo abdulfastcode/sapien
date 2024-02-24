@@ -135,7 +135,7 @@ const EditCamp = ({
               {campaignData[0]?.status||checkQueryAndCampData  }
             </div>
           )}
-          {checkQueryAndCampData ? (
+          {/* {checkQueryAndCampData ? (
             <>
               <button>
                 <img src={downloadIcon} alt="downloadIcon" />
@@ -144,7 +144,7 @@ const EditCamp = ({
                 <img src={deleteIcon} alt="deleteIcon" />
               </button>
             </>
-          ) : null}
+          ) : null} */}
           <Link to={`/dashboard/campaign`}>
             <button className=" py-[3px]  items-center text-[#381E50]  text-md font-bold">
               X
