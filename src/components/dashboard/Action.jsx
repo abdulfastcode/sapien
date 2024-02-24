@@ -16,7 +16,7 @@ const Action = ({ selectedData, renderParentComponent }) => {
   // console.log("comp mount from action");
   // console.log(selectedData);
   // function extractIds(arr) {
-  //   const ids = []; 
+  //   const ids = [];
   //   arr.forEach((obj) => {
   //     Object.keys(obj).forEach((key) => {
   //       if (key.includes("id")) {
@@ -35,7 +35,7 @@ const Action = ({ selectedData, renderParentComponent }) => {
       }
     })
     .filter(Boolean);
-  // console.log("idsSelectedData", idsSelectedData);
+  console.log("idsSelectedData", idsSelectedData);
   const { pathname } = useLocation();
   // let checkbox = useSelector((state) => state.dashboard.checkBox);
   const [downloadItems, setDownloadItems] = useState([]);
@@ -93,9 +93,15 @@ const Action = ({ selectedData, renderParentComponent }) => {
         }
       )
         .then((response) => response.json())
-        .then((data) =>{
-          dispatch(audienceDownloadedData(data))
-          setDownloadItems(data)});
+        .then((data) => {
+          dispatch(audienceDownloadedData(data));
+          if (path === "campaign") {
+            setDownloadItems(data);
+          }
+          if (path === "audience") {
+            setDownloadItems(data[0]?.contacts);
+          }
+        });
     } else {
       setDownloadItems([]); // Reset download items if checkbox is empty
     }
@@ -104,7 +110,7 @@ const Action = ({ selectedData, renderParentComponent }) => {
     };
   }, [path, checkIdsWithParams]);
   console.log("downloadItems->", downloadItems);
- 
+
   // console.log(downloadItems);
 
   return (
@@ -124,7 +130,7 @@ const Action = ({ selectedData, renderParentComponent }) => {
         ) : (
           <CSVLink
             data={downloadItems}
-            filename={`${path}_data_${new Date().toString()}.csv`}
+            filename={`${path}_data_Id:${idsSelectedData}_${new Date().toString()}.csv`}
             className="cursor-pointer"
           >
             {idsSelectedData?.length >= 1 && (
