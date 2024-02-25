@@ -113,9 +113,12 @@ const EditAudienceComp = () => {
   }
 
   console.log("CSVcsvJsonData", csvJsonData);
-  function update() {
-    let dataToSend;
 
+  function update() {
+  console.log("CSVcsvJsonData", csvJsonData);
+
+    let dataToSend;
+if(fileType){
     switch (fileType) {
       case "json":
         dataToSend = JSON.stringify(jsonFileData[0]);
@@ -128,6 +131,10 @@ const EditAudienceComp = () => {
         // Handle default case
         break;
     }
+  }else{
+    console.log("csvData", JSON.stringify(csvJsonData));
+    dataToSend=JSON.stringify(csvJsonData)
+  }
     // console.log("object")
     // console.log("JsonData", JSON.stringify(jsonFileData[0]));
     async function saveUserOptions() {
@@ -187,7 +194,7 @@ const EditAudienceComp = () => {
               Save
             </button>
           )}
-          {audienceIdfromQuery && fileType && (
+          {audienceIdfromQuery  && (
             <button
               className=" py-[3px] px-[25px] items-center bg-[#381E50] text-white  text-md font-bold"
               onClick={update}

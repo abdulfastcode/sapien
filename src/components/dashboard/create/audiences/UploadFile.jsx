@@ -14,6 +14,7 @@ const UploadFile = () => {
   // const [jsonData, setJsonData] = useState(null);
   // const [csvData, setCsvData] = useState(null);
   // const [xlsxData, setXlsxData] = useState(null);
+  let csvFileData = useSelector((state) => state.fileLoader.csv);
   let { search } = useLocation();
   let querySearch = search?.split("?");
   let indvQuery = querySearch[1];
@@ -42,11 +43,10 @@ const UploadFile = () => {
         dispatch(uploadAudienceName(audienceName));
         dispatch(uploadJsonFile([{ ...res.json[0], name: audienceName }]));
         // dispatch(uploadJsonFile(res.json));
-        if(audienceIdfromQuery){
-        navigate(`/dashboard/audience/create/create/json?${indvQuery}`);
-        }else{
-        navigate(`/dashboard/audience/create/create/json`);
-
+        if (audienceIdfromQuery) {
+          navigate(`/dashboard/audience/create/create/json?${indvQuery}`);
+        } else {
+          navigate(`/dashboard/audience/create/create/json`);
         }
       }
       if (res.csv) {
@@ -54,10 +54,11 @@ const UploadFile = () => {
 
         dispatch(uploadAudienceName(audienceName));
         dispatch(uploadCsvFile(res.csv.data));
-        if(audienceIdfromQuery){
-        navigate(`/dashboard/audience/create/create/csv?${indvQuery}`);
-        }else{
-        navigate("/dashboard/audience/create/create/csv");}
+        if (audienceIdfromQuery) {
+          navigate(`/dashboard/audience/create/create/csv?${indvQuery}`);
+        } else {
+          navigate("/dashboard/audience/create/create/csv");
+        }
         // setCsvData(res.csv);
       }
       // if (res.xlsx) setXlsxData([res.xlsx]);
@@ -75,10 +76,17 @@ const UploadFile = () => {
   }, [audienceName]);
   console.log("audienceName", audienceName);
   console.log("downlaodedData", downlaodedData);
-  let tableData 
-if(downlaodedData){
-   tableData = downlaodedData[0]?.contacts;
-}
+  let tableData;
+  if (downlaodedData) {
+    console.log("downlaodedData", "namesss");
+    console.log("downlaodedData", downlaodedData);
+
+    tableData = downlaodedData[0]?.contacts;
+    dispatch(uploadAudienceName(audienceName));
+    dispatch(uploadCsvFile(tableData));
+    console.log("downlaodedData", downlaodedData);
+    console.log("csvData", csvFileData);
+  }
   let maxTableHeaders = useMaxHeaderValues(tableData);
   maxTableHeaders?.sort();
 
@@ -97,22 +105,31 @@ if(downlaodedData){
             className="border border-[#381E50] py-[2px] px-2"
           ></input>
         </div>
-        {audienceIdfromQuery&&<div>
-          {/* <button
-             
-              // onClick={saveData}
-            >
-              Upload New File
-            </button> */}
-            <input
-              // id="dropzone-file"
-              type="file"
-              className="py-[3px] px-[25px] w-[270px] cursor-pointer items-center bg-[#381E50] text-white  text-md font-bold"
-              placeholder="Upload New File"
-              accept=".csv, .json, "
-              onChange={handleFileChange}
-            />
-        </div>}
+        {audienceIdfromQuery && (
+          <div>
+         
+            <div className="flex w-full  items-center justify-center bg-grey-lighter">
+              <label className="w-[180px] flex items-center justify-center gap-[15px] px-1 py-2 bg-[#d7c9ff] text-blue rounded-sm text-[#381E50]   border border-blue cursor-pointer hover:bg-[#381E50] hover:text-white">
+                <svg
+                  className="w-7 h-7 "
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+                </svg>
+                <span className=" ">Upload a File</span>
+                <input
+                  type="file"
+                  accept=".csv, .json, "
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
+              </label>
+            </div>
+           
+          </div>
+        )}
       </div>
       {audienceIdfromQuery ? (
         // EDIT

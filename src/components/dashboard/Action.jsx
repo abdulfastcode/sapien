@@ -106,7 +106,9 @@ const Action = ({ selectedData, renderParentComponent }) => {
       setDownloadItems([]); // Reset download items if checkbox is empty
     }
     return () => {
-      // console.log("comp unmount from action");
+      console.log("comp unmount from action********************************");
+     
+
     };
   }, [path, checkIdsWithParams]);
   console.log("downloadItems->", downloadItems);

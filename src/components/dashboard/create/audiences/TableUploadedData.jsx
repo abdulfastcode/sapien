@@ -7,25 +7,25 @@ import {
 import { useLocation } from "react-router-dom";
 
 const TableUploadedData = () => {
-  //   console.log("csvData", csvData);
-
+  
   let { search } = useLocation();
   let querySearch = search?.split("?");
   let indvQuery = querySearch[1];
   let audienceIdfromQuery = indvQuery?.split("=").pop();
   console.log("audienceIdfromQuery", audienceIdfromQuery);
   console.log("indvQuery", indvQuery);
-
+  
   const audienceNameRedux = useSelector(
     (state) => state.fileLoader.audienceName
-  );
-
-  let dispatch = useDispatch();
-  const jsonData = useSelector((state) => state.fileLoader.json);
-  console.log("jsonData", jsonData);
-  const csvData = useSelector((state) => state.fileLoader.csv);
-  const audienceName = useSelector((state) => state.fileLoader.audienceName);
-
+    );
+    
+    let dispatch = useDispatch();
+    const jsonData = useSelector((state) => state.fileLoader.json);
+    console.log("jsonData", jsonData);
+    const csvData = useSelector((state) => state.fileLoader.csv);
+    const audienceName = useSelector((state) => state.fileLoader.audienceName);
+    
+    console.log("csvData", csvData);
   console.log("audienceName", audienceName);
   let [audienceNameReset, setAudienceNameReset] = useState("");
   console.log("audienceNameRedux", audienceNameRedux);
