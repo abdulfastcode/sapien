@@ -42,7 +42,7 @@ const DashBoardHeader = () => {
   return (
     <>
       <div className="px-[25px] sm:px-[45px] py-[20px] md:px-[72px] flex justify-between items-center border-b border-[#433456]">
-        <Link to="/">
+        <Link to="/dashboard/agent">
           <div>
             <img src={logo} alt="logo" />
           </div>
