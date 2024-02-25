@@ -100,7 +100,7 @@ const UploadFile = () => {
             onChange={(e) => setAudienceName(e.target.value)}
             type="text"
             placeholder={
-              audienceIdfromQuery ? downlaodedData[0]?.name : "ENTER NAME"
+              audienceIdfromQuery && downlaodedData ? downlaodedData[0]?.name : "ENTER NAME"
             }
             className="border border-[#381E50] py-[2px] px-2"
           ></input>
