@@ -35,7 +35,7 @@ const Dashbord = () => {
 
     if (token) {
       console.log("user not null", user);
-      navigate("/dashboard/agent");
+      // navigate("/dashboard/agent");
     } else {
       console.log("user null", user);
       navigate("/");

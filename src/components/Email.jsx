@@ -16,11 +16,35 @@ const Email = () => {
 
   const [errorMessage, setErrorMessage] = useState(null);
 
+  const [isResendDisabled, setIsResendDisabled] = useState(false);
+  const [remainingTime, setRemainingTime] = useState(0);
+
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   console.log(user);
 
   let token = localStorage.getItem("auth_token");
+
+
+  useEffect(() => {
+    let timer = null;
+    if (isResendDisabled) {
+      timer = setInterval(() => {
+        setRemainingTime((prevTime) => {
+          if (prevTime === 0) {
+            clearInterval(timer);
+            setIsResendDisabled(false);
+            return 0;
+          }
+          return prevTime - 1;
+        });
+      }, 1000);
+    }
+    return () => {
+      clearInterval(timer);
+    };
+  }, [isResendDisabled]);
+
 
   async function sendMail() {
     console.log(email);
@@ -38,8 +62,13 @@ const Email = () => {
       console.log("res-", res);
       if (res.error) {
         setErrorMessage(res.error);
-      }else{
-        setErrorMessage(null)
+      }  else {
+        setErrorMessage(null);
+        setIsResendDisabled(true);
+        setTimeout(() => {
+          setIsResendDisabled(false);
+        }, 30000); // Enable Resend button after 30 seconds
+        setRemainingTime(30)
       }
     } catch (e) {
       console.error("Error sending mail:", e);
@@ -49,6 +78,12 @@ const Email = () => {
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       if (showFirstDiv && validEmail) {
+        setIsResendDisabled(true);
+
+        setTimeout(() => {
+          setIsResendDisabled(false);
+          console.log("isResendDisabled",isResendDisabled)
+        }, 30000);
         console.log("email valid", email);
         if (token === null) {
           dispatch(addUserEmail({ email: email }));
@@ -86,6 +121,7 @@ const Email = () => {
   useEffect(() => {
     document.addEventListener("keydown", handleKeyPress);
     let token = localStorage.getItem("auth_token");
+   
     // if (token) {
     //   navigate("/dashboard/agent");
     // } else {
@@ -108,6 +144,7 @@ const Email = () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
   }, [showFirstDiv, email]);
+  console.log("isResendDisabled",isResendDisabled)
 
   return (
     <div className="relative">
@@ -176,8 +213,9 @@ const Email = () => {
           </div>
           <div className="">
             <button
-              className="w-[90px] p-[8px] mr-[10px] text-white bg-indigo-950"
+              className={`w-[90px] p-[8px] mr-[10px] ${isResendDisabled?"bg-[#381e5061]":"bg-[#381E50]"} text-white bg-indigo-95`}
               onClick={sendMail}
+              disabled={isResendDisabled}
             >
               Resend
             </button>
@@ -188,6 +226,11 @@ const Email = () => {
               Back
             </button>
           </div>
+          {isResendDisabled && (
+              <div className="text-gray-500 text-sm">
+                Resend mail in {remainingTime} seconds
+              </div>
+            )}
         </div>
       </div>
     </div>
