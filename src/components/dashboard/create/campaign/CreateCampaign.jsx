@@ -8,6 +8,7 @@ import DashboardTable from "../../table/DashboardTable";
 import { useMaxHeaderValues } from "../../../../utils/cus-hooks/useMaxHeaderValues";
 import { useDispatch, useSelector } from "react-redux";
 import { createdCampaignResponse } from "../../../../utils/slices/createcampaignOptionsSlice";
+import { toast } from "react-toastify";
 
 const CreateCampaign = () => {
   let dispatch = useDispatch();
@@ -15,6 +16,7 @@ const CreateCampaign = () => {
   const [tableData, setTableData] = useState([]);
   const [showStartBtn, setShowStartBtn] = useState(false);
   const [btnStatusStartCamp, setBtnStatusStartCamp] = useState(false);
+  const [renderComp, setRenderComp] = useState(false);
 
   console.log("showStartBtn", showStartBtn);
   let { search } = useLocation();
@@ -121,28 +123,33 @@ const CreateCampaign = () => {
       });
       let res = await post.json();
       // navigate('/dashboard/agent')
+      if (post.status === 200) {
+        toast.success(res.message);
+      } else {
+        toast.error(res.error);
+      }
       console.log("res-", res);
-      if(res.campaign_id){
-      setBtnStatusStartCamp(true);
-    }
-      console.log("btnStatusStartCamp",btnStatusStartCamp);
+      if (res.campaign_id) {
+        setBtnStatusStartCamp(true);
+      }
+      console.log("btnStatusStartCamp", btnStatusStartCamp);
     } catch (e) {
+      toast.error("Failed to Start Campaign");
       console.error(e);
     }
   }
-  if (indvQuery) {
-  }
 
   function refrenshCampAndCampData() {
-    console.log("refresh!!!!!!!!")
+    console.log("refresh!!!!!!!! calling  getCampand getCampTableData ");
     getCamp();
     getCampTableData();
   }
+
   useEffect(() => {
     console.log("createdCampResponse", createdCampResponse);
     if (indvQuery || createdCampResponse) {
       console.log("createdCampResponse", createdCampResponse);
-
+      setRenderComp(!renderComp);
       getCamp();
       getCampTableData();
       // setShowStartBtn(true);

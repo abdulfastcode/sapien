@@ -259,11 +259,11 @@ const Options = ({ callScript, resErrData }) => {
       {/* NAME */}
       {voiceList.error && <div className="text-red-500">No Voice List</div>}
       {phoneList.error && <div className="text-red-500">No Phone List</div>}
-      {responseMessage && (
+      {/* {responseMessage && (
         <div className="text-[#156534] p-[10px] rounded-sm bg-[#f0fdf5]">
           {responseMessage}
         </div>
-      )}
+      )} */}
       <div className="flex flex-wrap gap-3 justify-between ">
         <div>Name</div>
         <div>

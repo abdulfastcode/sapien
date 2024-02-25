@@ -12,7 +12,7 @@ const Options = ({ indvQuery, campaignData }) => {
   const [audienceList, setAudienceList] = useState([]);
   const [agentId, setAgentId] = useState("");
   const [audienceIds, setAudienceIds] = useState("");
-  const [retriesVal, setRetriesVal] = useState();
+  const [retriesVal, setRetriesVal] = useState(1);
   const [name, setName] = useState("");
 
   console.log("campaignData", campaignData);

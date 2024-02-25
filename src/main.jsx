@@ -16,6 +16,8 @@ import CreateAgent from "./components/dashboard/create/agent/CreateAgent.jsx";
 import CreateAudience from "./components/dashboard/create/audiences/CreateAudience.jsx";
 import CreateAudienceTable from "./components/dashboard/create/audiences/CreateAudienceTable.jsx";
 import Payment from "./components/dashboard/Payment.jsx";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const router = createBrowserRouter([
   {
@@ -76,6 +78,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   // <React.StrictMode>
   <Provider store={store}>
     <RouterProvider router={router}></RouterProvider>
+    <ToastContainer />
   </Provider>
   // </React.StrictMode>,
 );

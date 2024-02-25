@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { baseUrl } from "../../../../utils/baseUrl";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const EditAudienceComp = () => {
   let { search } = useLocation();
@@ -98,6 +99,13 @@ const EditAudienceComp = () => {
         let res = await post.json();
         setRes(res);
 
+        if(res.message){
+          toast.success(res.message);
+        }
+        if(res.error){
+          toast.error(res.error)
+        }
+
         setTimeout(() => {
           setMessPopUp(false);
         }, 4000);
@@ -106,6 +114,7 @@ const EditAudienceComp = () => {
           navigate("/dashboard/audience");
         }
       } catch (e) {
+        toast.error("Failed to Save Audience");
         console.error(e);
       }
     }
@@ -155,6 +164,12 @@ if(fileType){
         let res = await post.json();
         setRes(res);
 
+        if(res.message){
+          toast.success(res.message);
+        }
+        if(res.error){
+          toast.error(res.error)
+        }
         setTimeout(() => {
           setMessPopUp(false);
         }, 4000);
@@ -163,6 +178,7 @@ if(fileType){
           navigate("/dashboard/audience");
         }
       } catch (e) {
+        toast.error("Failed to Update Audience");
         console.error(e);
       }
     }
@@ -176,7 +192,7 @@ if(fileType){
             <div>{audienceIdfromQuery?"Update Audience":"Create Audience"}</div>
           </div>
         </div>
-        {res && (
+        {/* {res && (
           <div
             className={`p-4 ${messPopUp ? "block" : "hidden"} text-white ${
               res?.error ? "bg-red-500 " : "bg-green-600"
@@ -184,7 +200,7 @@ if(fileType){
           >
             {res?.error ? res?.error : res?.message}
           </div>
-        )}
+        )} */}
         <div className="flex items-center gap-[15px]">
           {fileType && !audienceIdfromQuery && (
             <button

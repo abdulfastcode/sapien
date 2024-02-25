@@ -11,6 +11,7 @@ import { CSVLink } from "react-csv";
 import { baseUrl, headers } from "../../utils/baseUrl";
 import { useLocation } from "react-router-dom";
 import { audienceDownloadedData } from "../../utils/slices/downloadData";
+import { toast } from "react-toastify";
 
 const Action = ({ selectedData, renderParentComponent }) => {
   // console.log("comp mount from action");
@@ -67,10 +68,19 @@ const Action = ({ selectedData, renderParentComponent }) => {
         );
         console.log("post", post);
         let res = await post.json();
+        if (post.status === 200) {
+          renderParentComponent(true);
+          toast.success(res.message);
+        } else if (post.status === 400) {
+          toast.error(res.error);
+        } else {
+          toast.error(res.error);
+        }
 
-        renderParentComponent(true);
         console.log("res-", res);
       } catch (e) {
+        toast.error("Failed to Delete");
+
         console.error(e);
       }
     }
@@ -94,6 +104,7 @@ const Action = ({ selectedData, renderParentComponent }) => {
       )
         .then((response) => response.json())
         .then((data) => {
+          // dispatch for edit
           dispatch(audienceDownloadedData(data));
           if (path === "campaign") {
             setDownloadItems(data);
@@ -107,8 +118,6 @@ const Action = ({ selectedData, renderParentComponent }) => {
     }
     return () => {
       console.log("comp unmount from action********************************");
-     
-
     };
   }, [path, checkIdsWithParams]);
   console.log("downloadItems->", downloadItems);

@@ -5,16 +5,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { baseUrl } from "../../../../utils/baseUrl";
 import { useEffect, useState } from "react";
 import { setResponseMessage } from "../../../../utils/slices/responseSlice";
+import { toast } from "react-toastify";
 
 const EditAgentComp = ({ sendResData }) => {
   let optionsState = useSelector((state) => state.createAgentOptions.options);
   let navigate = useNavigate();
   let [updateBtn, setUpdateBtn] = useState(false);
   let [agentCreatedId, setAgentCreatedId] = useState(null);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   // console.log("optionsStateEDIT", optionsState);
-  dispatch(setResponseMessage(""))
-  
+  dispatch(setResponseMessage(""));
+
   let { search } = useLocation();
   let querySearch = search?.split("?");
   let indvQuery = querySearch[1];
@@ -39,18 +40,25 @@ const EditAgentComp = ({ sendResData }) => {
         });
         let res = await post.json();
         console.log("res", post);
+        if (res.message) {
+          toast.success(res.message);
+        }
+        if (res.error) {
+          toast.error(res.error);
+        }
         if (post.status == 400) {
           sendResData("Field Missing");
         }
         if (post.status === 201) {
-          setAgentCreatedId(res.agent_id)
-          console.log("agentCreatedId",agentCreatedId)
+          setAgentCreatedId(res.agent_id);
+          console.log("agentCreatedId", agentCreatedId);
           setUpdateBtn(true);
-          dispatch(setResponseMessage("Agent Created Successfully"))
+          // dispatch(setResponseMessage("Agent Created Successfully"))
+          // navigate("/dashboard/agent");
         }
-        // navigate('/dashboard/agent')
         console.log("res-", res);
       } catch (e) {
+        toast.error("Failed to create Agent");
         console.error(e);
       }
     }
@@ -59,35 +67,45 @@ const EditAgentComp = ({ sendResData }) => {
     }
   }
 
-  function updateHandler(){
+  function updateHandler() {
     // /agents/update_agent
-    console.log("agentCreatedId",agentCreatedId)
+    console.log("agentCreatedId", agentCreatedId);
     console.log("jsonData", JSON.stringify(optionsState));
     async function saveUserOptions() {
       try {
         let token = localStorage.getItem("auth_token");
 
-        let post = await fetch(`${baseUrl}/agents/update_agent?agent_id=${agentCreatedId}`, {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(optionsState),
-        });
+        let post = await fetch(
+          `${baseUrl}/agents/update_agent?agent_id=${agentCreatedId}`,
+          {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(optionsState),
+          }
+        );
         let res = await post.json();
+        if (res.message) {
+          toast.success(res.message);
+        }
+        if (res.error) {
+          toast.error(res.error);
+        }
         console.log("res", post);
         if (post.status == 400) {
           sendResData("Field Missing");
           // setUpdateBtn(true);
         }
         if (post.status === 201) {
-          dispatch(setResponseMessage("Agent Updated Successfully"))
+          // dispatch(setResponseMessage("Agent Updated Successfully"));
 
-          // navigate('/dashboard/agent')
+          navigate('/dashboard/agent')
         }
         console.log("res-", res);
       } catch (e) {
+        toast.error("Failed to Update Agent");
         console.error(e);
       }
     }
@@ -96,11 +114,11 @@ const EditAgentComp = ({ sendResData }) => {
     }
   }
 
-  useEffect(()=>{
-  setAgentCreatedId(agentIdfromQuery)
-  // dispatch(setResponseMessage())
-},[])
-console.log("agentCreatedId",agentCreatedId)
+  useEffect(() => {
+    setAgentCreatedId(agentIdfromQuery);
+    // dispatch(setResponseMessage())
+  }, []);
+  console.log("agentCreatedId", agentCreatedId);
   return (
     <div>
       <div className="w-full flex px-[24px] py-[29px] items-center flex-wrap gap-[20px] justify-between border border-b-[#381E50]">
@@ -114,7 +132,7 @@ console.log("agentCreatedId",agentCreatedId)
           </div>
         </div>
         <div className="flex items-center gap-[15px]">
-          {updateBtn === true||agentIdfromQuery ?  (
+          {updateBtn === true || agentIdfromQuery ? (
             <button
               disabled={optionsState ? false : true}
               onClick={updateHandler}
@@ -126,9 +144,7 @@ console.log("agentCreatedId",agentCreatedId)
             >
               {optionsState ? "Update" : "Select all the below field"}
             </button>
-          )
-           : 
-           (
+          ) : (
             <button
               disabled={optionsState ? false : true}
               onClick={saveData}
@@ -140,8 +156,7 @@ console.log("agentCreatedId",agentCreatedId)
             >
               {optionsState ? "Save" : "Select all the below field"}
             </button>
-          )
-         }
+          )}
           {/* <button>
             <img src={deleteIcon} alt="deleteIcon" />
           </button> */}

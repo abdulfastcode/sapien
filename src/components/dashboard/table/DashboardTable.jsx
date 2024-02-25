@@ -28,6 +28,7 @@ const DashboardTable = ({
   });
 
   console.log("tableData", tableData);
+  console.log("maxTableHeaders", maxTableHeaders);
   useEffect(() => {
     // dispatch(addCheckboxState([1, 2]));
     // console.log("dashboard useEfect");
@@ -92,12 +93,12 @@ const DashboardTable = ({
       const checkedValue = tableData.map((data) => {
         return { ...data, isChecked: checked };
       });
-      console.log(checkedValue);
+      console.log("checkedValue",checkedValue);
       setData(checkedValue);
     } else {
       console.log("object name", name);
       const checkedValue = tableData.map((data) =>
-        data[`${path}_id`] === name ? { ...data, isChecked: checked } : data
+        (data[`${path}_id`] || data.call_id) === name ? { ...data, isChecked: checked } : data
       );
       console.log(checkedValue);
       setData(checkedValue);
@@ -164,7 +165,7 @@ const DashboardTable = ({
                 <tr
                   key={e[`${path}_id`] || i}
                   onClick={checkedHandler}
-                  name={e[`${path}_id`]}
+                  name={e[`${path}_id`]||e.call_id}
                   // id={e?.isChecked || false}
                   // {...(e?.isChecked !== undefined && { id: e?.isChecked })}
                   data-checked={e?.isChecked || false}
@@ -186,8 +187,8 @@ const DashboardTable = ({
                     <td key={`${i}-checkbox`} className="pt-[4px]">
                       <input
                         type="checkbox"
-                        name={e[`${path}_id`]}
-                        value={e[`${path}_id`]}
+                        name={e[`${path}_id`]||e.call_id}
+                        value={e[`${path}_id`]||e.call_id}
                         // checked={check.includes(e[`${path}_id`])}
                         checked={e?.isChecked || false}
                         onChange={checkedHandler}

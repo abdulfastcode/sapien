@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { baseUrl } from "../../../../utils/baseUrl";
 import { createdCampaignResponse } from "../../../../utils/slices/createcampaignOptionsSlice";
+import { toast } from "react-toastify";
 
 const EditCamp = ({
   btnStatusStartCamp,
@@ -14,12 +15,12 @@ const EditCamp = ({
   indvQuery,
   campStarted,
   campaignData,
-  refrenshCampAndCampData
+  refrenshCampAndCampData,
 }) => {
-  const [checkStartBtn,setCheckStartBtn] = useState(true)
+  const [checkStartBtn, setCheckStartBtn] = useState(true);
   let dispatch = useDispatch();
-  console.log("campaignData",campaignData);
-  console.log("campStarted",campStarted);
+  console.log("campaignData", campaignData);
+  console.log("campStarted", campStarted);
   let optionsState = useSelector(
     (state) => state.createCampaignOptions.options
   );
@@ -29,9 +30,9 @@ const EditCamp = ({
   console.log("btnStatusStartCamp", btnStatusStartCamp);
   console.log("checkStartBtn", checkStartBtn);
 
-  if (search === ""&&checkStartBtn===true) {
+  if (search === "" && checkStartBtn === true) {
     console.log("curerntly in search!!!!!!!!!!");
-  setBtnStatusStartCamp(true)
+    setBtnStatusStartCamp(true);
   }
   // createdCampResponse is a Id getting while clicked on save
   let createdCampResponse = useSelector(
@@ -42,9 +43,10 @@ const EditCamp = ({
   const checkQueryAndCampData = indvQuery && campaignData.length > 0;
   console.log("checkQueryAndCampData", checkQueryAndCampData);
 
+  console.log("jsonData", JSON.stringify(optionsState));
   function saveData() {
-    // console.log("object")
     console.log("jsonData", JSON.stringify(optionsState));
+    // console.log("object")
     async function saveUserOptions() {
       try {
         let token = localStorage.getItem("auth_token");
@@ -57,21 +59,25 @@ const EditCamp = ({
           body: JSON.stringify(optionsState),
         });
         let res = await post.json();
-        if(res.error){
+
+        if (res.error || post.status === 400) {
+          toast.error(res.error);
           setBtnStatusStartCamp(true);
-        setCheckStartBtn(true)
+          setCheckStartBtn(true);
         }
-        if(res.campaign_id){
+        if (res.campaign_id || post.status === 200) {
+          toast.success(res.message);
           setBtnStatusStartCamp(false);
-          setCheckStartBtn(false)
+          setCheckStartBtn(false);
         }
-        
+
         // dispatch(createdCampaignResponse([res]))
         dispatch(createdCampaignResponse(res.campaign_id));
         console.log("res-", res);
         console.log("btnStatusStartCamp", btnStatusStartCamp);
         console.log("checkStartBtn", checkStartBtn);
       } catch (e) {
+        toast.error("Failed to Create Campaign");
         console.error(e);
       }
     }
@@ -79,7 +85,8 @@ const EditCamp = ({
   }
 
   function reload() {
-    refrenshCampAndCampData()
+    toast.info("Campaign Reloaded");
+    refrenshCampAndCampData();
   }
 
   useEffect(() => {
@@ -94,24 +101,33 @@ const EditCamp = ({
         <div className="flex gap-[20px] sm:gap-[35px] flex-wrap items-center ">
           <div className="flex  text-[#381E50] gap-[12px] items-center">
             <div className="font-semibold">
-              {checkQueryAndCampData ||campaignData.length>0
+              {checkQueryAndCampData || campaignData.length > 0
                 ? campaignData[0]?.name
                 : optionsState?.name.length > 0
                 ? optionsState?.name
                 : "Campaign Name"}
             </div>
-            {(checkQueryAndCampData ||campaignData.length>0 || campStarted) && (
+            {(checkQueryAndCampData ||
+              campaignData.length > 0 ||
+              campStarted) && (
               <>
                 <div>{campaignData[0]?.created_on}</div>
                 <div>
-                  <img className="cursor-pointer" onClick={reload} src={reloadIcon} alt="reloadIcon" />
+                  <img
+                    className="cursor-pointer"
+                    onClick={reload}
+                    src={reloadIcon}
+                    alt="reloadIcon"
+                  />
                 </div>
               </>
             )}
           </div>
         </div>
         <div className="flex items-center gap-[15px]">
-          {checkQueryAndCampData ||campaignData.length>0 || createdCampResponse ? (
+          {checkQueryAndCampData ||
+          campaignData.length > 0 ||
+          createdCampResponse ? (
             ""
           ) : (
             <button
@@ -121,7 +137,7 @@ const EditCamp = ({
               Save
             </button>
           )}
-          {(checkQueryAndCampData||campaignData.length>0) && (
+          {(checkQueryAndCampData || campaignData.length > 0) && (
             <div
               className={` py-[3px] px-[25px] items-center ${
                 checkQueryAndCampData && campaignData[0]?.status === "completed"
@@ -132,7 +148,7 @@ const EditCamp = ({
                   : "bg-purple-300"
               } text-black  text-md `}
             >
-              {campaignData[0]?.status||checkQueryAndCampData  }
+              {campaignData[0]?.status || checkQueryAndCampData}
             </div>
           )}
           {/* {checkQueryAndCampData ? (
