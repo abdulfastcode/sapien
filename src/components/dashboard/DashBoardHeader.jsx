@@ -8,7 +8,7 @@ import { removeUser } from "../../utils/userSlice";
 import SelectOpt from "./create/agent/SelectOpt";
 import { baseUrl } from "../../utils/baseUrl";
 const DashBoardHeader = () => {
-  let [userDetails,setUserDetails] = useState(null)
+  let [userDetails, setUserDetails] = useState(null);
   let dispatch = useDispatch();
   // console.log("user dashead", user);
   let navigate = useNavigate();
@@ -22,58 +22,68 @@ const DashBoardHeader = () => {
     //   console.log("user", user);
     //   navigate("/");
     // }
-    
+
     let token = localStorage.getItem("auth_token");
     fetch(`${baseUrl}/accounts/get_account_details`, {
       headers: {
-        Authorization:
-          `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("data perso Data",data)
+        console.log("data perso Data", data);
         setUserDetails(data);
         // dispatch(addDataTable(data));
       });
-    
-  }, [])
-  console.log(userDetails)
+  }, []);
+  console.log(userDetails);
   return (
     <>
-      <div className="px-[25px] sm:px-[45px] py-[20px] md:px-[72px] flex justify-between items-center border-b border-[#433456]">
+      <div className="px-[25px] sm:px-[45px] py-[20px] md:px-[72px] flex justify-between items-center flex-wrap border-b border-[#433456]">
         <Link to="/dashboard/agent">
           <div>
             <img src={logo} alt="logo" />
           </div>
         </Link>
         {userDetails && (
-          <div className="group p-[5px] cursor-pointer">
-            <div className=" w-8 h-8 relative bg-[#22182A] rounded-full flex justify-center items-center">
-              <div className=" w-[11px] text-center cursor-pointer h-6 text-white font-bold">
-                {userDetails?.main_user_id?.[0].toUpperCase()}
-              </div>
-              <div className=" hidden group-hover:block  border bg-white border-[#381E50] absolute top-[102%] right-[10%]">
-                <Link to="/dashboard/user-payment">
+          <div className="flex items-center gap-3">
+            <div>
+              <a
+                className="text-[#22182A] underline underline-offset-1 visited:text-purple-900  font-semibold"
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://sapien-docs.smallest.ai/introduction"
+              >
+                Documentation
+              </a>
+            </div>
+            <div className="group p-[5px] cursor-pointer">
+              <div className=" w-8 h-8 relative bg-[#22182A] rounded-full flex justify-center items-center">
+                <div className=" w-[11px] text-center cursor-pointer h-6 text-white font-bold">
+                  {userDetails?.main_user_id?.[0].toUpperCase()}
+                </div>
+                <div className=" hidden group-hover:block  border bg-white border-[#381E50] absolute top-[102%] right-[10%]">
+                  <Link to="/dashboard/user-payment">
+                    <div
+                      className={`text-right ${
+                        pathname === "/dashboard/user-payment"
+                          ? "bg-[#d7c9ff]"
+                          : "bg-white"
+                      } border-b border-b-[#381e5021] px-2 hover:bg-[#d7c9ff]  cursor-pointer`}
+                    >
+                      Account
+                    </div>
+                  </Link>
                   <div
-                    className={`text-right ${
-                      pathname === "/dashboard/user-payment"
-                        ? "bg-[#d7c9ff]"
-                        : "bg-white"
-                    } border-b border-b-[#381e5021] px-2 hover:bg-[#d7c9ff]  cursor-pointer`}
+                    className="text-right px-2 hover:bg-[#d7c9ff] cursor-pointer"
+                    onClick={() => {
+                      localStorage.removeItem("auth_token");
+                      navigate("/");
+                      dispatch(removeUser());
+                    }}
                   >
-                    Payments
+                    SignOut
                   </div>
-                </Link>
-                <div
-                  className="text-right px-2 hover:bg-[#d7c9ff] cursor-pointer"
-                  onClick={() => {
-                    localStorage.removeItem("auth_token")
-                    navigate('/')
-                    dispatch(removeUser());
-                  }}
-                >
-                  SignOut
                 </div>
               </div>
             </div>

@@ -146,8 +146,11 @@ const Select = ({
   console.log("selectValue", value);
   // console.log("options", options);
   // console.log("isOpen", isOpen);
-  
+
   console.log("editConversionOptions", editConversionOptions);
+  console.log("createConversionOptions", createConversionOptions);
+  console.log("createConversion", createConversion);
+
   return (
     <div
       onBlur={() => setIsOpen(false)}
@@ -158,7 +161,7 @@ const Select = ({
       className={`container  ${
         isOpen ? " ring-offset focus:ring-2 focus:ring-[#43345661]" : ""
       } relative min-h-[1.8em] border border-[#22182b] ${
-        value?.operator_id ? "w-[59px]" : "w-[210px]"
+        value?.operator_id || value?.countrycode_id ? "w-[59px]" : "w-[210px]"
       } flex items-center p-[.25em] outline-none cursor-pointer select-none`}
     >
       <span className="flex-grow flex flex-wrap gap-[.25em]">
@@ -176,7 +179,9 @@ const Select = ({
                 <span className="hidden group-hover:block">&times;</span>
               </button>
             ))
-          : value?.name || value?.full_phone || "No Value Selected"}
+          : value?.name ||
+            value?.full_phone ||
+            "No Value Selected"}
       </span>
       <div className="caret pr-2">
         <img className="" src={downArrow} alt="downArrow" />
@@ -195,6 +200,7 @@ const Select = ({
                 option.operator_id ||
                 option.conversion_id ||
                 option.agent_id ||
+                option.countrycode_id ||
                 index
               }
               onClick={(e) => {
@@ -216,12 +222,13 @@ const Select = ({
                   : ""
               } cursor-pointer select-none`}
             >
-              {option.name || option.full_phone}
+              {option?.name || option?.full_phone }
               {editOpt && (
                 <span
                   className="text-[10px] float-right mt-2 pr-2 pl-[8px] hover:text-blue-700"
                   onClick={() => {
                     setEditConversion(true);
+                    setCreateConversion(false);
                     setShowCustConversion(true);
                   }}
                 >
@@ -231,15 +238,17 @@ const Select = ({
             </li>
           ))}
           {/* CREATE */}
-          <li
-            className={`sticky bottom-0 bg-white cursor-pointer border-[0.5px] border-b-[#381e5029] py-1 hover:bg-[#d7c9ff] px-1 ] `}
-            onClick={() => {
-              setShowCustConversion(true);
-              setCreateConversion(true);
-            }}
-          >
-            {create}
-          </li>
+          {create && (
+            <li
+              className={`sticky bottom-0 bg-white cursor-pointer border-[0.5px] border-b-[#381e5029] py-1 hover:bg-[#d7c9ff] px-1 ] `}
+              onClick={() => {
+                setShowCustConversion(true);
+                setCreateConversion(true);
+              }}
+            >
+              {create}
+            </li>
+          )}
         </ul>
       )}
       {/* POP-UP */}
@@ -250,12 +259,34 @@ const Select = ({
             <div className="flex items-center justify-between">
               <div className="text-[#381E50] font-bold">Custom Conversion</div>
               <div className="flex items-center gap-3">
-                <button
-                  onClick={handleSave}
-                  className=" py-[3px] px-[25px] items-center bg-[#381E50] text-white  text-md font-bold"
-                >
-                  Save
-                </button>
+                {createConversion && (
+                  <button
+                    disabled={
+                      createConversion == true &&
+                      createConversionOptions.name.length > 0
+                        ? false
+                        : true
+                    }
+                    onClick={handleSave}
+                    className={` py-[3px] px-[25px] items-center ${
+                      createConversion == true &&
+                      createConversionOptions.name.length > 0
+                        ? "bg-[#381E50]"
+                        : "bg-[#381e509e] cursor-not-allowed"
+                    }  text-white  text-md font-bold`}
+                  >
+                    Save
+                  </button>
+                )}
+                {editConversion && (
+                  <button
+                    onClick={handleSave}
+                    className={` py-[3px] px-[25px] items-center bg-[#381E50] in-range:cursor-not-allowed"
+                  }  text-white  text-md font-bold`}
+                  >
+                    Save
+                  </button>
+                )}
                 <button
                   onClick={() => {
                     deleteUser(

@@ -6,6 +6,7 @@ import { updateUserInfo } from "../utils/slices/userSlice";
 import rightIcon from "../assets/icons/rightIcon.svg";
 import { baseUrl } from "../utils/baseUrl";
 import { addUserEmail } from "../utils/userSlice";
+import { toast } from "react-toastify";
 const UserInfo = () => {
   let navigate = useNavigate();
 
@@ -20,14 +21,15 @@ const UserInfo = () => {
     country_code: "+91",
     current_usage: [],
     designation: "",
-    has_dev_team: false,
+    has_dev_team: null,
     phone: "",
   });
   const dispatch = useDispatch();
 
   const handleKeyPress = async (e) => {
-    
-    if (e.key === "Enter" || e.target.id === "arrow-right") {
+    if (e.key === "Enter" || e.keyCode == 13 || e.target.id === "arrow-right") {
+      console.log("User Info:", userInfo); // Print the user info slice values
+
       console.log("entered!!!!");
       if (activeDivIndex === 4) {
         dispatch(updateUserInfo(userInfo));
@@ -51,21 +53,54 @@ const UserInfo = () => {
             const response = await fetch(apiUrl, requestOptions);
             if (response.ok) {
               let dataRes = await response.json();
+              toast.success(dataRes.message);
+              toast.error(dataRes.error);
               console.log("data", dataRes);
               dispatch(addUserEmail(dataRes.user_id));
               navigate("/dashboard/agent");
               localStorage.setItem("auth_token", authToken);
             } else {
+              toast.error("Failed to update user info");
               console.error("Failed to update user info");
             }
           } catch (error) {
+            toast.error("Failed to update user info");
             console.error("Error updating user info:", error);
           }
         } else {
+          toast.error("Token not found ");
+
           console.error("Auth token not found in URL");
         }
       } else if (activeDivIndex < 4) {
+        // setActiveDivIndex((prevIndex) => prevIndex + 1);
+        console.log("activeDivIndex", activeDivIndex);
+        // if (userInfo.phone.length > 0) {
+        //   setActiveDivIndex(1);
+        // }
+
+        // // setActiveDivIndex(2);
+
+        // if (userInfo.designation.length > 0) {
+        //   setActiveDivIndex(3);
+        // }
+
+        // if (userInfo.current_usage.length > 0) {
+        //   setActiveDivIndex(4);
+        // }
+
         setActiveDivIndex((prevIndex) => prevIndex + 1);
+
+        // if (
+        //   userInfo.phone.length == 0 ||
+        //   userInfo.current_usage.length == 0 ||
+        //   (userInfo.designation.length == 0 &&
+        //     (e.key === "Enter" ||
+        //       e.keyCode == 13 ||
+        //       e.target.id === "arrow-right"))
+        // ) {
+        //   toast.info("Field Can't be empty");
+        // }
       }
     }
     // else if (e.key === "Backspace") {
@@ -86,6 +121,9 @@ const UserInfo = () => {
           (item) => item !== e.target.value
         );
       }
+    } else if (key === "has_dev_team") {
+      // Update value to a boolean true/false
+      value = e.target.value === "YES";
     }
     setUserInfo((prevState) => ({
       ...prevState,
@@ -309,6 +347,47 @@ const UserInfo = () => {
 
       {renderDiv(
         4,
+        // <>
+        //   <div className="text-black text-lg font-normal leading-tight tracking-tight">
+        //     Do your company have a dev team?
+        //   </div>
+        //   <div>
+        //     <div className="flex flex-col gap-[12px]">
+        //       <div className="flex items-center">
+        //         <input
+        //           id="dev-team-yes"
+        //           type="checkbox"
+        //           name="dev-team"
+        //           value="YES"
+        //           className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+        //           onChange={(e) => handleInputChange(e, "has_dev_team")}
+        //         />
+        //         <label
+        //           htmlFor="dev-team-yes"
+        //           className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500  text-sm font-medium text-gray-900 dark:text-gray-300"
+        //         >
+
+        //         </label>
+        //       </div>
+        //       <div className="flex items-center">
+        //         <input
+        //           name="dev-team"
+        //           id="dev-team-no"
+        //           type="checkbox"
+        //           value="NO"
+        //           className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+        //           onChange={(e) => handleInputChange(e, "has_dev_team")}
+        //         />
+        //         <label
+        //           htmlFor="dev-team-no"
+        //           className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500  text-sm font-medium text-gray-900 dark:text-gray-300"
+        //         >
+        //           NO
+        //         </label>
+        //       </div>
+        //     </div>
+        //   </div>
+        // </>
         <>
           <div className="text-black text-lg font-normal leading-tight tracking-tight">
             Do your company have a dev team?
@@ -316,35 +395,65 @@ const UserInfo = () => {
           <div>
             <div className="flex flex-col gap-[12px]">
               <div className="flex items-center">
-                <input
-                  id="dev-team-yes"
-                  type="checkbox"
-                  name="dev-team"
-                  value="YES"
-                  className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  onChange={(e) => handleInputChange(e, "has_dev_team")}
-                />
                 <label
                   htmlFor="dev-team-yes"
-                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500  text-sm font-medium text-gray-900 dark:text-gray-300"
+                  className="cursor-pointer flex items-center"
                 >
-                  YES
+                  <input
+                    id="dev-team-yes"
+                    type="checkbox"
+                    name="dev-team"
+                    value="YES"
+                    className="w-[28px] h-[28px] opacity-0 absolute"
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setUserInfo((prevState) => ({
+                          ...prevState,
+                          has_dev_team: "YES",
+                        }));
+                      }
+                    }}
+                    checked={userInfo.has_dev_team === "YES"}
+                  />
+                  <span className="h-[28px] w-[28px] rounded border border-gray-500 flex items-center justify-center mr-2">
+                    {userInfo.has_dev_team === "YES" && (
+                      <span className="text-[#433456]">&#10003;</span>
+                    )}
+                  </span>
+                  <span className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500  text-sm font-medium text-gray-900 dark:text-gray-300">
+                    YES
+                  </span>
                 </label>
               </div>
               <div className="flex items-center">
-                <input
-                  name="dev-team"
-                  id="dev-team-no"
-                  type="checkbox"
-                  value="NO"
-                  className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  onChange={(e) => handleInputChange(e, "has_dev_team")}
-                />
                 <label
                   htmlFor="dev-team-no"
-                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500  text-sm font-medium text-gray-900 dark:text-gray-300"
+                  className="cursor-pointer flex items-center"
                 >
-                  NO
+                  <input
+                    id="dev-team-no"
+                    type="checkbox"
+                    name="dev-team"
+                    value="NO"
+                    className="w-[28px] h-[28px] opacity-0 absolute"
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setUserInfo((prevState) => ({
+                          ...prevState,
+                          has_dev_team: "NO",
+                        }));
+                      }
+                    }}
+                    checked={userInfo.has_dev_team === "NO"}
+                  />
+                  <span className="h-[28px] w-[28px] rounded border border-gray-500 flex items-center justify-center mr-2">
+                    {userInfo.has_dev_team === "NO" && (
+                      <span className="text-[#433456]">&#10003;</span>
+                    )}
+                  </span>
+                  <span className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500  text-sm font-medium text-gray-900 dark:text-gray-300">
+                    NO
+                  </span>
                 </label>
               </div>
             </div>

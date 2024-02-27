@@ -4,6 +4,7 @@ import { baseUrl } from "../../../../../utils/baseUrl";
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setAgentOptions } from "../../../../../utils/slices/createAgentOptionsSlice";
+import { toast } from "react-toastify";
 
 const NewOpt = ({ callScript }) => {
   const dispatch = useDispatch();
@@ -15,6 +16,17 @@ const NewOpt = ({ callScript }) => {
     { name: "OR", operator_id: "1" },
     { name: "AND", operator_id: "2" },
   ]);
+
+  const [callToCountryCode, setCallToCountryCode] = useState([
+    { name: "IN", countrycode_id: 1, countryCode: "+91" },
+    { name: "USA", countrycode_id: 2, countryCode: "+01" },
+    { name: "UK", countrycode_id: 3, countryCode: "+44" },
+  ]);
+
+  const [testAgentContact, setTestAgentContact] = useState({
+    countrycode: { name: "IN", countrycode_id: 1, countryCode: "+91" },
+    phone: "",
+  });
 
   const [value, setValue] = useState({
     phone: "",
@@ -228,11 +240,50 @@ const NewOpt = ({ callScript }) => {
     }
   }
 
+  async function testCall(e) {
+    const body = {
+      agent_id: agentIdfromQuery,
+      contact: {
+        countrycode: testAgentContact.countrycode.countryCode,
+        phone: testAgentContact.phone,
+      },
+    };
+    console.log("body",JSON.stringify(body))
+    console.log("test", e);
+    try {
+      let token = localStorage.getItem("auth_token");
+      let post = await fetch(`${baseUrl}/agents/test_agent`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+      let res = await post.json();
+      
+      if (res.message) {
+        toast.success(res.message);
+      }
+      if (res.error) {
+        toast.error(res.error);
+      }
+      // setUpdateDefaultName(true)
+      console.log("resEdit-", res);
+      
+    } catch (e) {
+      toast.error("Failed to Create Conversion");
+      console.error(e);
+    }
+    e.stopPropagation();
+  }
+
   console.log("voiceList", voiceList);
   console.log("phoneList", phoneList);
   console.log("conversationList", conversationList);
   console.log("isExestingValues", isExestingValues);
   console.log("valueOp", value);
+  console.log("testAgentContact", testAgentContact);
   return (
     <div className="w-full py-[20px] px-[24px] lg:w-[40%] flex flex-col gap-[30px]">
       <div className="flex flex-wrap gap-3  justify-between ">
@@ -248,7 +299,7 @@ const NewOpt = ({ callScript }) => {
                 name: e.target.value,
               }))
             }
-            className="border px-[6px] h-[35px] border-black w-[210px]"
+            className="border px-[6px] h-[35px] ring-offset focus:ring-2 focus:ring-[#43345661] focus-visible:outline-none  border-black w-[210px]"
           />
         </div>
       </div>
@@ -339,6 +390,51 @@ const NewOpt = ({ callScript }) => {
             />
           </div>
         </div>
+        {agentIdfromQuery && (
+          <div className="flex flex-wrap gap-3 justify-between ">
+            <div>Call To </div>
+
+            <div className="flex flex-col gap-[20px]">
+              <div className="flex gap-[10px]">
+                {/* <select className="border px-[6px] border-black ">
+                <option value="">IN</option>
+              </select> */}
+                <Select
+                  value={testAgentContact.countrycode}
+                  options={callToCountryCode}
+                  onChange={(o) =>
+                    setTestAgentContact({ ...testAgentContact, countrycode: o })
+                  }
+                />
+                <input
+                  minLength="8"
+                  maxLength="12"
+                  name="Number"
+                  id="Number"
+                  // pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+                  value={testAgentContact.phone}
+                  onChange={(e) =>
+                    setTestAgentContact({
+                      ...testAgentContact,
+                      phone: e.target.value,
+                    })
+                  }
+                  type="tel"
+                  placeholder="1234567890"
+                  className="border px-[6px] ring-offset focus:ring-2 focus:ring-[#43345661] focus-visible:outline-none border-black w-[210px] "
+                />
+              </div>
+              <div className="text-right">
+                <button
+                  onClick={(e) => testCall(e)}
+                  className="border bg-[#381E50] border-[#381E50] text-white py-2 px-4"
+                >
+                  Test Call
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
