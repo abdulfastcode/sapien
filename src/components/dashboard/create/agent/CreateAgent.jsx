@@ -8,6 +8,7 @@ import { setAgentOptions } from "../../../../utils/slices/createAgentOptionsSlic
 import { setResponseMessage } from "../../../../utils/slices/responseSlice";
 import { useLocation } from "react-router-dom";
 import NewOptions from "./NewOptions";
+import NewOpt from "./select/NewOpt";
 
 const CreateAgent = () => {
   let dispatch = useDispatch();
@@ -67,7 +68,8 @@ const CreateAgent = () => {
       <div className="flex flex-col lg:flex-row  w-full">
         <Text callScript={callScript} changeText={changeText} />
         {/* <Options resErrData={resData} callScript={callScript} /> */}
-        <NewOptions callScript={callScript} />
+        {/* <NewOptions callScript={callScript} /> */}
+        <NewOpt/>
       </div>
     </div>
   );

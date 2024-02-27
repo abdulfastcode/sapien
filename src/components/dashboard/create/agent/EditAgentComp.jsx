@@ -101,7 +101,7 @@ const EditAgentComp = ({ sendResData }) => {
         if (post.status === 201) {
           // dispatch(setResponseMessage("Agent Updated Successfully"));
 
-          navigate('/dashboard/agent')
+          // navigate('/dashboard/agent')
         }
         console.log("res-", res);
       } catch (e) {
@@ -146,15 +146,16 @@ const EditAgentComp = ({ sendResData }) => {
             </button>
           ) : (
             <button
-              disabled={optionsState ? false : true}
+              disabled={optionsState?.name?.length<1 ? true : false}
               onClick={saveData}
               className={` py-[3px] px-[25px] items-center ${
-                optionsState
-                  ? "bg-[#381E50] cursor-pointer"
-                  : "bg-red-400 cursor-not-allowed"
+                optionsState?.name?.length<1
+                  ? "bg-[#381e505f] cursor-not-allowed" 
+                  : "bg-[#381E50] cursor-pointer"
               } text-white  text-md font-bold`}
             >
-              {optionsState ? "Save" : "Select all the below field"}
+              {/* {optionsState ? "Save" : "Select all the below field"} */}
+              { "Save" }
             </button>
           )}
           {/* <button>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   uploadCsvFile,
@@ -37,7 +37,7 @@ const UploadFile = () => {
       const fileExtension = fileName.split(".").pop().toLowerCase();
 
       let res = await useFileDataExtractor(fileExtension, selectedFile);
-      console.log(res);
+      console.log("res", res);
       if (res.json) {
         console.log(res.json);
         dispatch(uploadAudienceName(audienceName));
@@ -50,7 +50,7 @@ const UploadFile = () => {
         }
       }
       if (res.csv) {
-        console.log("object", res.csv);
+        console.log("csvvv", res.csv);
 
         dispatch(uploadAudienceName(audienceName));
         dispatch(uploadCsvFile(res.csv.data));
@@ -64,6 +64,13 @@ const UploadFile = () => {
       // if (res.xlsx) setXlsxData([res.xlsx]);
     }
   }
+
+  useMemo(() => {
+    if (audienceIdfromQuery && downlaodedData) {
+      setAudienceName(downlaodedData[0]?.name);
+    }
+  }, []);
+
   useEffect(() => {
     dispatch(uploadJsonFile(null));
     dispatch(uploadCsvFile(null));
@@ -97,17 +104,20 @@ const UploadFile = () => {
           <div>Name</div>
           <input
             value={audienceName}
-            onChange={(e) => setAudienceName(e.target.value)}
+            onChange={(e) => {
+              setAudienceName(e.target.value);
+            }}
             type="text"
             placeholder={
-              audienceIdfromQuery && downlaodedData ? downlaodedData[0]?.name : "ENTER NAME"
+              audienceIdfromQuery && downlaodedData
+                ? downlaodedData[0]?.name
+                : "ENTER NAME"
             }
             className="border border-[#381E50] py-[2px] px-2"
           ></input>
         </div>
         {audienceIdfromQuery && (
           <div>
-         
             <div className="flex w-full  items-center justify-center bg-grey-lighter">
               <label className="w-[180px] flex items-center justify-center gap-[15px] px-1 py-2 bg-[#d7c9ff] text-blue rounded-sm text-[#381E50]   border border-blue cursor-pointer hover:bg-[#381E50] hover:text-white">
                 <svg
@@ -127,7 +137,6 @@ const UploadFile = () => {
                 />
               </label>
             </div>
-           
           </div>
         )}
       </div>

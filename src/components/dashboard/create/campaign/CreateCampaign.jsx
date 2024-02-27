@@ -179,7 +179,7 @@ const CreateCampaign = () => {
         // PAUSE
         <>
           {/* <EditCampTable campaignData={campaignData} indvQuery={indvQuery} /> */}
-          <div className="w-full h-[40vh] lg:h-[38.4vh] relative">
+          <div className="w-full h-[40vh] lg:h-[29.4vh] relative">
             <DashboardTable
               tableData={tableData}
               setData={setData}

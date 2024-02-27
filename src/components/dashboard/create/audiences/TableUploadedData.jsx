@@ -16,7 +16,7 @@ const TableUploadedData = () => {
   console.log("indvQuery", indvQuery);
   
   const audienceNameRedux = useSelector(
-    (state) => state.fileLoader.audienceName
+    (state) => state.fileLoader.audienceName 
     );
     
     let dispatch = useDispatch();

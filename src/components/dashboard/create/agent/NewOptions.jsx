@@ -321,7 +321,7 @@ const NewOptions = ({ callScript }) => {
             }
             className="border px-[6px] border-black w-[210px]"
           />
-        </div>
+        </div> 
       </div>
       {/* VOICE */}
       {voiceList.length > 1 ? (
