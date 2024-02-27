@@ -145,7 +145,10 @@ const EditCamp = ({
                   : checkQueryAndCampData &&
                     campaignData[0]?.status === "in progress"
                   ? "bg-[#FFF172]"
-                  : "bg-purple-300"
+                  : checkQueryAndCampData &&
+                    campaignData[0]?.status === "not started"
+                  ? "bg-purple-300"
+                  : "bg-pink-600"
               } text-black  text-md `}
             >
               {campaignData[0]?.status || checkQueryAndCampData}

@@ -24,6 +24,8 @@ const Select = ({ value, onChange, options, multiple }) => {
   }
 
   console.log("selectValue", value);
+  console.log("options", options);
+  console.log("isOpen", isOpen);
 
   return (
     <div
@@ -35,12 +37,12 @@ const Select = ({ value, onChange, options, multiple }) => {
       className={`container  ${
         isOpen ? " ring-offset focus:ring-2 focus:ring-[#43345661]" : ""
       } relative min-h-[1.8em] border border-[#22182b] ${
-        value?.operator_id ? "w-[50px]" : "w-[210px]"
+        value?.operator_id ? "w-[59px]" : "w-[210px]"
       } flex items-center p-[.25em] outline-none cursor-pointer select-none`}
     >
       <span className="flex-grow flex flex-wrap gap-[.25em]">
         {multiple
-          ? value?.map((v,i) => (
+          ? value?.map((v, i) => (
               <button
                 className="border min-w-[5em] group border-[#381e50] rounded-sm flex items-center gap-[.25em] px-[.25em] pt-[.15em] cursor-pointer hover:bg-[#D7C9FF] justify-between"
                 key={i}
@@ -53,7 +55,7 @@ const Select = ({ value, onChange, options, multiple }) => {
                 <span className="hidden group-hover:block">&times;</span>
               </button>
             ))
-          : value?.name || value?.full_phone || "Loading..."}
+          : value?.name || value?.full_phone || "No Value Selected"}
       </span>
       <div className="caret pr-2">
         <img className="" src={downArrow} alt="downArrow" />

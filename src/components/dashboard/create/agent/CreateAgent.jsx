@@ -69,7 +69,7 @@ const CreateAgent = () => {
         <Text callScript={callScript} changeText={changeText} />
         {/* <Options resErrData={resData} callScript={callScript} /> */}
         {/* <NewOptions callScript={callScript} /> */}
-        <NewOpt/>
+        <NewOpt callScript={callScript}/>
       </div>
     </div>
   );
