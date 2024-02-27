@@ -221,6 +221,13 @@ const NewOpt = ({ callScript }) => {
     );
   }, [value, callScript]);
 
+  function renderParentComponent(stateFromChild) {
+    console.log("stateFromChild", stateFromChild);
+    if (stateFromChild) {
+      getConversationList();
+    }
+  }
+
   console.log("voiceList", voiceList);
   console.log("phoneList", phoneList);
   console.log("conversationList", conversationList);
@@ -291,6 +298,7 @@ const NewOpt = ({ callScript }) => {
                 <Select
                   editOpt="true"
                   create="Create Conversion"
+                  renderParentComponent={renderParentComponent}
                   value={value?.conversions[index].conversion[0]}
                   options={conversationList}
                   onChange={(o) =>

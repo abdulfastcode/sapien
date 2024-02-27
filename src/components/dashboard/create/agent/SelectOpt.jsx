@@ -45,15 +45,7 @@ const SelectOpt = ({
     conversion_id: "",
   });
 
-  //   const optionWidth = parseFloat(width) - 1 + "px";
-  //   console.log("showCustConversion", showCustConversion);
-  // console.log(" selectedVal############", selectedVal);
-  //   console.log("createConversionOptions", createConversionOptions);
-  //   console.log("editConversionOptions", editConversionOptions);
-  //   console.log("createConversion", createConversion);
-  //   console.log("editConversion", editConversion);
-  // console.log("selectedVal", selectedVal);
-  // sendSelectedVal(selectedVal);
+ 
   console.log("index", index);
   useMemo(() => {
     sendSelectedVal(selectedVal, index);
@@ -136,7 +128,7 @@ console.log("selectedVal",selectedVal)
         name: "",
         description: "",
         conversion_id: "",
-      });
+      }); 
     }
   }
   function handleSave() {
