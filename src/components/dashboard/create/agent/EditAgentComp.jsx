@@ -13,7 +13,7 @@ const EditAgentComp = ({ sendResData }) => {
   let [updateBtn, setUpdateBtn] = useState(false);
   let [agentCreatedId, setAgentCreatedId] = useState(null);
   const dispatch = useDispatch();
-  // console.log("optionsStateEDIT", optionsState);
+  console.log("optionsStateEDIT", optionsState);
   dispatch(setResponseMessage(""));
 
   let { search } = useLocation();
@@ -146,10 +146,10 @@ const EditAgentComp = ({ sendResData }) => {
             </button>
           ) : (
             <button
-              disabled={optionsState?.name?.length<1 ? true : false}
+              disabled={optionsState?.name?.length<1 || optionsState==undefined  ? true : false}
               onClick={saveData}
               className={` py-[3px] px-[25px] items-center ${
-                optionsState?.name?.length<1
+                optionsState?.name?.length<1|| optionsState==undefined 
                   ? "bg-[#381e505f] cursor-not-allowed" 
                   : "bg-[#381E50] cursor-pointer"
               } text-white  text-md font-bold`}
