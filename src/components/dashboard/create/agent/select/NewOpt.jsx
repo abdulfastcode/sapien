@@ -5,6 +5,7 @@ import { useLocation, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setAgentOptions } from "../../../../../utils/slices/createAgentOptionsSlice";
 import { toast } from "react-toastify";
+import info  from "../../../../../assets/icons/info.svg"
 
 const NewOpt = ({ callScript,resData }) => {
   const dispatch = useDispatch();
@@ -309,8 +310,8 @@ console.log("resData",resData)
       </div>
       {/* Voice */}
       <div className="flex flex-wrap gap-3 justify-between ">
-        <div>Voice <a target="_blank" rel="noreferrer" href="https://sapien-docs.smallest.ai/essentials/voices
-" className="ml-1 ">&#9432;</a></div>
+        <div className="flex items-center">Voice <a target="_blank" rel="noreferrer" href="https://sapien-docs.smallest.ai/essentials/voices
+" className="ml-1 "><img className="w-[20px]" src={info}/></a></div>
         <Select
           value={value.voice}
           options={voiceList}
