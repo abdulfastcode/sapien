@@ -193,10 +193,10 @@ const UserInfo = () => {
         activeDivIndex === index ? "" : "transform translate-x-full"
       }`}
     >
-      <div className="flex flex-col ml-[39px] items-start gap-[12px]">
+      <div className="flex flex-col ml-[13px] sm:ml-[39px] items-start gap-[12px]">
         {content}
         <div className="w-full">
-          <div className="flex justify-between">
+          <div className="flex  w-[71vw] sm:w-auto justify-between">
             <div>
               <span className="text-zinc-500 text-[12px] font-normal leading-[8.80px]">
                 Press{" "}
@@ -324,12 +324,12 @@ const UserInfo = () => {
                   id="robo"
                   type="checkbox"
                   value="Robo Calls"
-                  className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  className="w-[31px] h-[31px] form-checkbox accent-[#433456] text-[#351f52]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   onChange={(e) => handleInputChange(e, "current_usage")}
                 />
                 <label
                   htmlFor="robo"
-                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500  text-sm font-medium text-gray-900 dark:text-gray-300"
+                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500  font-medium text-[#381E50] dark:text-gray-300"
                 >
                   Robo-Calling
                 </label>
@@ -339,12 +339,12 @@ const UserInfo = () => {
                   id="outbound-sales"
                   type="checkbox"
                   value="Outbound"
-                  className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  className="w-[31px] h-[31px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   onChange={(e) => handleInputChange(e, "current_usage")}
                 />
                 <label
                   htmlFor="outbound-sales"
-                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500  text-sm font-medium text-gray-900 dark:text-gray-300"
+                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500   font-medium text-[#381E50] dark:text-gray-300"
                 >
                   Outbound Sales Calls
                 </label>
@@ -354,12 +354,12 @@ const UserInfo = () => {
                   id="inbound-sales"
                   type="checkbox"
                   value="Inbound"
-                  className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  className="w-[31px] h-[31px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   onChange={(e) => handleInputChange(e, "current_usage")}
                 />
                 <label
                   htmlFor="inbound-sales"
-                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500  text-sm font-medium text-gray-900 dark:text-gray-300"
+                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500   font-medium text-[#381E50] dark:text-gray-300"
                 >
                   Inbound Sales Calls
                 </label>
@@ -369,12 +369,12 @@ const UserInfo = () => {
                   id="cus-support"
                   type="checkbox"
                   value="Support"
-                  className="w-[28px] h-[28px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  className="w-[31px] h-[31px] form-checkbox accent-[#433456] text-[#433456]  bg-gray-100 border-gray-300 rounded focus:ring-[#43345661] dark:focus:ring-[#433456] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   onChange={(e) => handleInputChange(e, "current_usage")}
                 />
                 <label
                   htmlFor="cus-support"
-                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500  text-sm font-medium text-gray-900 dark:text-gray-300"
+                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500 font-medium text-[#381E50] dark:text-gray-300"
                 >
                   Customer Support Calls
                 </label>

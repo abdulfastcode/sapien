@@ -208,8 +208,8 @@ const Email = () => {
         <div className="flex flex-col items-center gap-[12px]">
           <div className="text-black text-lg font-normal leading-tight tracking-tight">
             {errorMessage
-              ? `${errorMessage}, Recheck your email`
-              : " Check your inbox for confirmation email"}
+              ? `${errorMessage}, Recheck your email `
+              : " Check your inbox for confirmation email (Check Spam)"}
           </div>
           <div className="">
             <button
