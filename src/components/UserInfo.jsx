@@ -179,14 +179,11 @@ const UserInfo = () => {
           (item) => item !== e.target.value
         );
       }
-    } else if (key === "has_dev_team") {
-      // Update value to a boolean true/false
-      value = e.target.value === "YES";
-      console.log("value", value);
     }
     setUserInfo((prevState) => ({
       ...prevState,
       [key]: key === "country_code" ? e.target.value : value,
+      has_dev_team: key === "has_dev_team" ? e.target.checked : prevState.has_dev_team,
     }));
   };
   useEffect(() => {
@@ -467,14 +464,14 @@ const UserInfo = () => {
                       if (e.target.checked) {
                         setUserInfo((prevState) => ({
                           ...prevState,
-                          has_dev_team: "YES",
+                          has_dev_team: true,
                         }));
                       }
                     }}
-                    checked={userInfo.has_dev_team === "YES"}
+                    checked={userInfo.has_dev_team === true}
                   />
                   <span className="h-[28px] w-[28px] rounded border border-gray-500 flex items-center justify-center mr-2">
-                    {userInfo.has_dev_team === "YES" && (
+                    {userInfo.has_dev_team === true && (
                       <span className="text-[#433456]">&#10003;</span>
                     )}
                   </span>
@@ -498,14 +495,14 @@ const UserInfo = () => {
                       if (e.target.checked) {
                         setUserInfo((prevState) => ({
                           ...prevState,
-                          has_dev_team: "NO",
+                          has_dev_team: false,
                         }));
                       }
                     }}
-                    checked={userInfo.has_dev_team === "NO"}
+                    checked={userInfo.has_dev_team === false}
                   />
                   <span className="h-[28px] w-[28px] rounded border border-gray-500 flex items-center justify-center mr-2">
-                    {userInfo.has_dev_team === "NO" && (
+                    {userInfo.has_dev_team === false && (
                       <span className="text-[#433456]">&#10003;</span>
                     )}
                   </span>
