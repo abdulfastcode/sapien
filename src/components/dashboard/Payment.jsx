@@ -41,9 +41,9 @@ const Payment = () => {
           <div>{userDetails ? userDetails.remaining_talk_time : ""}</div>
         </div>
         <div className="mt-2">
-          <button className=" py-[3px] px-[25px] items-center bg-[#381E50] text-white  text-md ">
+          <a href="https://payments.cashfree.com/forms/add-sapien-credits" target="_blank" rel="noreferrer" className=" py-[3px] px-[25px] items-center bg-[#381E50] text-white  text-md ">
             Add Credit
-          </button>
+          </a>
         </div>
       </div>
     </div>
