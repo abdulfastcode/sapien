@@ -10,6 +10,7 @@ import { baseUrl } from "../../utils/baseUrl";
 const DashBoardHeader = () => {
   let [userDetails, setUserDetails] = useState(null);
   let dispatch = useDispatch();
+
   // console.log("user dashead", user);
   let navigate = useNavigate();
   let { pathname } = useLocation();
@@ -47,16 +48,20 @@ const DashBoardHeader = () => {
         </Link>
         {userDetails && (
           <div className="flex items-center gap-3">
-            <div>
-              <a
-                className="text-[#22182A] underline underline-offset-1 visited:text-purple-900  font-semibold"
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://sapien-docs.smallest.ai/introduction"
-              >
-                Documentation
-              </a>
-            </div>
+            {(pathname === "/dashboard/agent" ||
+              "/dashboard/campaign" ||
+              "/dashboard/audience") && (
+                <div>
+                  <a
+                    className="text-[#22182A] underline underline-offset-1 visited:text-purple-900  font-semibold"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://sapien-docs.smallest.ai/introduction"
+                  >
+                    Documentation
+                  </a>
+                </div>
+              )}
             <div className="group p-[5px] cursor-pointer">
               <div className=" w-8 h-8 relative bg-[#22182A] rounded-full flex justify-center items-center">
                 <div className=" w-[11px] text-center cursor-pointer h-6 text-white font-bold">

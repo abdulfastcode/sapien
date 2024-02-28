@@ -93,12 +93,14 @@ const DashboardTable = ({
       const checkedValue = tableData.map((data) => {
         return { ...data, isChecked: checked };
       });
-      console.log("checkedValue",checkedValue);
+      console.log("checkedValue", checkedValue);
       setData(checkedValue);
     } else {
       console.log("object name", name);
       const checkedValue = tableData.map((data) =>
-        (data[`${path}_id`] || data.call_id) === name ? { ...data, isChecked: checked } : data
+        (data[`${path}_id`] || data.call_id) === name
+          ? { ...data, isChecked: checked }
+          : data
       );
       console.log(checkedValue);
       setData(checkedValue);
@@ -165,7 +167,7 @@ const DashboardTable = ({
                 <tr
                   key={e[`${path}_id`] || i}
                   onClick={checkedHandler}
-                  name={e[`${path}_id`]||e.call_id}
+                  name={e[`${path}_id`] || e.call_id}
                   // id={e?.isChecked || false}
                   // {...(e?.isChecked !== undefined && { id: e?.isChecked })}
                   data-checked={e?.isChecked || false}
@@ -179,7 +181,19 @@ const DashboardTable = ({
                         className="border border-[#381E50]"
                         key={`${i}-${header}`}
                       >
-                        {e[header] ?? "null"}
+                        {header === "recording_url" ? (
+                          <a
+                            href={e[header]}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-900"
+                          >
+                            {e[header]}
+                          </a>
+                        ) : (
+                          e[header] ?? "null"
+                        )}
+                        {/* {e[header] ?? "null"} */}
                       </td>
                     );
                   })}
@@ -187,8 +201,8 @@ const DashboardTable = ({
                     <td key={`${i}-checkbox`} className="pt-[4px]">
                       <input
                         type="checkbox"
-                        name={e[`${path}_id`]||e.call_id}
-                        value={e[`${path}_id`]||e.call_id}
+                        name={e[`${path}_id`] || e.call_id}
+                        value={e[`${path}_id`] || e.call_id}
                         // checked={check.includes(e[`${path}_id`])}
                         checked={e?.isChecked || false}
                         onChange={checkedHandler}
