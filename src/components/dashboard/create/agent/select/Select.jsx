@@ -143,6 +143,40 @@ const Select = ({
     return multiple ? value.includes(option) : option === value;
   }
 
+  async function callGetConversion(data) {
+    console.log("callGetConversion", data);
+
+    // console.log("body",JSON.stringify(body))
+    const conv_id = data.conversion_id;
+    try {
+      let token = localStorage.getItem("auth_token");
+      let post = await fetch(
+        `${baseUrl}/conversions/get_conversion?conversion_id=${conv_id}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      let res = await post.json();
+      const indDescription = res?.description;
+      const indName = res?.name;
+      setEditConversionOptions({
+        ...editConversionOptions,
+        conversion_id:conv_id,
+        name:indName,
+        description: indDescription,
+      });
+
+      // setUpdateDefaultName(true)
+      console.log("callGetConversion-", res);
+    } catch (e) {
+      console.error(e);
+    }
+    // e.stopPropagation();
+  }
+
   console.log("selectValue", value);
   // console.log("options", options);
   // console.log("isOpen", isOpen);
@@ -179,9 +213,7 @@ const Select = ({
                 <span className="hidden group-hover:block">&times;</span>
               </button>
             ))
-          : value?.name ||
-            value?.full_phone ||
-            "No Value Selected"}
+          : value?.name || value?.full_phone || "No Value Selected"}
       </span>
       <div className="caret pr-2">
         <img className="" src={downArrow} alt="downArrow" />
@@ -207,11 +239,11 @@ const Select = ({
                 e.stopPropagation();
                 setIsOpen(false);
                 selectoption(option);
-                setEditConversionOptions({
-                  ...editConversionOptions,
-                  name: option?.name,
-                  conversion_id: option?.conversion_id,
-                });
+                // setEditConversionOptions({
+                //   ...editConversionOptions,
+                //   name: option?.name,
+                //   conversion_id: option?.conversion_id,
+                // });
               }}
               onMouseEnter={() => setHighlitedIndex(index)}
               className={`p-[.25em] ${
@@ -222,11 +254,12 @@ const Select = ({
                   : ""
               } cursor-pointer select-none`}
             >
-              {option?.name || option?.full_phone }
+              {option?.name || option?.full_phone}
               {editOpt && (
                 <span
                   className="text-[10px] float-right mt-2 pr-2 pl-[8px] hover:text-blue-700"
                   onClick={() => {
+                    callGetConversion(option);
                     setEditConversion(true);
                     setCreateConversion(false);
                     setShowCustConversion(true);
