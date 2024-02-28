@@ -22,6 +22,7 @@ const UserInfo = () => {
     current_usage: [],
     designation: "",
     has_dev_team: null,
+    full_name:"",
     phone: "",
   });
   const dispatch = useDispatch();
@@ -75,21 +76,39 @@ const UserInfo = () => {
       } else if (activeDivIndex < 4) {
         // setActiveDivIndex((prevIndex) => prevIndex + 1);
         console.log("activeDivIndex", activeDivIndex);
-        // if (userInfo.phone.length > 0) {
-        //   setActiveDivIndex(1);
+        if (userInfo.phone.length > 0) {
+          setActiveDivIndex(1);
+        }
+        // else{
+        //   toast.info("Field can't be empty")
+        // }
+
+        if (userInfo.full_name.length > 0) {
+          setActiveDivIndex(2);
+        }
+        // else{
+        //   toast.info("Field can't be empty")
         // }
 
         // // setActiveDivIndex(2);
 
-        // if (userInfo.designation.length > 0) {
-        //   setActiveDivIndex(3);
+        if (userInfo.designation.length > 0) {
+          setActiveDivIndex(3);
+        }
+        // else{
+        //   toast.info("Field can't be empty")
         // }
 
-        // if (userInfo.current_usage.length > 0) {
-        //   setActiveDivIndex(4);
+
+        if (userInfo.current_usage.length > 0) {
+          setActiveDivIndex(4);
+        }
+        // else{
+        //   toast.info("Field can't be empty")
         // }
 
-        setActiveDivIndex((prevIndex) => prevIndex + 1);
+
+        // setActiveDivIndex((prevIndex) => prevIndex + 1);
 
         // if (
         //   userInfo.phone.length == 0 ||
@@ -110,6 +129,26 @@ const UserInfo = () => {
     // }
   };
 
+  // const handleInputChange = (e, key) => {
+  //   let value =
+  //     e.target.type === "checkbox" ? e.target.checked : e.target.value;
+  //   if (key === "current_usage") {
+  //     if (e.target.checked) {
+  //       value = [...userInfo.current_usage, e.target.value];
+  //     } else {
+  //       value = userInfo.current_usage.filter(
+  //         (item) => item !== e.target.value
+  //       );
+  //     }
+  //   } else if (key === "has_dev_team") {
+  //     // Update value to a boolean true/false
+  //     value = e.target.value === "YES";
+  //   }
+  //   setUserInfo((prevState) => ({
+  //     ...prevState,
+  //     [key]: key === "country_code" ? e.target.value : value,
+  //   }));
+  // };
   const handleInputChange = (e, key) => {
     let value =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;

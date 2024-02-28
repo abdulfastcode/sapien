@@ -40,6 +40,7 @@ const EditAgentComp = ({ sendResData }) => {
         });
         let res = await post.json();
         console.log("res", post);
+        dispatch(setResponseMessage(res))
         if (res.message) {
           toast.success(res.message);
         }
@@ -53,7 +54,6 @@ const EditAgentComp = ({ sendResData }) => {
           setAgentCreatedId(res.agent_id);
           console.log("agentCreatedId", agentCreatedId);
           setUpdateBtn(true);
-          // dispatch(setResponseMessage("Agent Created Successfully"))
           // navigate("/dashboard/agent");
         }
         console.log("res-", res);

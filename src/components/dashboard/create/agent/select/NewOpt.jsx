@@ -1,13 +1,15 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Select from "./Select";
 import { baseUrl } from "../../../../../utils/baseUrl";
-import { useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useLocation, useSearchParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { setAgentOptions } from "../../../../../utils/slices/createAgentOptionsSlice";
 import { toast } from "react-toastify";
 
 const NewOpt = ({ callScript }) => {
   const dispatch = useDispatch();
+  const responseMessage = useSelector((state) => state.response.message);
+
 
   const [voiceList, setVoiceList] = useState([]);
   const [phoneList, setPhoneList] = useState([]);
@@ -112,7 +114,9 @@ const NewOpt = ({ callScript }) => {
     if (agentIdfromQuery) {
       getAdgentById();
     }
+    
   }, []);
+  console.log("responseMessage",responseMessage)
 
   useMemo(() => {
     if (isExestingValues.length > 0) {
@@ -244,7 +248,7 @@ const NewOpt = ({ callScript }) => {
     const body = {
       agent_id: agentIdfromQuery,
       contact: {
-        countrycode: testAgentContact.countrycode.countryCode,
+        country_code: testAgentContact.countrycode.countryCode,
         phone: testAgentContact.phone,
       },
     };
