@@ -309,7 +309,8 @@ console.log("resData",resData)
       </div>
       {/* Voice */}
       <div className="flex flex-wrap gap-3 justify-between ">
-        <div>Voice</div>
+        <div>Voice <a target="_blank" rel="noreferrer" href="https://sapien-docs.smallest.ai/essentials/voices
+" className="ml-1 ">&#9432;</a></div>
         <Select
           value={value.voice}
           options={voiceList}
