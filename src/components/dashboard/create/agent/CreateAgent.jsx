@@ -47,7 +47,7 @@ const CreateAgent = () => {
     }
     return () => {
       dispatch(setAgentOptions());
-      dispatch(setResponseMessage());
+      // dispatch(setResponseMessage());
     };
   }, [dispatch]);
   console.log("callScript", callScript);
@@ -69,7 +69,7 @@ const CreateAgent = () => {
         <Text callScript={callScript} changeText={changeText} />
         {/* <Options resErrData={resData} callScript={callScript} /> */}
         {/* <NewOptions callScript={callScript} /> */}
-        <NewOpt callScript={callScript}/>
+        <NewOpt callScript={callScript} resData={resData} />
       </div>
     </div>
   );

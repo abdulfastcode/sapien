@@ -6,11 +6,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAgentOptions } from "../../../../../utils/slices/createAgentOptionsSlice";
 import { toast } from "react-toastify";
 
-const NewOpt = ({ callScript }) => {
+const NewOpt = ({ callScript,resData }) => {
   const dispatch = useDispatch();
   const responseMessage = useSelector((state) => state.response.message);
-
-
+const agentIdSave = resData?.agent_id
+console.log("resData",resData)
   const [voiceList, setVoiceList] = useState([]);
   const [phoneList, setPhoneList] = useState([]);
   const [conversationList, setconversationList] = useState([]);
@@ -246,7 +246,7 @@ const NewOpt = ({ callScript }) => {
 
   async function testCall(e) {
     const body = {
-      agent_id: agentIdfromQuery,
+      agent_id: agentIdfromQuery || agentIdSave,
       contact: {
         country_code: testAgentContact.countrycode.countryCode,
         phone: testAgentContact.phone,
@@ -394,7 +394,7 @@ const NewOpt = ({ callScript }) => {
             />
           </div>
         </div>
-        {agentIdfromQuery && (
+        {(agentIdfromQuery || agentIdSave ) && (
           <div className="flex flex-wrap gap-3 justify-between ">
             <div>Call To </div>
 
@@ -431,7 +431,7 @@ const NewOpt = ({ callScript }) => {
               <div className="text-right">
                 <button
                   onClick={(e) => testCall(e)}
-                  className="border bg-[#381E50] border-[#381E50] text-white py-2 px-4"
+                  className="border bg-[#381E50] hover:bg-[#2d1841]  border-[#381E50] text-white py-2 px-4"
                 >
                   Test Call
                 </button>

@@ -2,7 +2,6 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 
 const Text = ({ callScript, changeText }) => {
-  
   let { search } = useLocation();
   let querySearch = search?.split("?");
   let indvQuery = querySearch[1];
@@ -10,7 +9,7 @@ const Text = ({ callScript, changeText }) => {
   console.log("agentIdfromQuery!!@!@!@!@@!@!@!", agentIdfromQuery);
 
   return (
-    <div className="w-full lg:w-[60%] lg:min-h-[calc(100vh-154.64px)] bg-[#22182A]">
+    <div className="w-full h-[60vh] lg:w-[60%] lg:min-h-[calc(100vh-154.64px)] bg-[#22182A]">
       {/* <div className="mt-[25px] ">
         <div className="text-white mb-[10px]  ml-[45px]">
           System Instructions
@@ -26,15 +25,17 @@ const Text = ({ callScript, changeText }) => {
           still interested in getting the GST Regis
         </div>
       </div> */}
-      <div className="mt-[45px] mb-[25px] h-[78%]">
-        <div className="text-white mb-[10px]  ml-[45px]">Call Script</div>
+      <div className="mt-6 lg:mt-[45px] mb-[25px] h-[78%]">
+        <div className="text-white mb-[10px]  ml-5 sm:ml-[45px]">
+          Call Script
+        </div>
         <textarea
           onChange={(e) => {
-            changeText(e.target.value)
+            changeText(e.target.value);
             // console.log(e.target.value);
           }}
-          value={callScript ?  callScript?.script : "Script"}
-          className="bg-[#381E50] w-[83%] ml-[43px] h-full px-[19px] py-[8px]  text-white"
+          value={callScript ? callScript?.script : "Script"}
+          className="bg-[#381E50] w-[83%] ml-5 sm:ml-[43px] h-full px-[19px] py-[8px]  text-white"
         >
           {callScript != null ? callScript?.script : "Loading..."}
         </textarea>

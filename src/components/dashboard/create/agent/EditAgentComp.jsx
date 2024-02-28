@@ -40,16 +40,15 @@ const EditAgentComp = ({ sendResData }) => {
         });
         let res = await post.json();
         console.log("res", post);
-        dispatch(setResponseMessage(res))
+        // dispatch(setResponseMessage(res))
+        sendResData(res)
         if (res.message) {
           toast.success(res.message);
         }
         if (res.error) {
           toast.error(res.error);
         }
-        if (post.status == 400) {
-          sendResData("Field Missing");
-        }
+        
         if (post.status === 201) {
           setAgentCreatedId(res.agent_id);
           console.log("agentCreatedId", agentCreatedId);
@@ -94,10 +93,10 @@ const EditAgentComp = ({ sendResData }) => {
           toast.error(res.error);
         }
         console.log("res", post);
-        if (post.status == 400) {
-          sendResData("Field Missing");
-          // setUpdateBtn(true);
-        }
+        // if (post.status == 400) {
+        //   sendResData("Field Missing");
+        //   // setUpdateBtn(true);
+        // }
         if (post.status === 201) {
           // dispatch(setResponseMessage("Agent Updated Successfully"));
 
