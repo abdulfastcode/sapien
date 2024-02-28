@@ -282,12 +282,12 @@ console.log("resData",resData)
     e.stopPropagation();
   }
 
-  console.log("voiceList", voiceList);
-  console.log("phoneList", phoneList);
-  console.log("conversationList", conversationList);
-  console.log("isExestingValues", isExestingValues);
-  console.log("valueOp", value);
-  console.log("testAgentContact", testAgentContact);
+  // console.log("voiceList", voiceList);
+  // console.log("phoneList", phoneList);
+  // console.log("conversationList", conversationList);
+  // console.log("isExestingValues", isExestingValues);
+  // console.log("valueOp", value);
+  // console.log("testAgentContact", testAgentContact);
   return (
     <div className="w-full py-[20px] px-[24px] lg:w-[40%] flex flex-col gap-[30px]">
       <div className="flex flex-wrap gap-3  justify-between ">
