@@ -38,6 +38,7 @@ const UserInfo = () => {
         const urlParams = new URLSearchParams(window.location.search);
         console.log("urlParams---", urlParams);
         const authToken = urlParams.get("auth_token");
+        console.log("authToken",authToken)
         // const authToken =
         //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYWJkdWxAZmFzdGNvZGUuYWkifQ.dSNnYNrD6WRTzV-weQeJwj0RaOrUXhq3jEqVVU2r1cA";
         if (authToken) {
