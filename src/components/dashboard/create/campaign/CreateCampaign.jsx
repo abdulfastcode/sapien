@@ -62,7 +62,7 @@ const CreateCampaign = () => {
         }
 
         if (data[0]?.status === "completed") {
-          setBtnStatusStartCamp(false);
+          setBtnStatusStartCamp(true);
         }
         // dispatch(addDataTable(data));
       });
