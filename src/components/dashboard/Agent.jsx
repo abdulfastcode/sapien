@@ -10,11 +10,14 @@ import {
   addDataTable,
 } from "../../utils/slices/dashboardSlice";
 import { baseUrl, headers } from "../../utils/baseUrl";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Agent = () => {
   // console.log("agentData", agentData);
   // console.log("comp mount from main agent");
   const user = useSelector((state) => state.user);
+  let navigate = useNavigate()
 console.log("userrmail",user)
   // const dispatch = useDispatch();
   const [updateComp, setUpdateComp] = useState(false);
@@ -45,6 +48,11 @@ console.log("userrmail",user)
     })
       .then((response) => response.json())
       .then((data) => {
+        if(data.message=="Token is invalid!"){
+          localStorage.removeItem("token");
+          toast.info("Token is invalid")
+          navigate("/")
+        }
         setTableData(data);
         // dispatch(addDataTable(data));
       });
