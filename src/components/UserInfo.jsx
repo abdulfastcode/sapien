@@ -103,22 +103,7 @@ const UserInfo = () => {
         if (userInfo.current_usage.length > 0) {
           setActiveDivIndex(4);
         }
-        // else{
-        //   toast.info("Field can't be empty")
-        // }
-
-        // setActiveDivIndex((prevIndex) => prevIndex + 1);
-
-        // if (
-        //   userInfo.phone.length == 0 ||
-        //   userInfo.current_usage.length == 0 ||
-        //   (userInfo.designation.length == 0 &&
-        //     (e.key === "Enter" ||
-        //       e.keyCode == 13 ||
-        //       e.target.id === "arrow-right"))
-        // ) {
-        //   toast.info("Field Can't be empty");
-        // }
+    
       }
     }
     // else if (e.key === "Backspace") {
@@ -128,46 +113,6 @@ const UserInfo = () => {
     // }
   };
 
-  // const handleInputChange = (e, key) => {
-  //   let value =
-  //     e.target.type === "checkbox" ? e.target.checked : e.target.value;
-  //   if (key === "current_usage") {
-  //     if (e.target.checked) {
-  //       value = [...userInfo.current_usage, e.target.value];
-  //     } else {
-  //       value = userInfo.current_usage.filter(
-  //         (item) => item !== e.target.value
-  //       );
-  //     }
-  //   } else if (key === "has_dev_team") {
-  //     // Update value to a boolean true/false
-  //     value = e.target.value === "YES";
-  //   }
-  //   setUserInfo((prevState) => ({
-  //     ...prevState,
-  //     [key]: key === "country_code" ? e.target.value : value,
-  //   }));
-  // };
-  // const handleInputChange = (e, key) => {
-  //   let value =
-  //     e.target.type === "checkbox" ? e.target.checked : e.target.value;
-  //   if (key === "current_usage") {
-  //     if (e.target.checked) {
-  //       value = [...userInfo.current_usage, e.target.value];
-  //     } else {
-  //       value = userInfo.current_usage.filter(
-  //         (item) => item !== e.target.value
-  //       );
-  //     }
-  //   } else if (key === "has_dev_team") {
-  //     // Update value to a boolean true/false
-  //     value = e.target.value === "YES";
-  //   }
-  //   setUserInfo((prevState) => ({
-  //     ...prevState,
-  //     [key]: key === "country_code" ? e.target.value : value,
-  //   }));
-  // };
 
   const handleInputChange = (e, key) => {
     let value =
@@ -346,7 +291,7 @@ const UserInfo = () => {
                 />
                 <label
                   htmlFor="robo"
-                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500  font-medium text-[#381E50] dark:text-gray-300"
+                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500 font-semibold text-[#381E50] dark:text-gray-300"
                 >
                   Robo-Calling
                 </label>
@@ -361,7 +306,7 @@ const UserInfo = () => {
                 />
                 <label
                   htmlFor="outbound-sales"
-                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500   font-medium text-[#381E50] dark:text-gray-300"
+                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500   font-semibold text-[#381E50] dark:text-gray-300"
                 >
                   Outbound Sales Calls
                 </label>
@@ -376,7 +321,7 @@ const UserInfo = () => {
                 />
                 <label
                   htmlFor="inbound-sales"
-                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500   font-medium text-[#381E50] dark:text-gray-300"
+                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500  font-semibold text-[#381E50] dark:text-gray-300"
                 >
                   Inbound Sales Calls
                 </label>
@@ -391,7 +336,7 @@ const UserInfo = () => {
                 />
                 <label
                   htmlFor="cus-support"
-                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500 font-medium text-[#381E50] dark:text-gray-300"
+                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500 font-semibold text-[#381E50] dark:text-gray-300"
                 >
                   Customer Support Calls
                 </label>
