@@ -51,7 +51,7 @@ console.log("userrmail",user)
         if(data.message=="Token is invalid!"){
           localStorage.removeItem("token");
           toast.info("Token is invalid")
-          navigate("/")
+          // navigate("/")
         }
         setTableData(data);
         // dispatch(addDataTable(data));
