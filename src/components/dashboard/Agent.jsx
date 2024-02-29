@@ -50,7 +50,7 @@ console.log("userrmail",user)
       .then((data) => {
         if(data.message=="Token is invalid!"){
           localStorage.removeItem("auth_token");
-          toast.info("Token is invalid")
+          toast.info("Token Expired")
           navigate("/")
         }
         setTableData(data);
