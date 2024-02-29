@@ -60,6 +60,10 @@ const CreateCampaign = () => {
           console.log("setting in progress");
           setBtnStatusStartCamp(true);
         }
+
+        if (data[0]?.status === "completed") {
+          setBtnStatusStartCamp(false);
+        }
         // dispatch(addDataTable(data));
       });
   }
@@ -161,7 +165,7 @@ const CreateCampaign = () => {
   console.log("btnStatusStartCamp", btnStatusStartCamp);
 
   return (
-    <div className="w-full ">
+    <div className="w-full relative">
       <EditCamp
         btnStatusStartCamp={btnStatusStartCamp}
         setBtnStatusStartCamp={setBtnStatusStartCamp}
@@ -195,7 +199,7 @@ const CreateCampaign = () => {
       {!btnStatusStartCamp && (
         <>
           <div className="hidden sm:block w-full h-auto relative bg-white">
-            <div className="hidden  z-20  sm:flex w-full h-[66px] px-[24px] justify-end items-center border bg-white border-[#433456] sticky  bottom-0">
+            <div className="hidden  z-20  sm:flex w-full lg:w-[calc(100%-9.1%)] h-[66px] px-[24px] justify-end items-center border bg-white border-[#433456] fixed  bottom-0">
               <button
                 disabled={btnStatusStartCamp ? true : false}
                 className={`border border-[#381E50] ${
@@ -210,7 +214,7 @@ const CreateCampaign = () => {
             </div>
           </div>
 
-          <div className="flex  z-20  sm:hidden w-full h-[66px] px-[24px] justify-end items-center border bg-white border-[#433456] sticky  bottom-0">
+          <div className="flex  z-20  sm:hidden w-full lg:w-[calc(100%-9.1%)] h-[66px] px-[24px] justify-end items-center border bg-white border-[#433456] fixed  bottom-0">
             <button
               disabled={btnStatusStartCamp ? true : false}
               className={`border border-[#381E50] ${
