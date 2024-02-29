@@ -291,7 +291,7 @@ const UserInfo = () => {
                 />
                 <label
                   htmlFor="robo"
-                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500 font-semibold text-[#381E50] dark:text-gray-300"
+                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500 font-semibold text-[#381E50] "
                 >
                   Robo-Calling
                 </label>
@@ -306,7 +306,7 @@ const UserInfo = () => {
                 />
                 <label
                   htmlFor="outbound-sales"
-                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500   font-semibold text-[#381E50] dark:text-gray-300"
+                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500   font-semibold text-[#381E50] "
                 >
                   Outbound Sales Calls
                 </label>
@@ -321,7 +321,7 @@ const UserInfo = () => {
                 />
                 <label
                   htmlFor="inbound-sales"
-                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500  font-semibold text-[#381E50] dark:text-gray-300"
+                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500  font-semibold text-[#381E50] "
                 >
                   Inbound Sales Calls
                 </label>
@@ -336,7 +336,7 @@ const UserInfo = () => {
                 />
                 <label
                   htmlFor="cus-support"
-                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500 font-semibold text-[#381E50] dark:text-gray-300"
+                  className="ms-2 w-[70vw] md:w-[50vw] rounded-sm lg:w-[425px] py-[4px] px-[6px] border border-gray-500 font-semibold text-[#381E50] "
                 >
                   Customer Support Calls
                 </label>
