@@ -49,9 +49,9 @@ console.log("userrmail",user)
       .then((response) => response.json())
       .then((data) => {
         if(data.message=="Token is invalid!"){
-          localStorage.removeItem("token");
+          localStorage.removeItem("auth_token");
           toast.info("Token is invalid")
-          // navigate("/")
+          navigate("/")
         }
         setTableData(data);
         // dispatch(addDataTable(data));
