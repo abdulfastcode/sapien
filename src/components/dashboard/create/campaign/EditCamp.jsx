@@ -148,7 +148,7 @@ const EditCamp = ({
                   : checkQueryAndCampData &&
                     campaignData[0]?.status === "not started"
                   ? "bg-purple-300"
-                  : "bg-pink-600"
+                  : "bg-red-500"
               } text-black  text-md `}
             >
               {campaignData[0]?.status || checkQueryAndCampData}
