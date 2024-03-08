@@ -52,7 +52,7 @@ const Audiences = () => {
     // console.log("val", val);
     setTableData(val);
     // console.log(selectedData)
-  }
+  } 
   function renderParentComponent(stateFromChild) {
     setUpdateComp(stateFromChild);
   }

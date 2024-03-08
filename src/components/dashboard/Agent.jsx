@@ -55,7 +55,7 @@ console.log("userrmail",user)
         }
         setTableData(data);
         // dispatch(addDataTable(data));
-      });
+      }); 
   }, [updateComp]);
   // console.log(tableData);
 

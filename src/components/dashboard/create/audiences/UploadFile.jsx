@@ -9,6 +9,7 @@ import useFileDataExtractor from "../../../../utils/cus-hooks/useFileDataExtract
 import { useLocation, useNavigate } from "react-router-dom";
 import DashboardTable from "../../table/DashboardTable";
 import { useMaxHeaderValues } from "../../../../utils/cus-hooks/useMaxHeaderValues";
+import { toast } from "react-toastify";
 
 const UploadFile = () => {
   // const [jsonData, setJsonData] = useState(null);
@@ -29,41 +30,82 @@ const UploadFile = () => {
   let [audienceName, setAudienceName] = useState("");
   console.log(jsonFileData);
 
+  // async function handleFileChange(e) {
+  //   const selectedFile = e.target.files[0];
+
+  //   if (selectedFile) {
+  //     const fileName = selectedFile.name;
+  //     const fileExtension = fileName.split(".").pop().toLowerCase();
+
+  //     let res = await useFileDataExtractor(fileExtension, selectedFile);
+  //     console.log("res", res);
+  //     if (res.json) {
+  //       console.log(res.json);
+  //       dispatch(uploadAudienceName(audienceName));
+  //       dispatch(uploadJsonFile([{ ...res.json[0], name: audienceName }]));
+  //       // dispatch(uploadJsonFile(res.json));
+  //       if (audienceIdfromQuery) {
+  //         navigate(`/dashboard/audience/create/create/json?${indvQuery}`);
+  //       } else {
+  //         navigate(`/dashboard/audience/create/create/json`);
+  //       }
+  //     }
+  //     if (res.csv) {
+  //       console.log("csvvv", res.csv);
+
+  //       dispatch(uploadAudienceName(audienceName));
+  //       dispatch(uploadCsvFile(res.csv.data));
+  //       if (audienceIdfromQuery) {
+  //         navigate(`/dashboard/audience/create/create/csv?${indvQuery}`);
+  //       } else {
+  //         navigate("/dashboard/audience/create/create/csv");
+  //       }
+  //       // setCsvData(res.csv);
+  //     }
+  //     // if (res.xlsx) setXlsxData([res.xlsx]);
+  //   }
+  // }
   async function handleFileChange(e) {
     const selectedFile = e.target.files[0];
-
+  
     if (selectedFile) {
       const fileName = selectedFile.name;
       const fileExtension = fileName.split(".").pop().toLowerCase();
-
-      let res = await useFileDataExtractor(fileExtension, selectedFile);
-      console.log("res", res);
-      if (res.json) {
-        console.log(res.json);
-        dispatch(uploadAudienceName(audienceName));
-        dispatch(uploadJsonFile([{ ...res.json[0], name: audienceName }]));
-        // dispatch(uploadJsonFile(res.json));
-        if (audienceIdfromQuery) {
-          navigate(`/dashboard/audience/create/create/json?${indvQuery}`);
-        } else {
-          navigate(`/dashboard/audience/create/create/json`);
+  
+      try {
+        let res = await useFileDataExtractor(fileExtension, selectedFile);
+        console.log("res", res);
+        if (res.json) {
+          console.log(res.json);
+          dispatch(uploadAudienceName(audienceName));
+          dispatch(uploadJsonFile([{ ...res.json[0], name: audienceName }]));
+          if (audienceIdfromQuery) {
+            navigate(`/dashboard/audience/create/create/json?${indvQuery}`);
+          } else {
+            navigate(`/dashboard/audience/create/create/json`);
+          }
         }
-      }
-      if (res.csv) {
-        console.log("csvvv", res.csv);
-
-        dispatch(uploadAudienceName(audienceName));
-        dispatch(uploadCsvFile(res.csv.data));
-        if (audienceIdfromQuery) {
-          navigate(`/dashboard/audience/create/create/csv?${indvQuery}`);
-        } else {
-          navigate("/dashboard/audience/create/create/csv");
+        if (res.csv) {
+          console.log("csvvv", res.csv);
+  
+          dispatch(uploadAudienceName(audienceName));
+          dispatch(uploadCsvFile(res.csv.data));
+          if (audienceIdfromQuery) {
+            navigate(`/dashboard/audience/create/create/csv?${indvQuery}`);
+          } else {
+            navigate("/dashboard/audience/create/create/csv");
+          }
+  
         }
-        // setCsvData(res.csv);
+      } catch (error) {
+        toast.info("Error processing file. Try Again")
+        console.error("Error processing file:", error);
+
+        // Handle error (e.g., display error message to user)
       }
-      // if (res.xlsx) setXlsxData([res.xlsx]);
     }
   }
+  
 
   useMemo(() => {
     if (audienceIdfromQuery && downlaodedData) {

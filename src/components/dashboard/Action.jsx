@@ -37,7 +37,7 @@ const Action = ({ selectedData, renderParentComponent }) => {
     })
     .filter(Boolean);
   console.log("idsSelectedData", idsSelectedData);
-  const { pathname } = useLocation();
+  const { pathname } = useLocation(); 
   // let checkbox = useSelector((state) => state.dashboard.checkBox);
   const [downloadItems, setDownloadItems] = useState([]);
   // console.log("pathname", pathname.split("/").pop());

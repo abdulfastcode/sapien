@@ -18,7 +18,7 @@ const CreateCampaign = () => {
   const [btnStatusStartCamp, setBtnStatusStartCamp] = useState(false);
   const [renderComp, setRenderComp] = useState(false);
 
-  console.log("showStartBtn", showStartBtn);
+  console.log("showStartBtn", showStartBtn); 
   let { search } = useLocation();
   let querySearch = search?.split("?");
   let indvQuery = querySearch[1];
