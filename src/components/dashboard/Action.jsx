@@ -37,7 +37,7 @@ const Action = ({ selectedData, renderParentComponent }) => {
     })
     .filter(Boolean);
   console.log("idsSelectedData", idsSelectedData);
-  const { pathname } = useLocation(); 
+  const { pathname } = useLocation();
   // let checkbox = useSelector((state) => state.dashboard.checkBox);
   const [downloadItems, setDownloadItems] = useState([]);
   // console.log("pathname", pathname.split("/").pop());
@@ -92,27 +92,50 @@ const Action = ({ selectedData, renderParentComponent }) => {
 
     if (idsSelectedData?.length >= 1) {
       console.log(
-        `${baseUrl}/${path}s/get_${path}?${path}_id=${checkIdsWithParams}`
+        "idsSelectedData",
+        `${baseUrl}/calls/get_call_by_campaign?${path}_id=${checkIdsWithParams}`
       );
-      fetch(
-        `${baseUrl}/${path}s/get_${path}?${path}_id=${checkIdsWithParams}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          // dispatch for edit
-          dispatch(audienceDownloadedData(data));
-          if (path === "campaign") {
-            setDownloadItems(data);
+      if (path === "campaign") {
+        fetch(
+          `${baseUrl}/calls/get_call_by_campaign?${path}_id=${checkIdsWithParams}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
-          if (path === "audience") {
-            setDownloadItems(data[0]?.contacts);
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            // dispatch for edit
+            dispatch(audienceDownloadedData(data));
+            if (path === "campaign") {
+              setDownloadItems(data[0]?.calls);
+            }
+            // if (path === "audience") {
+            //   setDownloadItems(data[0]?.contacts);
+            // }
+          });
+      } else {
+        fetch(
+          `${baseUrl}/${path}s/get_${path}?${path}_id=${checkIdsWithParams}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
-        });
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            // dispatch for edit
+            dispatch(audienceDownloadedData(data));
+            // if (path === "campaign") {
+            //   setDownloadItems(data);
+            // }
+            if (path === "audience") {
+              setDownloadItems(data[0]?.contacts);
+            }
+          });
+      }
     } else {
       setDownloadItems([]); // Reset download items if checkbox is empty
     }
