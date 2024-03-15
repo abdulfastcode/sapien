@@ -5,6 +5,8 @@ import { addUserEmail } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { baseUrl } from "../utils/baseUrl";
+import OptInput from "./OptInput";
+import { toast } from "react-toastify";
 
 const Email = () => {
   const navigate = useNavigate();
@@ -25,7 +27,6 @@ const Email = () => {
 
   let token = localStorage.getItem("auth_token");
 
-
   useEffect(() => {
     let timer = null;
     if (isResendDisabled) {
@@ -45,12 +46,12 @@ const Email = () => {
     };
   }, [isResendDisabled]);
 
-
   async function sendMail() {
     console.log(email);
     console.log(JSON.stringify({ email: email }));
     try {
-      let post = await fetch(`${baseUrl}/login/send_verification_link`, {
+      // /login/send_verification_otp
+      let post = await fetch(`${baseUrl}/login/send_verification_otp`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -62,13 +63,13 @@ const Email = () => {
       console.log("res-", res);
       if (res.error) {
         setErrorMessage(res.error);
-      }  else {
+      } else {
         setErrorMessage(null);
         setIsResendDisabled(true);
         setTimeout(() => {
           setIsResendDisabled(false);
         }, 30000); // Enable Resend button after 30 seconds
-        setRemainingTime(30)
+        setRemainingTime(30);
       }
     } catch (e) {
       console.error("Error sending mail:", e);
@@ -82,7 +83,7 @@ const Email = () => {
 
         setTimeout(() => {
           setIsResendDisabled(false);
-          console.log("isResendDisabled",isResendDisabled)
+          console.log("isResendDisabled", isResendDisabled);
         }, 30000);
         console.log("email valid", email);
         if (token === null) {
@@ -121,7 +122,7 @@ const Email = () => {
   useEffect(() => {
     document.addEventListener("keydown", handleKeyPress);
     let token = localStorage.getItem("auth_token");
-   
+
     // if (token) {
     //   navigate("/dashboard/agent");
     // } else {
@@ -144,7 +145,33 @@ const Email = () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
   }, [showFirstDiv, email]);
-  console.log("isResendDisabled",isResendDisabled)
+  console.log("isResendDisabled", isResendDisabled);
+
+  const onOtpSubmit = (otpVal) => {
+    console.log("optsub", { email: email, opt: otpVal });
+    console.log("otpVal", otpVal);
+    // /login/verify_otp post email & otp
+    fetch(`${baseUrl}/login/verify_otp`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: email, otp: otpVal }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log("resOpt", res);
+        if (res.error) {
+          toast.error(res.error);
+        }
+        if(res.invalidOtp){
+          toast.error(res.invalidOtp);
+        } 
+        if(res.message){
+          navigate(res.redirect_url)
+        }
+      });
+  };
 
   return (
     <div className="relative">
@@ -205,7 +232,12 @@ const Email = () => {
           showFirstDiv ? "transform translate-x-full" : ""
         }`}
       >
-        <div className="flex flex-col items-center gap-[12px]">
+        <div className="flex flex-col text-center items-center gap-[12px]">
+          <div>{`Enter OTP send to ${email}`}</div>
+          <div>
+            {/* <input type="number" name="" id="" /> */}
+            <OptInput length={6} onOtpSubmit={onOtpSubmit} />
+          </div>
           <div className="text-black text-lg font-normal leading-tight tracking-tight">
             {errorMessage
               ? `${errorMessage}, Recheck your email `
@@ -213,7 +245,9 @@ const Email = () => {
           </div>
           <div className="">
             <button
-              className={`w-[90px] p-[8px] mr-[10px] ${isResendDisabled?"bg-[#381e5061]":"bg-[#381E50]"} text-white bg-indigo-95`}
+              className={`w-[90px] p-[8px] mr-[10px] ${
+                isResendDisabled ? "bg-[#381e5061]" : "bg-[#381E50]"
+              } text-white bg-indigo-95`}
               onClick={sendMail}
               disabled={isResendDisabled}
             >
@@ -227,11 +261,14 @@ const Email = () => {
             </button>
           </div>
           {isResendDisabled && (
-              <div className="text-gray-500 text-sm">
-                Resend mail in {remainingTime} seconds
-              </div>
-            )}
+            <div className="text-gray-500 text-sm">
+              Resend mail in {remainingTime} seconds
+            </div>
+          )}
         </div>
+        {/* verify : /login/verify_otp post email & otp 
+        reult  https://sapien-beige.vercel.app/user-info?auth_token={token}
+         existing https://sapien-beige.vercel.app/dashboard/agent?auth_token={token}'}) */}
       </div>
     </div>
   );

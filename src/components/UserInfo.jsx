@@ -13,9 +13,15 @@ const UserInfo = () => {
   const user = useSelector((state) => state.user);
   const [valueSel, setValueSel] = useState("+91");
 
-  // useEffect(() => {
-  //   localStorage.removeItem("auth_token");
-  // }, []);
+  useEffect(() => {
+    // localStorage.removeItem("auth_token");
+    const urlParams = new URLSearchParams(window.location.search);
+    console.log("urlParams---", urlParams);
+    const authToken = urlParams.get("auth_token");
+    if(!authToken){
+      navigate('/')
+    }
+  }, []);
   const [activeDivIndex, setActiveDivIndex] = useState(0);
   const [userInfo, setUserInfo] = useState({
     country_code: "+91",
@@ -71,7 +77,7 @@ const UserInfo = () => {
           }
         } else {
           toast.error("Token not found ");
-
+        
           console.error("Auth token not found in URL");
         }
       } else if (activeDivIndex < 4) {
@@ -297,7 +303,7 @@ const UserInfo = () => {
                 </label>
               </div>
               <div className="flex items-center">
-                <input
+                <input 
                   id="outbound-sales"
                   type="checkbox"
                   value="Outbound"
