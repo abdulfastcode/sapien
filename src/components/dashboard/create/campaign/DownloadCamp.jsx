@@ -49,7 +49,7 @@ const DownloadCamp = ({tableData}) => {
           });
         }else {
             setDownloadItems([]); // Reset download items if checkbox is empty
-            
+             
           }
     },[checkIdsWithParams])
     console.log("downloadItems->", downloadItems);
