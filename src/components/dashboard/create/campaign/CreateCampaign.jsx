@@ -171,6 +171,7 @@ const CreateCampaign = () => {
         setBtnStatusStartCamp={setBtnStatusStartCamp}
         showStartBtn={showStartBtn}
         campaignData={campaignData}
+        tableData={tableData}
         indvQuery={indvQuery}
         refrenshCampAndCampData={refrenshCampAndCampData}
       />

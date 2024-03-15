@@ -12,7 +12,7 @@ import { baseUrl, headers } from "../../utils/baseUrl";
 // import { addDataTable } from "../../utils/slices/dashboardSlice";
 
 const Campaign = () => {
-  // const dispatch = useDispatch();
+  // const dispatch = useDispatch(); 
   // let [tableData] = useState(campaignData);
   const [updateComp, setUpdateComp] = useState(false);
   let [tableData, setTableData] = useState([]);

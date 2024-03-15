@@ -2,12 +2,13 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import deleteIcon from "../../../../assets/icons/deleIcon.svg";
 import reloadIcon from "../../../../assets/icons/reload.svg";
-import downloadIcon from "../../../../assets/icons/Download.svg";
+
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { baseUrl } from "../../../../utils/baseUrl";
 import { createdCampaignResponse } from "../../../../utils/slices/createcampaignOptionsSlice";
 import { toast } from "react-toastify";
+import DownloadCamp from "./DownloadCamp";
 
 const EditCamp = ({
   btnStatusStartCamp,
@@ -15,12 +16,14 @@ const EditCamp = ({
   indvQuery,
   campStarted,
   campaignData,
+  tableData,
   refrenshCampAndCampData,
 }) => {
   const [checkStartBtn, setCheckStartBtn] = useState(true);
   let dispatch = useDispatch();
   console.log("campaignData", campaignData);
   console.log("campStarted", campStarted);
+  console.log("tableData", tableData);
   let optionsState = useSelector(
     (state) => state.createCampaignOptions.options
   );
@@ -154,12 +157,11 @@ const EditCamp = ({
               {campaignData[0]?.status || checkQueryAndCampData}
             </div>
           )}
+          {tableData?.length > 0 ? <DownloadCamp tableData={tableData} /> : ""}
           {/* {checkQueryAndCampData ? (
             <>
-              <button>
-                <img src={downloadIcon} alt="downloadIcon" />
-              </button>
-              <button>
+              
+              <button> 
                 <img src={deleteIcon} alt="deleteIcon" />
               </button>
             </>

@@ -15,7 +15,7 @@ import { toast } from "react-toastify";
 
 const Action = ({ selectedData, renderParentComponent }) => {
   // console.log("comp mount from action");
-  // console.log(selectedData);
+  console.log("selectedData",selectedData);
   // function extractIds(arr) {
   //   const ids = [];
   //   arr.forEach((obj) => {
@@ -36,7 +36,7 @@ const Action = ({ selectedData, renderParentComponent }) => {
       }
     })
     .filter(Boolean);
-  console.log("idsSelectedData", idsSelectedData);
+  // console.log("idsSelectedData", idsSelectedData);
   const { pathname } = useLocation();
   // let checkbox = useSelector((state) => state.dashboard.checkBox);
   const [downloadItems, setDownloadItems] = useState([]);
@@ -108,7 +108,8 @@ const Action = ({ selectedData, renderParentComponent }) => {
           .then((data) => {
             // dispatch for edit
             dispatch(audienceDownloadedData(data));
-            if (path === "campaign") {
+            if (path === "campaign" && data.length > 0) {
+              console.log("downloadItems", data[0]);
               setDownloadItems(data[0]?.calls);
             }
             // if (path === "audience") {
