@@ -52,7 +52,7 @@ const DownloadCamp = ({tableData}) => {
              
           }
     },[checkIdsWithParams])
-    console.log("downloadItems->", downloadItems);
+    console.log("downloadItems->", downloadItems); 
 
   return (
     <div>
