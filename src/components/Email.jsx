@@ -77,7 +77,7 @@ const Email = () => {
   }
 
   const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter"|| e.keyCode == 13) {
       if (showFirstDiv && validEmail) {
         setIsResendDisabled(true);
 
