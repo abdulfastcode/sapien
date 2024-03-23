@@ -22,10 +22,10 @@ const EditAgentComp = ({ sendResData }) => {
   let agentIdfromQuery = indvQuery?.split("=").pop();
   console.log("qieryNO", agentIdfromQuery);
 
+  console.log("jsonData", JSON.stringify(optionsState));
   function saveData() {
     // console.log("object")
     sendResData(null);
-    console.log("jsonData", JSON.stringify(optionsState));
     async function saveUserOptions() {
       try {
         let token = localStorage.getItem("auth_token");

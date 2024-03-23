@@ -164,8 +164,8 @@ const Select = ({
       const indName = res?.name;
       setEditConversionOptions({
         ...editConversionOptions,
-        conversion_id:conv_id,
-        name:indName,
+        conversion_id: conv_id,
+        name: indName,
         description: indDescription,
       });
 
@@ -213,7 +213,10 @@ const Select = ({
                 <span className="hidden group-hover:block">&times;</span>
               </button>
             ))
-          : value?.name || value?.full_phone || "No Value Selected"}
+          : value?.name ||
+            value?.full_phone ||
+            value?.llm_name ||
+            "No Value Selected"}
       </span>
       <div className="caret pr-2">
         <img className="" src={downArrow} alt="downArrow" />
@@ -229,6 +232,7 @@ const Select = ({
               key={
                 option.phone_id ||
                 option.voice_id ||
+                option.llm_id ||
                 option.operator_id ||
                 option.conversion_id ||
                 option.agent_id ||
@@ -254,7 +258,7 @@ const Select = ({
                   : ""
               } cursor-pointer select-none`}
             >
-              {option?.name || option?.full_phone}
+              {option?.name || option?.llm_name || option?.full_phone}
               {editOpt && (
                 <span
                   className="text-[10px] float-right mt-2 pr-2 pl-[8px] hover:text-blue-700"

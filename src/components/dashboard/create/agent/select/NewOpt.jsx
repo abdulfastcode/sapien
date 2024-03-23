@@ -5,14 +5,15 @@ import { useLocation, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setAgentOptions } from "../../../../../utils/slices/createAgentOptionsSlice";
 import { toast } from "react-toastify";
-import info  from "../../../../../assets/icons/info.svg"
+import info from "../../../../../assets/icons/info.svg";
 
-const NewOpt = ({ callScript,resData }) => {
+const NewOpt = ({ callScript, resData }) => {
   const dispatch = useDispatch();
   const responseMessage = useSelector((state) => state.response.message);
-const agentIdSave = resData?.agent_id
-console.log("resData",resData)
+  const agentIdSave = resData?.agent_id;
+  console.log("resData", resData);
   const [voiceList, setVoiceList] = useState([]);
+  const [llmList, setLlmList] = useState([]);
   const [phoneList, setPhoneList] = useState([]);
   const [conversationList, setconversationList] = useState([]);
   const [operatorList] = useState([
@@ -34,6 +35,7 @@ console.log("resData",resData)
   const [value, setValue] = useState({
     phone: "",
     voice: "",
+    llm: "",
     conversions: [
       { conversion: [{}], operator: [{ name: "OR", operator_id: "1" }] },
     ],
@@ -61,6 +63,20 @@ console.log("resData",resData)
       .then((data) => {
         console.log("data", data);
         setVoiceList(data);
+      });
+  }
+
+  function getLlmList() {
+    let token = localStorage.getItem("auth_token");
+    fetch(`${baseUrl}/agents/get_llm_list`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("llmList", data);
+        setLlmList(data);
       });
   }
 
@@ -104,20 +120,21 @@ console.log("resData",resData)
       .then((data) => {
         console.log("idData", data);
         setIsExestingValues(data);
+        // console.log("isExestingValues",isExestingValues)
         //    console.log("voiceList",voiceList)
       });
   }
 
   useEffect(() => {
     getPhoneList();
+    getLlmList();
     getVoiceList();
     getConversationList();
     if (agentIdfromQuery) {
       getAdgentById();
     }
-    
   }, []);
-  console.log("responseMessage",responseMessage)
+  console.log("responseMessage", responseMessage);
 
   useMemo(() => {
     if (isExestingValues.length > 0) {
@@ -149,14 +166,29 @@ console.log("resData",resData)
       const checkPhoneId = phoneList.findIndex(
         (v) => v?.phone_id == isExestingValues[0]?.phone_id
       );
-
-      setValue({
-        ...value,
-        phone: phoneList[checkPhoneId],
-        voice: voiceList[checkVoiceId],
-        name: exestingName,
-        conversions: updatedConversions,
-      });
+      let checkLlmId = llmList.findIndex(
+        (v) => v?.llm_id == isExestingValues[0]?.llm_id
+      );
+      // checking for previously created agents before llm was introduced
+      if (checkLlmId === -1) {
+        setValue({
+          ...value,
+          phone: phoneList[checkPhoneId],
+          voice: voiceList[checkVoiceId],
+          llm: {llm_id:0,llm_name:"No LLM was Selected"},
+          name: exestingName,
+          conversions: updatedConversions,
+        });
+      } else {
+        setValue({
+          ...value,
+          phone: phoneList[checkPhoneId],
+          voice: voiceList[checkVoiceId],
+          llm: llmList[checkLlmId],
+          name: exestingName,
+          conversions: updatedConversions,
+        });
+      }
       console.log("checkPhoneId", checkPhoneId);
       console.log("exestingName", exestingName);
 
@@ -168,6 +200,7 @@ console.log("resData",resData)
         ...value,
         phone: phoneList[0],
         voice: voiceList[0],
+        llm: llmList[0],
         conversions: [
           {
             ...value.conversions[0],
@@ -176,7 +209,7 @@ console.log("resData",resData)
         ],
       });
     }
-  }, [voiceList, phoneList, conversationList, isExestingValues]);
+  }, [voiceList, phoneList, llmList, conversationList, isExestingValues]);
 
   const handleAddCondition = () => {
     // setAdditionalDivs([...additionalDivs, { conversion_id: "", operator: "" }]);
@@ -214,6 +247,7 @@ console.log("resData",resData)
     let voice_id = value?.voice?.voice_id;
     let phone_id = value?.phone?.phone_id;
     let script = callScript?.script;
+    let llm_id = value?.llm?.llm_id;
 
     console.log(
       "voice_id",
@@ -234,6 +268,7 @@ console.log("resData",resData)
         name: name,
         phone_id: phone_id,
         voice_id: voice_id,
+        llm_id: llm_id,
       })
     );
   }, [value, callScript]);
@@ -253,7 +288,7 @@ console.log("resData",resData)
         phone: testAgentContact.phone,
       },
     };
-    console.log("body",JSON.stringify(body))
+    console.log("body", JSON.stringify(body));
     console.log("test", e);
     try {
       let token = localStorage.getItem("auth_token");
@@ -266,7 +301,7 @@ console.log("resData",resData)
         body: JSON.stringify(body),
       });
       let res = await post.json();
-      
+
       if (res.message) {
         toast.success(res.message);
       }
@@ -275,14 +310,13 @@ console.log("resData",resData)
       }
       // setUpdateDefaultName(true)
       console.log("resEdit-", res);
-      
     } catch (e) {
       toast.error("Failed to Create Conversion");
       console.error(e);
     }
     e.stopPropagation();
   }
-
+  console.log("value", value);
   // console.log("voiceList", voiceList);
   // console.log("phoneList", phoneList);
   // console.log("conversationList", conversationList);
@@ -310,12 +344,31 @@ console.log("resData",resData)
       </div>
       {/* Voice */}
       <div className="flex flex-wrap gap-3 justify-between ">
-        <div className="flex items-center">Voice <a target="_blank" rel="noreferrer" href="https://sapien-docs.smallest.ai/essentials/voices
-" className="ml-1 "><img className="w-[20px]" src={info}/></a></div>
+        <div className="flex items-center">
+          Voice{" "}
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href="https://sapien-docs.smallest.ai/essentials/voices
+"
+            className="ml-1 "
+          >
+            <img className="w-[20px]" src={info} />
+          </a>
+        </div>
         <Select
           value={value.voice}
           options={voiceList}
           onChange={(o) => setValue({ ...value, voice: o })}
+        />
+      </div>
+      {/* LLM */}
+      <div className="flex flex-wrap gap-3 justify-between ">
+        <div className="flex items-center">LLM</div>
+        <Select
+          value={value.llm}
+          options={llmList}
+          onChange={(o) => setValue({ ...value, llm: o })}
         />
       </div>
       {/* Conversion */}
@@ -396,7 +449,7 @@ console.log("resData",resData)
             />
           </div>
         </div>
-        {(agentIdfromQuery || agentIdSave ) && (
+        {(agentIdfromQuery || agentIdSave) && (
           <div className="flex flex-wrap gap-3 justify-between ">
             <div>Call To </div>
 
